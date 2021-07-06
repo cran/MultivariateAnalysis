@@ -1,4 +1,4 @@
-VariaveisCanonicas2=function(Dados,Modelo=1,xlab=NULL, ylab=NULL,
+VariaveisCanonicas2=function(Dados,Modelo=1,Factor=NULL,xlab=NULL, ylab=NULL,
                              CR=TRUE, CorPlot=TRUE, x=1,y=2,x3=NULL,bty="L", Perc=0.1){
 
   xlab=ifelse(is.null(xlab),paste("VC",x),xlab)
@@ -37,6 +37,7 @@ VariaveisCanonicas2=function(Dados,Modelo=1,xlab=NULL, ylab=NULL,
     FatorB= as.factor(D[,2])
     #Bloco= as.factor(D[,3])
     Y=as.matrix(D[,-(1:3)])
+    Trat=paste(D[,1],D[,2],sep="_")
   }
 
   #Fat2Dbc
@@ -45,51 +46,102 @@ VariaveisCanonicas2=function(Dados,Modelo=1,xlab=NULL, ylab=NULL,
     FatorB= as.factor(D[,2])
     Bloco= as.factor(D[,3])
     Y=as.matrix(D[,-(1:3)])
+    Trat=paste(D[,1],D[,2],sep="_")
   }
 
 
   #library(candisc)
   saida=manova(modelos[Modelo][[1]])
-  if (Modelo == 1){c=candisc(saida, term="Trat", sdcale = T)}
-  if (Modelo == 2){c=candisc(saida, term="Trat", sdcale = T)}
-  if (Modelo == 3){c=candisc(saida, term="Trat", sdcale = T)}
 
-  if (Modelo == 4){c=candisc(saida, term="FatorA:FatorB", sdcale = T)}
-  if (Modelo == 5){c=candisc(saida, term="FatorA:FatorB", sdcale = T)}
-
-
-
-
-
-  if(Modelo==1){
-
-    Escores=apply(c$scores[,2:ncol(c$scores)],2,function(x)tapply(x, Trat,mean))
-    D2=apply(Y,2,function(x)tapply(x, Trat,mean))
+  if (Modelo == 1){
+  c=candisc(saida, term="Trat", sdcale = T)
+  Escores=apply(c$scores[,2:ncol(c$scores)],2,function(x)tapply(x, Trat,mean))
+  D2=apply(Y,2,function(x)tapply(x, Trat,mean))
   }
-  if(Modelo==2){
 
+
+  if (Modelo == 2){
+    c=candisc(saida, term="Trat", sdcale = T)
     Escores=apply(c$scores[,3:ncol(c$scores)],2,function(x)tapply(x, Trat,mean))
     D2=apply(Y,2,function(x)tapply(x, Trat,mean))
   }
-  if(Modelo==3){
+
+
+  if (Modelo == 3){
+    c=candisc(saida, term="Trat", sdcale = T)
     Escores=apply(c$scores[,4:ncol(c$scores)],2,function(x)tapply(x, Trat,mean))
     D2=apply(Y,2,function(x)tapply(x, Trat,mean))
+    }
+
+
+  if((Modelo==4)){
+
+  if((Factor=="A:B")){
+    saida=manova(modelos[1][[1]])
+    c=candisc(saida, term="Trat", sdcale = T)
+    Escores=apply(c$scores[,2:ncol(c$scores)],2,function(x)tapply(x, Trat,mean))
+    D2=apply(Y,2,function(x)tapply(x, Trat,mean))
   }
-  if(Modelo==4){
-    Escores=apply(c$scores[,3:ncol(c$scores)],2,function(x)tapply(x, FatorA:FatorB,mean))
+
+
+
+  if((Factor=="A")){
+    saida=manova(modelos[Modelo][[1]])
+    c=candisc(saida, term="FatorA", sdcale = T)
+    Escores=apply(c$scores[,3:ncol(c$scores)],2,function(x)tapply(x, FatorA,mean))
     NomeTrat=rownames(Escores)
-    D2=apply(Y,2,function(x)tapply(x, FatorA:FatorB,mean))
+    D2=apply(Y,2,function(x)tapply(x, FatorA,mean))
   }
-  if(Modelo==5){
-    Escores=apply(c$scores[,4:ncol(c$scores)],2,function(x)tapply(x, FatorA:FatorB,mean))
+
+  if((Factor=="B")){
+    saida=manova(modelos[Modelo][[1]])
+    c=candisc(saida, term="FatorB", sdcale = T)
+    Escores=apply(c$scores[,3:ncol(c$scores)],2,function(x)tapply(x, FatorB,mean))
     NomeTrat=rownames(Escores)
-    D2=apply(Y,2,function(x)tapply(x, FatorA:FatorB,mean))
+    D2=apply(Y,2,function(x)tapply(x, FatorB,mean))
+  }
+
+}
+
+  if((Modelo==5)){
+  if((Factor=="A:B")){
+    saida=manova(modelos[2][[1]])
+    c=candisc(saida, term="Trat", sdcale = T)
+    Escores=apply(c$scores[,3:ncol(c$scores)],2,function(x)tapply(x, Trat,mean))
+    D2=apply(Y,2,function(x)tapply(x, Trat,mean))
   }
 
 
 
+  if((Factor=="A")){
+    saida=manova(modelos[Modelo][[1]])
+    c=candisc(saida, term="FatorA", sdcale = T)
+    Escores=apply(c$scores[,4:ncol(c$scores)],2,function(x)tapply(x, FatorA,mean))
+    NomeTrat=rownames(Escores)
+    D2=apply(Y,2,function(x)tapply(x, FatorA,mean))
+  }
 
-  Escores2=c$means
+  if((Factor=="B")){
+    saida=manova(modelos[Modelo][[1]])
+    c=candisc(saida, term="FatorB", sdcale = T)
+    Escores=apply(c$scores[,4:ncol(c$scores)],2,function(x)tapply(x, FatorB,mean))
+    NomeTrat=rownames(Escores)
+    D2=apply(Y,2,function(x)tapply(x, FatorB,mean))
+  }
+  }
+
+
+  saida=manova(modelos[Modelo][[1]])
+
+
+
+
+
+
+
+
+
+  Escores2=Escores
   if(CorPlot==TRUE){Escores2=Normatiza(Escores2,Escores2,-1,1)}
   Escores2=apply(Escores,2,function(x) (x-mean(x))/sd(x))
   Escores2=cbind(Escores2[,x],Escores2[,y])

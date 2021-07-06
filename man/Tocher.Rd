@@ -44,10 +44,11 @@ A funcao retorna resultados do teste Tocher.
 Esta funcao faz o agrupamento pelo metodo Tocher
 }
 \examples{
+\donttest{
 data("Dados.MED")
 Dist=Distancia(Dados.MED,Metodo=6)
 Tocher(Dist)
-
+}
 }
 \references{
 PlayList "Curso de Analise Multivariada":

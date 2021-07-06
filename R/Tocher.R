@@ -48,10 +48,11 @@
 #'    methodology for the cluster analysis. Pesquisa Agropecuaria Brasileira, 42:1421-1428.
 #'
 #' @examples
+#' \donttest{
 #' data("Dados.MED")
 #' Dist=Distancia(Dados.MED,Metodo=6)
 #' Tocher(Dist)
-#'
+#'}
 #' @importFrom biotools tocher  mantelTest
 #' @importFrom graphics abline
 #' @importFrom stats cophenetic lm

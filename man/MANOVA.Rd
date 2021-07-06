@@ -35,21 +35,22 @@ Esta funcao retorna o resultado da analise de variancia
 #Delineamento inteiramente casualizado (DIC)
 data("Dados.DIC")
 MANOVA(Dados.DIC,1)
-VariaveisCanonicas(Dados.DIC,1)
+
 #Delineamento em blocos casualizados (DBC)
 data(Dados.DBC)
 MANOVA(Dados.DBC,2)
-VariaveisCanonicas(Dados.DBC,2)
+
 #Delineamento em quadrado latino (DQL)
 data(Dados.DQL)
 MANOVA(Dados.DQL,3)
-VariaveisCanonicas(Dados.DQL,3)
+
 #Esquema fatorial em DIC
 data(Dados.Fat2.DIC)
 MANOVA(Dados.Fat2.DIC,4)
-VariaveisCanonicas(Dados.Fat2.DIC,4)
+
 #Esquema fatorial em DBC
 data(Dados.Fat2.DBC)
+MANOVA(Dados.Fat2.DBC,5)
 }
 }
 \references{

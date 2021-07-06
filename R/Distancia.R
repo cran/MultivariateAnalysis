@@ -29,14 +29,20 @@
 #'
 #'   \item Dados qualitativos binarios
 #'   \itemize{
-#'  \item 12 = Dissimilaridade de Jacard.
-#'   \item 13 = Dissimilaridade de Sorensen Dice.
+#'  \item 12 = Dissimilaridade de Jacard: 1-a/(a+b+c).
+#'   \item 13 = Dissimilaridade de Sorensen Dice: 1-2a/(2a+b+c).
+#'   \item 14 = Dissimilaridade de Sokal e Sneath: 1-2(a+d)/(2(a+d)+b+c)
+#'   \item 15 = Dissimilaridade de Roger e Tanimoto: 1-(a+d)/(a+2(b+c)+d)
+#'   \item 16 = Dissimilaridade de Russel e Rao: 1-a/(a+b+c+d).
+#'   \item 17 = Dissimilaridade de Ochiai: 1-a/sqrt((a+b)(a+c)).
+#'   \item 18 = Dissimilaridade de Ochiai II: 1-ab/sqrt((a+b)(a+c)(b+d)(c+d)).
+#'   \item 19 = Dissimilaridade de Haman: 1-((a+d)-(b+c))/(a+b+c+d).
+#'   \item 20 = Dissimilaridade de Yule: 1-(ad-bc)/(ad+bc).
 #'   }
 #'
 #'   \item Dados mistos
 #'   \itemize{
-#'   \item  14 =
-#'   Dissimilaridade de Gower
+#'   \item  21 =Dissimilaridade de Gower
 #'   }
 #'   }
 #'
@@ -93,11 +99,29 @@
 #' Distancia(Dados.CAT,11)
 #'
 #' ##############################>Dados qualitativos binarios
+#' data(Dados.BIN)
 #' #12 = Dissimilaridade de Jacard.
 #' Distancia(Dados.BIN,12)
 #' #13 = Dissimilaridade de Sorensen Dice.
 #' Distancia(Dados.BIN,13)
+#'   # 14 = Dissimilaridade de Sokal e Sneath: 1-2(a+d)/(2(a+d)+b+c)
+#'   Distancia(Dados.BIN,14)
+#'   #15 = Dissimilaridade de Roger e Tanimoto: 1-(a+d)/(a+2(b+c)+d)
+#'   Distancia(Dados.BIN,15)
+#'   #16 = Dissimilaridade de Russel e Rao: 1-a/(a+b+c+d).
+#'   Distancia(Dados.BIN,16)
+#'   #17 = Dissimilaridade de Ochiai: 1-a/sqrt((a+b)(a+c)).
+#'   Distancia(Dados.BIN,17)
+#'   #18 = Dissimilaridade de Ochiai II: 1-ab/sqrt((a+b)(a+c)(b+d)(c+d)).
+#'   Distancia(Dados.BIN,18)
+#'   #19 = Dissimilaridade de Haman: 1-((a+d)-(b+c))/(a+b+c+d).
+#'   Distancia(Dados.BIN,19)
+#'   #20 = Dissimilaridade de Yule: 1-(ad-bc)/(ad+bc).
+#'   Distancia(Dados.BIN,20)
 #'
+#'#' ##################>Dados mistos (quantitativos, binarios e multicategoricos)
+#'   data(Dados.Misto)
+#'   Distancia(Dados.Misto,21)
 #' @export
 
 Distancia=function(Dados,Metodo=1,Cov=NULL){
@@ -230,14 +254,133 @@ if(Metodo==13){
   }
   Dist=as.dist(Mat)
 }
+#   #14 = Dissimilaridade de Sokal e Sneath: 1-2(a+d)/(2(a+d)+b+c)
+if(Metodo==14){
+  n=nrow(D)
+  Mat=matrix(0,ncol=n,nrow=n)
+  for(i in 1: (n-1)){
+    for(j in i:n){
+      a=sum((D[i,]==1)*(D[j,]==1))
+      b=sum((D[i,]==1)*(D[j,]==0))
+      c=sum((D[i,]==0)*(D[j,]==1))
+      d=sum((D[i,]==0)*(D[j,]==0))
+
+      Mat[i,j]=Mat[j,i]=1-2*(a+d)/(2*(a+d)+b+c)
+    }
+  }
+  Dist=as.dist(Mat)
+}
+#   \item 15 = Dissimilaridade de Roger e Tanimoto: 1-(a+d)/(a+2(b+c)+d)
+if(Metodo==15){
+  n=nrow(D)
+  Mat=matrix(0,ncol=n,nrow=n)
+  for(i in 1: (n-1)){
+    for(j in i:n){
+      a=sum((D[i,]==1)*(D[j,]==1))
+      b=sum((D[i,]==1)*(D[j,]==0))
+      c=sum((D[i,]==0)*(D[j,]==1))
+      d=sum((D[i,]==0)*(D[j,]==0))
+
+      Mat[i,j]=Mat[j,i]=1-(a+d)/(a+2*(b+c)+d)
+    }
+  }
+  Dist=as.dist(Mat)
+}
+#   \item 16 = Dissimilaridade de Russel e Rao: 1-a/(a+b+c+d).
+if(Metodo==16){
+  n=nrow(D)
+  Mat=matrix(0,ncol=n,nrow=n)
+  for(i in 1: (n-1)){
+    for(j in i:n){
+      a=sum((D[i,]==1)*(D[j,]==1))
+      b=sum((D[i,]==1)*(D[j,]==0))
+      c=sum((D[i,]==0)*(D[j,]==1))
+      d=sum((D[i,]==0)*(D[j,]==0))
+
+      Mat[i,j]=Mat[j,i]=1-a/(a+b+c+d)
+    }
+  }
+  Dist=as.dist(Mat)
+}
+#   \item 17 = Dissimilaridade de Ochiai: 1-a/sqrt((a+b)(a+c)).
+if(Metodo==17){
+  n=nrow(D)
+  Mat=matrix(0,ncol=n,nrow=n)
+  for(i in 1: (n-1)){
+    for(j in i:n){
+      a=sum((D[i,]==1)*(D[j,]==1))
+      b=sum((D[i,]==1)*(D[j,]==0))
+      c=sum((D[i,]==0)*(D[j,]==1))
+      d=sum((D[i,]==0)*(D[j,]==0))
+
+      Mat[i,j]=Mat[j,i]=1-a/sqrt((a+b)*(a+c))
+    }
+  }
+  Dist=as.dist(Mat)
+}
+#   \item 18 = Dissimilaridade de Ochiai II: 1-ad/sqrt((a+b)(a+c)(b+d)(c+d)).
+if(Metodo==18){
+  n=nrow(D)
+  Mat=matrix(0,ncol=n,nrow=n)
+  for(i in 1: (n-1)){
+    for(j in i:n){
+      a=sum((D[i,]==1)*(D[j,]==1))
+      b=sum((D[i,]==1)*(D[j,]==0))
+      c=sum((D[i,]==0)*(D[j,]==1))
+      d=sum((D[i,]==0)*(D[j,]==0))
+
+      Mat[i,j]=Mat[j,i]=1-a*d/sqrt((a+b)*(a+c)*(b+d)*(c+d))
+    }
+  }
+  Dist=as.dist(Mat)
+}
+#   \item 19 = Dissimilaridade de Haman: 1-((a+d)-(b+c))/(a+b+c+d).
+if(Metodo==19){
+  n=nrow(D)
+  Mat=matrix(0,ncol=n,nrow=n)
+  for(i in 1: (n-1)){
+    for(j in i:n){
+      a=sum((D[i,]==1)*(D[j,]==1))
+      b=sum((D[i,]==1)*(D[j,]==0))
+      c=sum((D[i,]==0)*(D[j,]==1))
+      d=sum((D[i,]==0)*(D[j,]==0))
+
+      Mat[i,j]=Mat[j,i]= 1-((a+d)-(b+c))/(a+b+c+d)
+    }
+  }
+  Dist=as.dist(Mat)
+}
+#   \item 20 = Dissimilaridade de Yule: 1-(ad-bc)/(ad+bc).
+if(Metodo==20){
+  n=nrow(D)
+  Mat=matrix(0,ncol=n,nrow=n)
+  for(i in 1: (n-1)){
+    for(j in i:n){
+      a=sum((D[i,]==1)*(D[j,]==1))
+      b=sum((D[i,]==1)*(D[j,]==0))
+      c=sum((D[i,]==0)*(D[j,]==1))
+      d=sum((D[i,]==0)*(D[j,]==0))
+
+      Mat[i,j]=Mat[j,i]= 1-(a*d-b*c)/(a*d+b*c)
+    }
+  }
+  Dist=as.dist(Mat)
+}
 ############################################################
 ###########################
 #Dados mistos
 #indice de Gower
-if(Metodo==14){
+if(Metodo==21){
   mat=D
   ntrat=nrow(mat)
   Diss=Div=matrix(0,ncol=ntrat,nrow=ntrat)
+  bin=apply(D,2,function(x) length(unique(x)))==2
+  mat2=mat[,bin]
+
+  for(i in 1:ncol(mat2)){
+    mat2[,i]=as.numeric(as.factor(mat2[,i]))==max(as.numeric(as.factor(mat2[,i])))
+  }
+mat[,bin]=mat2
   for(i in 1:ntrat){
     for(j in 1:ntrat){
       for(k in 1:ncol(mat)){
@@ -270,7 +413,7 @@ if(Metodo==14){
     }
   }
  Mat= Diss/Div
-colnames(Mat)
+ Dist=as.dist(Mat)
 
 }
 

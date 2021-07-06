@@ -2,7 +2,7 @@
 #'
 #' @description Esta funcao faz a analise dos dados pelo metodo de variaveis
 #'   canonicas.
-#' @usage VariaveisCanonicas(Dados,Modelo,xlab="VC 1", ylab="VC 2",CR=TRUE,
+#' @usage VariaveisCanonicas(Dados,Modelo,Fator=NULL,xlab="VC 1", ylab="VC 2",CR=TRUE,
 #'  CorPlot=TRUE, bty="L",Perc)
 #' @param Dados Matriz contendo os dados para execucao da MANOVA. Para cada
 #'   modelo o conjunto de dados precisa estar organizado de uma forma
@@ -21,10 +21,22 @@
 #' @param Modelo Valor numerico indicando o delineamento:
 #'  \itemize{
 #' \item 1 = Delineamento inteiramente casualizado (DIC)
-#' \item 2 = Delineamento em blocos casualizados (DBC)\item 3 = Delineamento em quadrado
+#' \item 2 = Delineamento em blocos casualizados (DBC)
+#' \item 3 = Delineamento em quadrado
 #'   latino (DQL)
 #'   \item 4 = Esquema fatorial em DIC
 #'   \item 5 = Esquema fatorial em DBC
+#'   }
+#' @param Fator Indica qual fator deve ser estudado na representacao grafica. Tal
+#' decisao pode ser feita baseando na significancia da manova. Esse objeto deve receber:
+#'  \itemize{
+#' \item NULL = Para os delineamentos DIC, DBC e DQL (1, 2 e 3)
+#' \item "A" = Para obter a presentacao grafica apenas dos niveis do fator A em caso
+#' de esquema fatorial (Design 4 ou 5)
+#' \item "B" = Para obter a presentacao grafica apenas dos niveis do fator B em caso
+#' de esquema fatorial (Design 4 ou 5)
+#' \item "A:B" = Para obter a presentacao grafica de todos os tratamentos (combinacoes
+#' entre os niveis do fator A e B) em caso de esquema fatorial (Design 4 ou 5)
 #'   }
 #' @param xlab nome do eixo x do grafico de variaveis canonicas
 #' @param ylab nome do eixo y do grafico de variaveis canonicas
@@ -61,27 +73,29 @@
 #' \donttest{
 #' #Delineamento inteiramente casualizado (DIC)
 #' data("Dados.DIC")
-#' MANOVA(Dados.DIC,1)
 #' VariaveisCanonicas(Dados.DIC,1)
 #' #Delineamento em blocos casualizados (DBC)
 #' data(Dados.DBC)
-#' MANOVA(Dados.DBC,2)
 #' VariaveisCanonicas(Dados.DBC,2)
 #' #Delineamento em quadrado latino (DQL)
 #' data(Dados.DQL)
-#' MANOVA(Dados.DQL,3)
 #' VariaveisCanonicas(Dados.DQL,3)
 #' #Esquema fatorial em DIC
 #' data(Dados.Fat2.DIC)
-#' MANOVA(Dados.Fat2.DIC,4)
-#' VariaveisCanonicas(Dados.Fat2.DIC,4)
+#' VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="A:B")
+#' VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="A")
+#' VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="B")
+#'
 #' #Esquema fatorial em DBC
 #' data(Dados.Fat2.DBC)
-#' }
+#' VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="A:B")
+#' VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="A")
+#' VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="B")
+#'}
 #' @export
 
-VariaveisCanonicas=function(Dados,Modelo=1,xlab="VC 1", ylab="VC 2",
+VariaveisCanonicas=function(Dados,Modelo=1,Fator=NULL,xlab="VC 1", ylab="VC 2",
                         CR=TRUE, CorPlot=TRUE, bty="L", Perc=0.1){
 D=Dados
-VariaveisCanonicas2(D,Modelo=1,xlab=xlab, ylab=ylab,CR=CR, CorPlot=CorPlot, bty=bty, Perc=Perc)
+VariaveisCanonicas2(D,Modelo=Modelo,Factor=Fator,xlab=xlab, ylab=ylab,CR=CR, CorPlot=CorPlot, bty=bty, Perc=Perc)
 }

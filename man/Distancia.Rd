@@ -35,14 +35,20 @@ Neste arquivo nao deve ter a identificacao dos tratamentos.}
 
   \item Dados qualitativos binarios
   \itemize{
- \item 12 = Dissimilaridade de Jacard.
-  \item 13 = Dissimilaridade de Sorensen Dice.
+ \item 12 = Dissimilaridade de Jacard: 1-a/(a+b+c).
+  \item 13 = Dissimilaridade de Sorensen Dice: 1-2a/(2a+b+c).
+  \item 14 = Dissimilaridade de Sokal e Sneath: 1-2(a+d)/(2(a+d)+b+c)
+  \item 15 = Dissimilaridade de Roger e Tanimoto: 1-(a+d)/(a+2(b+c)+d)
+  \item 16 = Dissimilaridade de Russel e Rao: 1-a/(a+b+c+d).
+  \item 17 = Dissimilaridade de Ochiai: 1-a/sqrt((a+b)(a+c)).
+  \item 18 = Dissimilaridade de Ochiai II: 1-ab/sqrt((a+b)(a+c)(b+d)(c+d)).
+  \item 19 = Dissimilaridade de Haman: 1-((a+d)-(b+c))/(a+b+c+d).
+  \item 20 = Dissimilaridade de Yule: 1-(ad-bc)/(ad+bc).
   }
 
   \item Dados mistos
   \itemize{
-  \item  14 =
-  Dissimilaridade de Gower
+  \item  21 =Dissimilaridade de Gower
   }
   }}
 
@@ -92,11 +98,29 @@ Distancia(Dados.BIN,10)
 Distancia(Dados.CAT,11)
 
 ##############################>Dados qualitativos binarios
+data(Dados.BIN)
 #12 = Dissimilaridade de Jacard.
 Distancia(Dados.BIN,12)
 #13 = Dissimilaridade de Sorensen Dice.
 Distancia(Dados.BIN,13)
+  # 14 = Dissimilaridade de Sokal e Sneath: 1-2(a+d)/(2(a+d)+b+c)
+  Distancia(Dados.BIN,14)
+  #15 = Dissimilaridade de Roger e Tanimoto: 1-(a+d)/(a+2(b+c)+d)
+  Distancia(Dados.BIN,15)
+  #16 = Dissimilaridade de Russel e Rao: 1-a/(a+b+c+d).
+  Distancia(Dados.BIN,16)
+  #17 = Dissimilaridade de Ochiai: 1-a/sqrt((a+b)(a+c)).
+  Distancia(Dados.BIN,17)
+  #18 = Dissimilaridade de Ochiai II: 1-ab/sqrt((a+b)(a+c)(b+d)(c+d)).
+  Distancia(Dados.BIN,18)
+  #19 = Dissimilaridade de Haman: 1-((a+d)-(b+c))/(a+b+c+d).
+  Distancia(Dados.BIN,19)
+  #20 = Dissimilaridade de Yule: 1-(ad-bc)/(ad+bc).
+  Distancia(Dados.BIN,20)
 
+#' ##################>Dados mistos (quantitativos, binarios e multicategoricos)
+  data(Dados.Misto)
+  Distancia(Dados.Misto,21)
 }
 \references{
 PlayList "Curso de Analise Multivariada":
