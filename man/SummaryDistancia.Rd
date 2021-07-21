@@ -4,12 +4,43 @@
 \alias{SummaryDistancia}
 \title{Resumo das informacoes de cada tratamento em funcao da dissimilaridade}
 \usage{
-SummaryDistancia(Dist,ndec=2)
+SummaryDistancia(Dist,ndec=2,plot=TRUE,layout="shade", type="full", title=NULL,
+tl.cex =1, tl.col="black", col=NULL)
 }
 \arguments{
 \item{Dist}{Matriz de dissimilaridade}
 
 \item{ndec}{Valor numerico indicando o numero de casas decimais.}
+
+\item{plot}{Valor logico (TRUE ou FALSE). Indica se o grafico deve ser apresentado.}
+
+\item{layout}{Valor do tipo character indicando como sera preenchido cada casela:
+\itemize{
+\item "circle"
+\item "square"
+\item "ellipse"
+\item "number"
+\item "shade"
+\item "color"
+\item "pie"
+}}
+
+\item{type}{Character, 'full' (default), 'upper' or 'lower', display full matrix,
+ lower triangular or upper triangular matrix.
+\itemize{
+\item "full"
+ \item "lower"
+  \item "upper"
+  }}
+
+\item{title}{Texto referente ao titulo da figura}
+
+\item{tl.cex}{Valor numerico indicando o tamanho das letras no grafico}
+
+\item{tl.col}{Cor das letras. Default ("black")}
+
+\item{col}{Vetor com a paleta de cores. Estas cores devem ser distribuidas uniformemente.
+se NULL, a paleta de cores sera colorRampPalette(col2)(200), veja exemplo abaixo.}
 }
 \value{
 Retorna informacoes importantes sobre cada tratamento em relacao aos
@@ -20,10 +51,28 @@ mais proximo, tratamento mais distante etc.
 Esta funcao apresenta informacoes que resumem a matriz de dissimilaridade
 }
 \examples{
- data(Dados.FMI.Quali)
-DadosQuali=ApplyDissimilaridade(Dados.FMI.Quali[,6:10],Dados.FMI.Quali[,2])
-Dist=Distancia(DadosQuali,1)
-SummaryDistancia(Dist)
+ data(Dados.MED)
+ Dist=Distancia(Dados.MED,1)
+ SummaryDistancia(Dist)
+ #Acrescentando nomes aos tratamentos
+ Dist=as.matrix(Dist)
+ rownames(Dist)=colnames(Dist)=paste("Trat",1:nrow(Dist))
+ SummaryDistancia(Dist)
+ #Diferentes configuracoes
+ SummaryDistancia(Dist,type  ="lower")
+ #opcoes de paletas de cores
+ col0 = colorRampPalette(c('white', 'cyan', '#007FFF', 'blue','#00007F'))
+ col1 = colorRampPalette(c('#7F0000', 'red', '#FF7F00', 'yellow', 'white',
+   'cyan', '#007FFF', 'blue','#00007F'))
+ col2 = colorRampPalette(c('#67001F', '#B2182B', '#D6604D', '#F4A582',
+                           '#FDDBC7', '#FFFFFF', '#D1E5F0', '#92C5DE',
+                           '#4393C3', '#2166AC', '#053061'))
+ col3 = colorRampPalette(c('red', 'white', 'blue'))
+ col4 = colorRampPalette(c('#7F0000', 'red', '#FF7F00', 'yellow', '#7FFF7F',
+                           'cyan', '#007FFF', 'blue', '#00007F'))
+
+ SummaryDistancia(Dist,type = "upper",col=col4(200),title = "Medidas de dissimilaridade")
+ SummaryDistancia(Dist,type = "lower",layout = "ellipse",col=col3(200))
 }
 \references{
 PlayList "Curso de Analise Multivariada":

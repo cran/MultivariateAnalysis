@@ -1,5 +1,5 @@
 VariaveisCanonicas2=function(Dados,Modelo=1,Factor=NULL,xlab=NULL, ylab=NULL,
-                             CR=TRUE, CorPlot=TRUE, x=1,y=2,x3=NULL,bty="L", Perc=0.1){
+                             CR=TRUE, CorPlot=TRUE,CorCol="red",VarCol="red", x=1,y=2,x3=NULL,bty="L", Perc=0.1){
 
   xlab=ifelse(is.null(xlab),paste("VC",x),xlab)
   ylab=ifelse(is.null(ylab),paste("VC",y),ylab)
@@ -173,9 +173,9 @@ VariaveisCanonicas2=function(Dados,Modelo=1,Factor=NULL,xlab=NULL, ylab=NULL,
   nVar=ncol(Cor)
 
   if(CorPlot==TRUE){
-    arrows(rep(0,nVar), rep(0,nVar), Cor[,1], Cor[,2],col=2)
+    arrows(rep(0,nVar), rep(0,nVar), Cor[,1], Cor[,2],col=rep(CorCol,nVar))
     NomeVar=colnames(Y)
-    text(Cor[,1], Cor[,2],NomeVar,col=4)
+    text(Cor[,1], Cor[,2],NomeVar,col=VarCol)
   }
 
 

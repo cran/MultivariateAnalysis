@@ -31,7 +31,9 @@
 #' DadosQuali=ApplyDissimilaridade(Dados.FMI.Quali[,6:10],Dados.FMI.Quali[,2])
 #' Dist=Distancia(DadosQuali,1)
 #' Dendograma(Dist, 3)
+#' @importFrom grDevices colorRampPalette
 #' @export
+#'
 #'
 #'
 

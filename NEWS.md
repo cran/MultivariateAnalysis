@@ -1,3 +1,10 @@
+# MultivariateAnalysis 0.2.0
+## New functions
+* New argument `ColCor` in `VariaveisCanonicas()`
+* New argument `ColCor` in `ComponentesPrincipais()`
+* New argument `plot` in `SummaryDistancia()`
+* New function `CorrelacaoMantel()`
+
 # MultivariateAnalysis 0.1.1
 ## Minor improvements
 * New argument `Fator` in `VariaveisCanonicas()`

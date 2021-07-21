@@ -3,7 +3,7 @@
 #' @description Esta funcao faz a analise dos dados pelo metodo de variaveis
 #'   canonicas.
 #' @usage VariaveisCanonicas(Dados,Modelo,Fator=NULL,xlab="VC 1", ylab="VC 2",CR=TRUE,
-#'  CorPlot=TRUE, bty="L",Perc)
+#'  CorPlot=TRUE,CorCol="red",VarCol ="blue", bty="L",Perc)
 #' @param Dados Matriz contendo os dados para execucao da MANOVA. Para cada
 #'   modelo o conjunto de dados precisa estar organizado de uma forma
 #'   apropriada:
@@ -44,6 +44,10 @@
 #'   a contriuicao relativa de cada eixo.
 #' @param CorPlot Valor logico. Se for TRUE sera apresentado no grafico as
 #'   correlacoes.
+#' @param CorCol  Cor das setas na dispersao grafica da correlacao
+#'  (default = "black")
+#' @param VarCol  Cor do nome das variavies na dispersao grafica da correlacao
+#' (default = "red")
 #' @param bty deve receber un character indicando o tipo de borda desejado no
 #'   grafico.
 #'    \itemize{
@@ -76,7 +80,7 @@
 #' VariaveisCanonicas(Dados.DIC,1)
 #' #Delineamento em blocos casualizados (DBC)
 #' data(Dados.DBC)
-#' VariaveisCanonicas(Dados.DBC,2)
+#' VariaveisCanonicas(Dados.DBC,2,CorCol = "red",VarCol = "red")
 #' #Delineamento em quadrado latino (DQL)
 #' data(Dados.DQL)
 #' VariaveisCanonicas(Dados.DQL,3)
@@ -95,7 +99,8 @@
 #' @export
 
 VariaveisCanonicas=function(Dados,Modelo=1,Fator=NULL,xlab="VC 1", ylab="VC 2",
-                        CR=TRUE, CorPlot=TRUE, bty="L", Perc=0.1){
+                        CR=TRUE, CorPlot=TRUE,CorCol="red",VarCol = "blue",
+                        bty="L", Perc=0.1){
 D=Dados
-VariaveisCanonicas2(D,Modelo=Modelo,Factor=Fator,xlab=xlab, ylab=ylab,CR=CR, CorPlot=CorPlot, bty=bty, Perc=Perc)
+VariaveisCanonicas2(D,Modelo=Modelo,Factor=Fator,xlab=xlab, ylab=ylab,CR=CR, CorPlot=CorPlot,CorCol=CorCol,VarCol = VarCol, bty=bty, Perc=Perc)
 }

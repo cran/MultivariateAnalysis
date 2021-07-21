@@ -5,7 +5,7 @@
 \title{Analise de variaveis canonicas}
 \usage{
 VariaveisCanonicas(Dados,Modelo,Fator=NULL,xlab="VC 1", ylab="VC 2",CR=TRUE,
- CorPlot=TRUE, bty="L",Perc)
+ CorPlot=TRUE,CorCol="red",VarCol ="blue", bty="L",Perc)
 }
 \arguments{
 \item{Dados}{Matriz contendo os dados para execucao da MANOVA. Para cada
@@ -55,6 +55,12 @@ a contriuicao relativa de cada eixo.}
 \item{CorPlot}{Valor logico. Se for TRUE sera apresentado no grafico as
 correlacoes.}
 
+\item{CorCol}{Cor das setas na dispersao grafica da correlacao
+(default = "black")}
+
+\item{VarCol}{Cor do nome das variavies na dispersao grafica da correlacao
+(default = "red")}
+
 \item{bty}{deve receber un character indicando o tipo de borda desejado no
 grafico.
  \itemize{
@@ -82,7 +88,7 @@ data("Dados.DIC")
 VariaveisCanonicas(Dados.DIC,1)
 #Delineamento em blocos casualizados (DBC)
 data(Dados.DBC)
-VariaveisCanonicas(Dados.DBC,2)
+VariaveisCanonicas(Dados.DBC,2,CorCol = "red",VarCol = "red")
 #Delineamento em quadrado latino (DQL)
 data(Dados.DQL)
 VariaveisCanonicas(Dados.DQL,3)

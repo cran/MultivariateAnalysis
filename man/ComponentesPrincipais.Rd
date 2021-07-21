@@ -5,17 +5,18 @@
 \title{Componentes principais}
 \usage{
 ComponentesPrincipais(D,padronizar=TRUE,xlab="PCA 1", ylab="PCA 2",
-CR=TRUE,CorPlot=TRUE,  Perc=0.1,NomeTrat=NULL,NomeVar=NULL, bty="L")
+  CR=TRUE,CorPlot=TRUE,CorCol="red",VarCol="blue",
+  Perc=0.1,NomeTrat=NULL,NomeVar=NULL, bty="L")
 }
 \arguments{
-\item{D}{Matriz com os valores para obtencao dos componentes
-principais.Esta matriz deve conter os valores observados, sendo as
-variaveis respostas na coluna. Esta matriz nao deve conter a identificacao
-dos tratamentos na primeira coluna. Se provir de experimento com repeticao,
-a matriz deve conter apenas as medias dos tratamentos.}
+\item{D}{Matriz com os valores para obtencao dos componentes principais.Esta
+matriz deve conter os valores observados, sendo as variaveis respostas na
+coluna. Esta matriz nao deve conter a identificacao dos tratamentos na
+primeira coluna. Se provir de experimento com repeticao, a matriz deve
+conter apenas as medias dos tratamentos.}
 
-\item{padronizar}{Se for TRUE (default) os dados serao padronizados para
-ter media 0 e variancia igual a 1. Se for FALSE os componentes principais
+\item{padronizar}{Se for TRUE (default) os dados serao padronizados para ter
+media 0 e variancia igual a 1. Se for FALSE os componentes principais
 considerarao os valores originais.}
 
 \item{xlab}{Nome do eixo X do grafico de componentes principais.}
@@ -28,13 +29,19 @@ dois primeiros componentes principais no grafico.}
 \item{CorPlot}{Valor logico. Se for TRUE sera apresentado no grafico as
 correlacoes.}
 
+\item{CorCol}{Indica a cor das setas referente a apresentacao das correlacoes
+no grafico (default = "red").}
+
+\item{VarCol}{Cor do nome das variavies na dispersao grafica da correlacao.}
+
 \item{Perc}{Valor entre 0 e 1 indicando o recuo dos eixos.}
 
 \item{NomeTrat}{vetor contendo o nome dos tratamentos/individuos. Se for
-igual a NULL sera considerado o nome das linhas do objeto D (conjunto de dados)}
+igual a NULL sera considerado o nome das linhas do objeto D (conjunto de
+dados)}
 
-\item{NomeVar}{Vetor contendo o nome das variaveis resposta. Se for
-igual a NULL sera considerado o nome das colunas do objeto D (conjunto de dados)}
+\item{NomeVar}{Vetor contendo o nome das variaveis resposta. Se for igual a
+NULL sera considerado o nome das colunas do objeto D (conjunto de dados)}
 
 \item{bty}{Deve receber um character indicando o tipo de borda desejado:
 grafico.
@@ -48,10 +55,11 @@ grafico.
 }}
 }
 \value{
-Esta funcao retorna informacoes importantes para o estudo de componentes
-princiapais. Sao apresentados autovalores e autovetores da matriz de covariancia,
-Escores dos componentes principais, correlacao entre as variaveis e eos escores,
-contribuicao na explicacao de cada componente e o grafico de dispersao dos CPs.
+Esta funcao retorna informacoes importantes para o estudo de
+  componentes princiapais. Sao apresentados autovalores e autovetores da
+  matriz de covariancia, Escores dos componentes principais, correlacao entre
+  as variaveis e eos escores, contribuicao na explicacao de cada componente e
+  o grafico de dispersao dos CPs.
 }
 \description{
 Esta possibilita o estudo dos componentes principais .
@@ -64,7 +72,8 @@ ComponentesPrincipais(Dados.MED)
 Trat=paste("T_",1:nrow(Dados.MED),sep="")
 ComponentesPrincipais(Dados.MED,NomeTrat = Trat)
 ComponentesPrincipais(Dados.MED,NomeTrat = Trat,CorPlot = FALSE)
-ComponentesPrincipais(Dados.MED,NomeTrat = Trat,CorPlot = TRUE)
+ComponentesPrincipais(Dados.MED,NomeTrat = Trat,CorPlot = TRUE,
+CorCol = "blue",VarCol="red" )
 ComponentesPrincipais(Dados.MED,NomeTrat = Trat,CorPlot = TRUE,bty = "n")
 }
 }
@@ -74,9 +83,11 @@ PlayList "Curso de Analise Multivariada":
 
 
 CRUZ, C.D. and CARNEIRO, P.C.S.  Modelos biometricos aplicados ao
-  melhoramento genetico. 3nd Edition. Vicosa, UFV, v.2, 2014. 668p.  (ISBN: 8572691510)
+  melhoramento genetico. 3nd Edition. Vicosa, UFV, v.2, 2014. 668p.
+  (ISBN: 8572691510)
 
-FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p. (ISBN 13:978 8581270630)
+FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p.
+(ISBN 13:978 8581270630)
 
  HAIR, J.F. Multivariate Data Analysis.  (2016) 6ed. Pearson Prentice HalL.
   (ISBN 13:978 0138132637)
