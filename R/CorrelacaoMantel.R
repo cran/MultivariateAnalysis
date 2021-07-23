@@ -57,6 +57,8 @@
 #'}
 #' @export
 #'
+#Funcao baseada na presente no pacote biotools.
+
 CorrelacaoMantel=function(Mat1,Mat2,nperm=999,Plot=TRUE,xlab="Dist1",ylab="Dist2",bty="l"){
 
 if(is.matrix(Mat1)){Mat1=dist(Mat1)}

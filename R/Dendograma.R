@@ -2,7 +2,7 @@
 #'
 #' @description Esta funcao retorna a figura do dendograma, distancias feneticas
 #'   e correlacao cofenetica.
-#' @usage Dendograma(Dissimilaridade,Metodo)
+#' @usage Dendograma(Dissimilaridade,Metodo=3,nperm=999)
 #' @param Dissimilaridade    Matriz contendo a estimativa das distancias entre
 #'   tratamentos.
 #' @param Metodo Valor numerico indicando o metodo a ser utilizado:
@@ -11,11 +11,13 @@
 #'  \item  2 = Ligacao completa (Metodo do vizinho distante).
 #'   \item  3 = Ligacao media entre grupo (UPGMA).
 #'   \item  4 = Metodo de Ward.
-#'   \item  5 = Metodo de ward (d²).
+#'   \item  5 = Metodo de ward (d2).
 #'   \item  6= Metodo da mediana (WPGMC).
 #'   \item  7= Metodo do centroide (UPGMC).
 #'   \item  8 = Metodo mcquitty (WPGMA).
 #'   }
+#' @param nperm Numero de permutacoes do teste mantel para testar a significancia
+#' pelo teste Mantel.
 #' @return A funcao retorna o dendograma, distancias feneticas e correlacao
 #'   cofenetica.
 #'
@@ -38,18 +40,41 @@
 #' Dist=Distancia(Dados.MED,2)
 #' Dendograma(Dist,2)
 #' @export
-Dendograma=function(Dissimilaridade,Metodo=3){
+Dendograma=function(Dissimilaridade,Metodo=3,nperm=999)
+
+{
 ############################################################
 Met=c( "single","complete","average","ward.D","ward.D2","median","centroid","mcquitty" )
 Dissimilaridade=as.dist(Dissimilaridade)
+
 Arvore=hclust(Dissimilaridade,Met[Metodo])
 plot(Arvore,hang=-1)
 
 DistanciaFenetica=cophenetic(Arvore)
 CorrelacaoCofenetica=cor(Dissimilaridade,DistanciaFenetica)
+
+Mantel=mantelTest(Dissimilaridade,DistanciaFenetica,nperm = nperm,graph  = F)
 fusao=Arvore$height
 MojenaCorte=c(`k=1.25`=mean(fusao)+sd(fusao)*1.25,`k=2`=mean(fusao)+sd(fusao)*2)
 
-resultado=list(DistanciaFenetica=DistanciaFenetica,CorrelacaoCofenetica=CorrelacaoCofenetica,MojenaCorte=MojenaCorte,Ordem=Arvore$order)
+resultado=list(#call = match.call(),
+               DistanciaFenetica=DistanciaFenetica,CorrelacaoCofenetica=CorrelacaoCofenetica,SigCorrelCofenetica=Mantel,MojenaCorte=MojenaCorte,Ordem=Arvore$order)
+# class(resultado)="Dendograma"
+#
+# print.Dendograma = function (x, ...){
+#   cat("_________________________________________________________________________","\n")
+#   cat("Estimativa de correlacao cofenetica:","\n")
+#   print(x$CorrelacaoCofenetica)
+#   cat("Significancia da correlacao cofenetica pelo teste Mantel","\n")
+#   cat("pvalor:",x$SigCorrelCofenetica$p.value,"baseado no teste Mantel","\n")
+#   cat("Hipotese alternativa: A correlacao e maior que 0","\n")
+#   cat("\n")
+#   cat("Ponto de corte pelo metodo Mojena","\n")
+#   print(x$MojenaCorte)
+# }
+
+
+#print.Dendograma(resultado)
 return(resultado)
-}
+  }
+

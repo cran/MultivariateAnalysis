@@ -1,3 +1,13 @@
+# MultivariateAnalysis 0.3.0
+## New functions
+*The presentation message has been changed. 
+*The print of `Tocher` output function was improved
+* New argument `nperm` in `Dendograma`
+## New functions
+* New function `ComponentesPrincipais.misto()`
+
+
+
 # MultivariateAnalysis 0.2.0
 ## New functions
 * New argument `ColCor` in `VariaveisCanonicas()`

@@ -5,7 +5,7 @@
 \alias{Dados.Misto}
 \title{Dados de exemplo de um experimento  com dados mistos.}
 \format{
-Um data frame com 5 observacoes e 15 colunas.
+Um data frame com 5 observacoes e 11 colunas.
 }
 \usage{
 data(Dados.Misto)

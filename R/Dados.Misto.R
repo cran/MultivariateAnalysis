@@ -8,7 +8,7 @@
 #' @keywords datasets
 #' @name Dados.Misto
 #' @usage data(Dados.Misto)
-#' @format Um data frame com 5 observacoes e 15 colunas.
+#' @format Um data frame com 5 observacoes e 11 colunas.
 #'
 #' @references
 #' <https://www.youtube.com/playlist?list=PLvth1ZcREyK72M3lFl7kBaHiVh5W53mlR>

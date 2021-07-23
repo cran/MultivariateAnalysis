@@ -59,10 +59,17 @@
 #' @export
 #'
 
-Tocher=function(Dist,Metodo="original",nperm=9999, corPlot=TRUE,xlab="Dissimilaridade",ylab="Distancia fenetica",bty="n"){
-D=Dist
+Tocher=function(Dist,Metodo="original",nperm=9999, corPlot=TRUE,xlab="Dissimilaridade",ylab="Distancia fenetica",bty="n") {
+  D=dist(Dist)
+
+
 x=tocher(D,algorithm = Metodo)
 cof=cophenetic(x)
+
+
+
+DistanciaIntraInterCluster=x$distClust
+
 Mantel=mantelTest(D,cof,graph = FALSE,nperm = nperm)
 
 if(corPlot==TRUE){
@@ -71,8 +78,38 @@ plot(D,cof,col="blue",bty=bty,main=paste("r=", round(Mantel$correlation,4),sig),
 abline(lm(cof~D),col=2)
 }
 
-list(Tocher=x,DistanciaCofenetica=cof,CorrelacaoCofenetica=Mantel)
+out=list(#call = match.call(),
+            Tocher=x,
+            DistanciaCofenetica=cof,
+            DistanciaIntraInterCluster=DistanciaIntraInterCluster,
+            CorrelacaoCofenetica=Mantel)
+class(out) <- "Tocher"
+
+
+
+
+return(out)
+
 }
 
 
-
+#
+# print.Tocher=  function (x, ...){
+#   cat("_________________________________________________________________________","\n")
+#   #cat("Agrupamento Tocher","\n")
+#   print(x$Tocher)
+#   cat("Distancia intra e intercluster:","\n")
+#   print(x$DistanciaIntraInterCluster)
+#   cat("\n")
+#   cat("\n")
+#   cat("Correlacao Cofenetica (teste Mantel):","\n")
+#   cat("Correlacao Cofenetica:",x$CorrelacaoCofenetica$correlation,"\n")
+#   cat("pvalor:",x$CorrelacaoCofenetica$p.value,"baseado no teste Mantel","\n")
+#   cat("Hipotese alternativa: A correlacao e maior que 0","\n")
+#
+#   #print(x$CorrelacaoCofenetica)
+#   cat("_________________________________________________________________________","\n")
+#   invisible(x)
+# }
+#
+#

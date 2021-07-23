@@ -43,8 +43,8 @@ dados)}
 \item{NomeVar}{Vetor contendo o nome das variaveis resposta. Se for igual a
 NULL sera considerado o nome das colunas do objeto D (conjunto de dados)}
 
-\item{bty}{Deve receber um character indicando o tipo de borda desejado:
-grafico.
+\item{bty}{Deve receber um character indicando o tipo de borda desejado no
+grafico:
 \itemize{
 \item "o": Todas as bordas.
 \item "n": Sem bordas.
@@ -62,7 +62,7 @@ Esta funcao retorna informacoes importantes para o estudo de
   o grafico de dispersao dos CPs.
 }
 \description{
-Esta possibilita o estudo dos componentes principais .
+Esta funcao possibilita o estudo dos componentes principais .
 }
 \examples{
 \donttest{

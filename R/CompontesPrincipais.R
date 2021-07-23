@@ -1,6 +1,6 @@
 #' Componentes principais
 #'
-#' @description Esta possibilita o estudo dos componentes principais .
+#' @description Esta funcao possibilita o estudo dos componentes principais .
 #' @usage ComponentesPrincipais(D,padronizar=TRUE,xlab="PCA 1", ylab="PCA 2",
 #'   CR=TRUE,CorPlot=TRUE,CorCol="red",VarCol="blue",
 #'   Perc=0.1,NomeTrat=NULL,NomeVar=NULL, bty="L")
@@ -27,8 +27,8 @@
 #'   dados)
 #' @param NomeVar Vetor contendo o nome das variaveis resposta. Se for igual a
 #'   NULL sera considerado o nome das colunas do objeto D (conjunto de dados)
-#' @param bty Deve receber um character indicando o tipo de borda desejado:
-#'   grafico.
+#' @param bty Deve receber um character indicando o tipo de borda desejado no
+#'   grafico:
 #'   \itemize{
 #'   \item "o": Todas as bordas.
 #'   \item "n": Sem bordas.

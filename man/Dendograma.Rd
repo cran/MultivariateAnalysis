@@ -4,7 +4,7 @@
 \alias{Dendograma}
 \title{Dendograma}
 \usage{
-Dendograma(Dissimilaridade,Metodo)
+Dendograma(Dissimilaridade,Metodo=3,nperm=999)
 }
 \arguments{
 \item{Dissimilaridade}{Matriz contendo a estimativa das distancias entre
@@ -16,11 +16,14 @@ tratamentos.}
 \item  2 = Ligacao completa (Metodo do vizinho distante).
  \item  3 = Ligacao media entre grupo (UPGMA).
  \item  4 = Metodo de Ward.
- \item  5 = Metodo de ward (d²).
+ \item  5 = Metodo de ward (d2).
  \item  6= Metodo da mediana (WPGMC).
  \item  7= Metodo do centroide (UPGMC).
  \item  8 = Metodo mcquitty (WPGMA).
  }}
+
+\item{nperm}{Numero de permutacoes do teste mantel para testar a significancia
+pelo teste Mantel.}
 }
 \value{
 A funcao retorna o dendograma, distancias feneticas e correlacao

@@ -1,6 +1,7 @@
-M1	M2	M3	M4	M5	M6	M7	M8	M9	Altura	Prod	CorFlor	Crescimento	NumFr	Pelos
-1	1	1	0	0	1	0	1	1	55	100	Branco	ereto	50	Sim
-0	1	0	1	0	0	1	0	0	57	110	Branco	ereto	55	Sim
-1	0	1	1	1	1	0	0	1	85	115	Branco	prostado	54	Sim 
-0	1	1	0	0	1	0	1	0	92	114	Amarelo	prostado	56	Nao
-1	1	0	1	1	0	1	0	1	40	80	Vermelho	semiprostado	70	Nao
+M1	M2	M3	M4	M5	Altura	Prod	CorFlor	Crescimento	NumFr	Pelos
+1	1	1	0	0	55	100	Branco	ereto	50	Sim
+0	1	0	1	0	57	110	Branco	ereto	55	Sim
+1	0	1	1	1	85	115	Branco	prostado	54	Sim 
+0	1	1	0	0	92	114	Amarelo	prostado	56	Nao
+1	1	0	1	1	40	80	Vermelho	semiprostado	70	Nao
+
