@@ -1,0 +1,146 @@
+---
+title: "Exemplo: Experimento em DBC"
+author: "Alcinei Mistico Azevedo (ICA-UFMG)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+fig_caption: no
+vignette: >
+  %\VignetteIndexEntry{Exemplo: Experimento em DBC}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Ativando o pacote
+Após a instalação do pacote é preciso ativa-lo. Para isso, deve-se utilizar a função `library` ou `require`
+
+```{r}
+library(MultivariateAnalysis)
+```
+# Abrindo o conjunto de dados
+Posteriormente, deve-se carregar no R o conjunto de dados a serem analizados. Isso pode ser feito de diferentes formas.
+
+Uma possibilidade é utilizando a função `read.table`. Neste exemplo vamos trabalhar com o banco de dados do pacote, o qual pode ser carregado com a função `data`.
+
+Este exemplo trata-se de dados binarios vindo do uso de marcadores moleculares em cinco individuos.
+```{r}
+data("Dados.DBC")
+head(Dados.DBC)
+```
+# Analise de variancia Multivariada
+Quando se quer saber se há diferença entre os "Tratamentos" do ponto de vista multivariado, pode-se fazer a analise de variância multivariada. Para isso, deve-se utilizar a função `MANOVA`. Dessa função deve-se considerar o delineamento desejado no argumento `Modelo`:
+
+1 = Delineamento inteiramente casualizado (DIC)
+
+2 = Delineamento em blocos casualizados (DBC)
+
+3 = Delineamento em quadrado latino (DQL)
+
+4 = Esquema fatorial em DIC
+
+5 = Esquema fatorial em DBC
+
+```{r}
+Res=MANOVA(Dados.DBC,Modelo=2)
+Res
+```
+
+# Obtenção de medidas de dissimilaridade
+Muitas são as opções que este pacote oferece de medidas de dissimilaridade. Convidamos os usuários a ler o manual da funcao `Distancia` (`?Distancia`).
+
+Para se ter diferentes medidas de dissimilaridade basta colocar o respectivo numero no argumento `Metodo` dentro da função `Distancia`:
+
+### Dados quantitativos:
+
+1 = Distancia euclidiana.
+
+2= Distancia euclidiana media.
+
+3 = Quadrado da distancia euclidiana media.
+
+4 = Distancia euclidiana padronizada.
+
+5 = Distancia euclidiana padronizada media.
+
+6 = Quadrado da distancia euclidiana padronizada media.
+
+7 = Distancia de Mahalanobis.
+
+8 = Distancia de Cole Rodgers.
+
+
+```{r}
+#colocando nome nos individuos
+DadosMed=Res$Med
+Dist=Distancia(DadosMed,Metodo = 7,Cov = Res$CovarianciaResidual)
+round(Dist,3)
+```
+Informações importantes podem ser obtidas dessa matriz com a função `SummaryDistancia`:
+```{r}
+resumo=SummaryDistancia(Dist)
+resumo
+```
+
+A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um dendograma com o auxilio da função `dendograma`. Varios algoritimos podem ser utilizados para a construção deste dendograma. Para isso, deve-se indicar no argumento `Metodo`:
+
+1 = Ligacao simples (Metodo do vizinho mais proximo).
+
+2 = Ligacao completa (Metodo do vizinho distante).
+
+3 = Ligacao media entre grupo (UPGMA).
+
+4 = Metodo de Ward.
+
+5 = Metodo de ward (d2).
+
+6= Metodo da mediana (WPGMC).
+
+7= Metodo do centroide (UPGMC).
+
+8 = Metodo mcquitty (WPGMA).
+
+
+```{r}
+#Dendograma com o metodo UPGMA
+Dendograma(Dist,Metodo=3)
+```
+Adcionalmente, pode-se fazer o agrupamento Tocher com o auxilio da função `Tocher`:
+```{r}
+#Dendograma com o metodo UPGMA
+Tocher(Dist)
+```
+
+###Outra possibilidade é o estudo dos componentes principais:
+```{r}
+ComponentesPrincipais(DadosMed,padronizar = TRUE)
+```
+###Porém, quando se tem repetições, o mais indicado é o estudo de variáveis canônicas:
+
+Para isso, deve-se indicar qual é o `Modelo` referente ao delineamento:
+
+1 = Delineamento inteiramente casualizado (DIC)
+
+2 = Delineamento em blocos casualizados (DBC)
+
+3 = Delineamento em quadrado latino (DQL)
+
+4 = Esquema fatorial em DIC
+
+5 = Esquema fatorial em DBC
+
+```{r}
+VariaveisCanonicas(Dados.DBC,Modelo = 2,)
+```
+
+
+
+
+
+
+

@@ -1,3 +1,16 @@
+
+
+# MultivariateAnalysis 0.4.0
+## Minor improvements
+* News Vignetts
+* New argument `Titulo` in `Dendograma`
+* New argument `corte` in `Dendograma`
+* New data example `Dados.DBC.misto` in `Dendograma`
+## New functions
+* New function `Quant2Quali()`
+* New function `CoordenadasPrincipais()`
+
+
 # MultivariateAnalysis 0.3.0
 ## New functions
 *The presentation message has been changed. 

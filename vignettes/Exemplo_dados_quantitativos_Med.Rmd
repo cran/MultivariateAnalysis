@@ -1,0 +1,117 @@
+---
+title: "Exemplo: Experimento sem repetições"
+author: "Alcinei Mistico Azevedo (ICA-UFMG)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+fig_caption: no
+vignette: >
+  %\VignetteIndexEntry{Exemplo: Experimento sem repetições}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Ativando o pacote
+Após a instalação do pacote é preciso ativa-lo. Para isso, deve-se utilizar a função `library` ou `require`
+
+```{r}
+library(MultivariateAnalysis)
+```
+# Abrindo o conjunto de dados
+Posteriormente, deve-se carregar no R o conjunto de dados a serem analizados. Isso pode ser feito de diferentes formas.
+
+Uma possibilidade é utilizando a função `read.table`. Neste exemplo vamos trabalhar com o banco de dados do pacote, o qual pode ser carregado com a função `data`.
+
+Este exemplo trata-se de dados binarios vindo do uso de marcadores moleculares em cinco individuos.
+```{r}
+data("Dados.MED")
+Dados.MED
+```
+# Obtenção de medidas de dissimilaridade
+Muitas são as opções que este pacote oferece de medidas de dissimilaridade. Convidamos os usuários a ler o manual da funcao `Distancia` (`?Distancia`).
+
+Para se ter diferentes medidas de dissimilaridade basta colocar o respectivo numero no argumento `Metodo` dentro da função `Distancia`:
+
+### Dados quantitativos
+
+1 = Distancia euclidiana.
+
+2= Distancia euclidiana media.
+
+3 = Quadrado da distancia euclidiana media.
+
+4 = Distancia euclidiana padronizada.
+
+5 = Distancia euclidiana padronizada media.
+
+6 = Quadrado da distancia euclidiana padronizada media.
+
+7 = Distancia de Mahalanobis.
+
+8 = Distancia de Cole Rodgers.
+
+
+```{r}
+#colocando nome nos individuos
+rownames(Dados.MED)=paste0("T",1:nrow(Dados.MED))
+Dist=Distancia(Dados.MED,Metodo = 5)
+round(Dist,3)
+```
+Informações importantes podem ser obtidas dessa matriz com a função `SummaryDistancia`:
+```{r}
+resumo=SummaryDistancia(Dist)
+resumo
+```
+
+A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um dendograma com o auxilio da função `dendograma`. Varios algoritimos podem ser utilizados para a construção deste dendograma. Para isso, deve-se indicar no argumento `Metodo`:
+
+1 = Ligacao simples (Metodo do vizinho mais proximo).
+
+2 = Ligacao completa (Metodo do vizinho distante).
+
+3 = Ligacao media entre grupo (UPGMA).
+
+4 = Metodo de Ward.
+
+5 = Metodo de ward (d2).
+
+6= Metodo da mediana (WPGMC).
+
+7= Metodo do centroide (UPGMC).
+
+8 = Metodo mcquitty (WPGMA).
+
+
+```{r}
+#Dendograma com o metodo UPGMA
+Dendograma(Dist,Metodo=3)
+```
+Adcionalmente, pode-se fazer o agrupamento Tocher com o auxilio da função `Tocher`:
+```{r}
+#Dendograma com o metodo UPGMA
+Tocher(Dist)
+```
+
+Outra possibilidade é o estudo da dispersão da matriz de dissimilaridade pelas técnica de coordenadas principais, mas veja que ela é correspondente aos componentes principais quando se utiliza a distancia euclidiana:
+```{r}
+
+COp=CoordenadasPrincipais(Dist,main = "")
+CoordenadasPrincipais(Dist,Dados = Dados.MED,Padronizar = TRUE,main="")
+ComponentesPrincipais(Dados.MED)
+```
+Logo, quando se tem dados quantitativos faz mais sentido utilizar os componentes principais que coordenadas principais em situações quando irá se considerar a distância euclidiana padronizada.
+
+
+
+
+
+
+
+
+

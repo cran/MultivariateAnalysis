@@ -4,8 +4,17 @@
 \alias{VariaveisCanonicas}
 \title{Analise de variaveis canonicas}
 \usage{
-VariaveisCanonicas(Dados,Modelo,Fator=NULL,xlab="VC 1", ylab="VC 2",CR=TRUE,
- CorPlot=TRUE,CorCol="red",VarCol ="blue", bty="L",Perc)
+VariaveisCanonicas(Dados,
+                          Modelo,
+                          Fator=NULL,
+                          xlab="VC 1",
+                           ylab="VC 2",
+                           CR=TRUE,
+                           CorPlot=TRUE,
+                           CorCol="red",
+                           VarCol ="blue",
+                           bty="L",
+                           Perc)
 }
 \arguments{
 \item{Dados}{Matriz contendo os dados para execucao da MANOVA. Para cada

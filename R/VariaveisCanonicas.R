@@ -2,8 +2,17 @@
 #'
 #' @description Esta funcao faz a analise dos dados pelo metodo de variaveis
 #'   canonicas.
-#' @usage VariaveisCanonicas(Dados,Modelo,Fator=NULL,xlab="VC 1", ylab="VC 2",CR=TRUE,
-#'  CorPlot=TRUE,CorCol="red",VarCol ="blue", bty="L",Perc)
+#' @usage VariaveisCanonicas(Dados,
+#'                           Modelo,
+#'                           Fator=NULL,
+#'                           xlab="VC 1",
+#'                            ylab="VC 2",
+#'                            CR=TRUE,
+#'                            CorPlot=TRUE,
+#'                            CorCol="red",
+#'                            VarCol ="blue",
+#'                            bty="L",
+#'                            Perc)
 #' @param Dados Matriz contendo os dados para execucao da MANOVA. Para cada
 #'   modelo o conjunto de dados precisa estar organizado de uma forma
 #'   apropriada:

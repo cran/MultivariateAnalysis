@@ -43,9 +43,15 @@
 #'   \item Dados mistos
 #'   \itemize{
 #'   \item  21 =Dissimilaridade de Gower
+#'   \item  22 =Dissimilaridade de Gower 2
 #'   }
 #'   }
-#'
+#' @details Um problema do indice de Gower (Metodo = 21) e que quando as
+#'   variaveis binarias (0 ou 1) indicam a presença ou ausencia de bandas a
+#'   informação 0-0 (ausencia de bandas em ambos os individuos) indica que os
+#'   dois individuos sao iguais, o que nao e verdade necessariamente. Caso
+#'   queira desconsiderar essas informações (0-0) no computo da dissimilaridade,
+#'   pode-se usar o "indice de Gower 2" (Metodo =22)).
 #' @param Cov   matriz quadrada e simetrica contendo as variancias e
 #'   covariancias (residuais) entre as caracteristicas. Necessaria apenas para
 #'   calculo da distancia de Mahalanobis.
@@ -371,49 +377,104 @@ if(Metodo==20){
 #Dados mistos
 #indice de Gower
 if(Metodo==21){
-  mat=D
-  ntrat=nrow(mat)
-  Diss=Div=matrix(0,ncol=ntrat,nrow=ntrat)
-  bin=apply(D,2,function(x) length(unique(x)))==2
-  mat2=mat[,bin]
 
-  for(i in 1:ncol(mat2)){
-    mat2[,i]=as.numeric(as.factor(mat2[,i]))==max(as.numeric(as.factor(mat2[,i])))
-  }
-mat[,bin]=mat2
-  for(i in 1:ntrat){
-    for(j in 1:ntrat){
-      for(k in 1:ncol(mat)){
+  bin=apply(D,2,function(x2) {x=na.omit(x2) ;length(unique(x))})==2
+  class=sapply(D, class)
+
+  numeric=((class=="numeric")|(class=="integer"))&(bin==FALSE)
+
+  idNum=(1:length(numeric))[numeric]
+  idquali=(1:length(numeric))[numeric==F]
 
 
-        #binomial
-        if(is.logical(mat[,k])){
-          if(mat[i,k]==T |  mat[j,k]==T){
-            if((mat[i,k]!=mat[j,k])) {Diss[i,j]=Diss[i,j]+1}
-            Div[i,j]=Div[i,j]+1
+  mat=div=matrix(0,nrow(D),nrow(D))
+    for(i in 1:nrow(D)){
+      for(j in 1:nrow(D)){
+        for(k in idNum){
+          if((is.na(D[i,k])|is.na(D[j,k]))==FALSE){
+            mat[i,j]=mat[i,j]+abs(D[i,k]-D[j,k])/(max(D[,k])-min(D[,k]))
+            div[i,j]=div[i,j]+1
           }
         }
-        #Multicategorico
-        if(is.character(mat[,k])){
-          Div[i,j]=Div[i,j]+1
-          if((mat[i,k]!=mat[j,k])) {Diss[i,j]=Diss[i,j]+1}
-
-        }
-        #Quantitativo
-        if(is.numeric(mat[,k])){
-          Div[i,j]=Div[i,j]+1
-          Diss[i,j]=Diss[i,j]+abs(mat[i,k]-mat[j,k])/(max(mat[,k])-min(mat[,k]))
-
-        }
-
-
-
       }
+    }
 
+  for(i in 1:nrow(D)){
+    for(j in 1:nrow(D)){
+      for(k in idquali){
+        if((is.na(D[i,k])|is.na(D[j,k]))==FALSE){
+          mat[i,j]=mat[i,j]+(D[i,k]!=D[j,k])
+          div[i,j]=div[i,j]+1
+        }
+      }
     }
   }
- Mat= Diss/Div
- Dist=as.dist(Mat)
+
+
+ Dist=as.dist(mat/div)
+
+}
+
+############################################################
+###########################
+#Dados mistos
+#indice de Gower2
+if(Metodo==22){
+
+  bin=sapply(1:ncol(D),function(i) {x=D[,i];x2=na.omit(x);ifelse(length((unique(x2)))==2,sum(((unique(x2))==c(0,1))|((unique(x2))==c(1,0)))==2,FALSE)})
+  class=sapply(D, class)
+
+  numeric=((class=="integer")|(class=="numeric"))&(bin==F)
+
+  quali=(class=="factor")|(class=="character")
+
+
+  idNum=(1:length(numeric))[numeric]
+  idquali=(1:length(quali))[quali]
+  idbin=(1:length(bin))[bin]
+
+  mat=div=matrix(0,nrow(D),nrow(D))
+  #Numerico
+  for(i in 1:nrow(D)){
+    for(j in 1:nrow(D)){
+      for(k in idNum){
+        if((is.na(D[i,k])|is.na(D[j,k]))==FALSE){
+          mat[i,j]=mat[i,j]+abs(D[i,k]-D[j,k])/(max(D[,k])-min(D[,k]))
+          div[i,j]=div[i,j]+1
+        }
+      }
+    }
+  }
+  #quali
+  for(i in 1:nrow(D)){
+    for(j in 1:nrow(D)){
+      for(k in idquali){
+        if((is.na(D[i,k])|is.na(D[j,k]))==FALSE){
+          mat[i,j]=mat[i,j]+(D[i,k]!=D[j,k])
+          div[i,j]=div[i,j]+1
+        }
+      }
+    }
+  }
+  #bin
+  for(i in 1:nrow(D)){
+    for(j in 1:nrow(D)){
+      for(k in idbin){
+        if((is.na(D[i,k])|is.na(D[j,k]))==FALSE){
+          if((((D[i,k])==1)&((D[j,k])==1))){
+            div[i,j]=div[i,j]+1
+          }
+
+          if((((D[i,k])==1)!=((D[j,k])==1))){
+          mat[i,j]=mat[i,j]+1
+          div[i,j]=div[i,j]+1
+          }
+        }
+      }
+    }
+  }
+
+  Dist=as.dist(mat/div)
 
 }
 

@@ -1,0 +1,181 @@
+---
+title: "Exemplo: Experimento em DBC com dados Mistos"
+author: "Alcinei Mistico Azevedo (ICA-UFMG)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+fig_caption: no
+vignette: >
+  %\VignetteIndexEntry{Exemplo: Experimento em DBC com dados Mistos}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Ativando o pacote
+Após a instalação do pacote é preciso ativa-lo. Para isso, deve-se utilizar a função `library` ou `require`
+
+```{r}
+library(MultivariateAnalysis)
+```
+# Abrindo o conjunto de dados
+Posteriormente, deve-se carregar no R o conjunto de dados a serem analizados. Isso pode ser feito de diferentes formas.
+
+Uma possibilidade é utilizando a função `read.table`. Neste exemplo vamos trabalhar com o banco de dados do pacote, o qual pode ser carregado com a função `data`.
+
+```{r}
+data("Dados.DBC.Misto")
+head(Dados.DBC.Misto)
+```
+# Analise de variancia Multivariada
+Quando se quer saber se há diferença entre os "Tratamentos" do ponto de vista multivariado, pode-se fazer a analise de variância multivariada. Para isso, deve-se utilizar a função `MANOVA`. Dessa função deve-se considerar o delineamento desejado no argumento `Modelo`:
+
+1 = Delineamento inteiramente casualizado (DIC)
+
+2 = Delineamento em blocos casualizados (DBC)
+
+3 = Delineamento em quadrado latino (DQL)
+
+4 = Esquema fatorial em DIC
+
+5 = Esquema fatorial em DBC
+
+```{r}
+Res=MANOVA(Dados.DBC.Misto[,1:5],Modelo=2)
+Res
+```
+
+# Obtenção de medidas de dissimilaridade
+Muitas são as opções que este pacote oferece de medidas de dissimilaridade. Convidamos os usuários a ler o manual da funcao `Distancia` (`?Distancia`).
+
+Para se ter diferentes medidas de dissimilaridade basta colocar o respectivo numero no argumento `Metodo` dentro da função `Distancia`:
+
+## Dissimilaridade para os dados quantitativos:
+
+1 = Distancia euclidiana.
+
+2= Distancia euclidiana media.
+
+3 = Quadrado da distancia euclidiana media.
+
+4 = Distancia euclidiana padronizada.
+
+5 = Distancia euclidiana padronizada media.
+
+6 = Quadrado da distancia euclidiana padronizada media.
+
+7 = Distancia de Mahalanobis.
+
+8 = Distancia de Cole Rodgers.
+
+
+```{r}
+DadosMed=Res$Med
+DistMaha=Distancia(DadosMed,Metodo = 7,Cov = Res$CovarianciaResidual)
+round(DistMaha,3)
+```
+Informações importantes podem ser obtidas dessa matriz com a função `SummaryDistancia`:
+```{r}
+resumo=SummaryDistancia(DistMaha)
+resumo
+```
+
+
+## Dissimilaridade para os dados qualitativos:
+
+#### Opções de medidas para dados qualitativos
+
+Dados qualitativos: binarios ou multicategoricos
+
+9 = Frequencia de coincidencia.
+
+10 = Frequencia de discordancia.
+
+11 = indice Inverso de 1+coincidencia = 1/(1+c)
+
+```{r}
+Dadosquali=Dados.DBC.Misto[,6:11]
+
+#Excluindo os valores NA
+id=is.na(Dadosquali$CorFolha)==FALSE
+Dadosquali2=Dadosquali[id,]
+#Colocando o nome dos tratamentos na matriz
+rownames(Dadosquali2)=Dados.DBC.Misto[id,1]
+
+
+Distquali=Distancia(Dadosquali2,Metodo = 10)
+round(Distquali,3)
+```
+
+
+
+
+
+## Obtendo a média ponderada das matrizes de dissimilaridade
+
+```{r}
+
+#Criando list com as matrizes
+dissimilaridades=list(DistMaha,Distquali)
+n=c(ncol(DadosMed),ncol(Dadosquali2))
+#Calculando a media ponderada
+DistMisto=MediaDistancia(dissimilaridades,n)
+DistMisto
+
+```
+
+# Obtendo dendograma para as 3 medidas de dissimilaridade
+
+A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um dendograma com o auxilio da função `dendograma`. Varios algoritimos podem ser utilizados para a construção deste dendograma. Para isso, deve-se indicar no argumento `Metodo`:
+
+1 = Ligacao simples (Metodo do vizinho mais proximo).
+
+2 = Ligacao completa (Metodo do vizinho distante).
+
+3 = Ligacao media entre grupo (UPGMA).
+
+4 = Metodo de Ward.
+
+5 = Metodo de ward (d2).
+
+6= Metodo da mediana (WPGMC).
+
+7= Metodo do centroide (UPGMC).
+
+8 = Metodo mcquitty (WPGMA).
+
+
+```{r}
+#Dendograma com o metodo UPGMA
+Dendograma(DistMaha,Metodo=3,Titulo="Dados quantiativos")
+```
+
+```{r}
+Dendograma(Distquali,Metodo=3, Titulo="Dados qualitativos")
+```
+
+```{r}
+Dendograma(DistMisto,Metodo=3,Titulo= "Qualitativos + Quantiativos")
+```
+Adcionalmente, pode-se fazer o agrupamento Tocher com o auxilio da função `Tocher`:
+```{r}
+Tocher(DistMisto,corPlot = FALSE)
+```
+
+# Estimativas de correção entre as medidas de dissimilaridade
+```{r}
+CorrelacaoMantel(DistMaha,DistMisto)
+```
+
+```{r}
+CorrelacaoMantel(DistMaha,Distquali)
+```
+
+```{r}
+CorrelacaoMantel(Distquali,DistMisto)
+```

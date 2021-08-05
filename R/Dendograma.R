@@ -2,7 +2,11 @@
 #'
 #' @description Esta funcao retorna a figura do dendograma, distancias feneticas
 #'   e correlacao cofenetica.
-#' @usage Dendograma(Dissimilaridade,Metodo=3,nperm=999)
+#' @usage Dendograma(Dissimilaridade,
+#'                   Metodo=3,
+#'                   nperm=999,
+#'                   Titulo="",
+#'                   corte="Mojena1")
 #' @param Dissimilaridade    Matriz contendo a estimativa das distancias entre
 #'   tratamentos.
 #' @param Metodo Valor numerico indicando o metodo a ser utilizado:
@@ -11,13 +15,23 @@
 #'  \item  2 = Ligacao completa (Metodo do vizinho distante).
 #'   \item  3 = Ligacao media entre grupo (UPGMA).
 #'   \item  4 = Metodo de Ward.
-#'   \item  5 = Metodo de ward (d2).
+#'   \item  5 = Metodo de Ward (d2).
 #'   \item  6= Metodo da mediana (WPGMC).
 #'   \item  7= Metodo do centroide (UPGMC).
 #'   \item  8 = Metodo mcquitty (WPGMA).
 #'   }
 #' @param nperm Numero de permutacoes do teste mantel para testar a significancia
 #' pelo teste Mantel.
+#' @param Titulo Texto com o titulo a ser apresentado no grafico
+#' @param corte Indica a metodologia considerada para estabelecer a linha de
+#' corte no dendograma:
+#'   \itemize{
+#'  \item  FALSE = Indica que o ponto de corte nao sera apresentado.
+  #'  \item  Mojena1 = Coeficiente de mojena considerando o K=1.25.
+  #'  \item  Mojena2 = Coeficiente de mojena considerando o K=2.00.
+  #'  \item   `Numeric`= Valor numerico indicando onde se deseja plotar a linha
+  #'  de corte.
+  #'  }
 #' @return A funcao retorna o dendograma, distancias feneticas e correlacao
 #'   cofenetica.
 #'
@@ -29,26 +43,40 @@
 #'
 #'
 #' CRUZ, C.D. and CARNEIRO, P.C.S.  Modelos biometricos aplicados ao
-#'   melhoramento genetico. 3nd Edition. Vicosa, UFV, v.2, 2014. 668p.  (ISBN: 8572691510)
+#'   melhoramento genetico. 3nd Edition. Vicosa, UFV, v.2, 2014. 668p.
+#'     (ISBN: 8572691510)
 #'
-#' FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p. (ISBN 13:978 8581270630)
+#' FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p.
+#'  (ISBN 13:978 8581270630)
 #'
 #'  HAIR, J.F. Multivariate Data Analysis.  (2016) 6ed. Pearson Prentice HalL.
 #'   (ISBN 13:978 0138132637)
+#'
+#'   MOJENA, R. Hierarquical grouping method and stopping rules: an evaluation.
+#'    Computer Journal, v.20, p.359-363, 1977.
+
 #' @examples
 #' data(Dados.MED)
 #' Dist=Distancia(Dados.MED,2)
 #' Dendograma(Dist,2)
 #' @export
-Dendograma=function(Dissimilaridade,Metodo=3,nperm=999)
+Dendograma=function(Dissimilaridade,
+                    Metodo=3,
+                    nperm=999,
+                    Titulo="",
+                    corte="Mojena1")
 
 {
 ############################################################
 Met=c( "single","complete","average","ward.D","ward.D2","median","centroid","mcquitty" )
 Dissimilaridade=as.dist(Dissimilaridade)
 
+if(isFALSE((corte=="Mojena1")|(corte=="Mojena2")|is.numeric(corte))){
+  warning("O objeto 'corte' deve conter um valor numerico ou os textos 'Mojena1' ou 'Mojena2'")
+}
+
 Arvore=hclust(Dissimilaridade,Met[Metodo])
-plot(Arvore,hang=-1)
+plot(Arvore,hang=-1,main=Titulo,xlab="",sub ="" )
 
 DistanciaFenetica=cophenetic(Arvore)
 CorrelacaoCofenetica=cor(Dissimilaridade,DistanciaFenetica)
@@ -56,6 +84,20 @@ CorrelacaoCofenetica=cor(Dissimilaridade,DistanciaFenetica)
 Mantel=mantelTest(Dissimilaridade,DistanciaFenetica,nperm = nperm,graph  = F)
 fusao=Arvore$height
 MojenaCorte=c(`k=1.25`=mean(fusao)+sd(fusao)*1.25,`k=2`=mean(fusao)+sd(fusao)*2)
+
+if(corte=="Mojena1"){
+  corte=MojenaCorte[1]
+  lines(c(0,length(fusao+2)),c(corte,corte),col=2,lty=2)
+}
+if(corte=="Mojena2"){
+  corte=MojenaCorte[2]
+  lines(c(0,length(fusao+2)),c(corte,corte),col=2,lty=2)
+}
+
+if(is.numeric(corte)){
+  lines(c(0,length(fusao+2)),c(corte,corte),col=2,lty=2)
+}
+
 
 resultado=list(#call = match.call(),
                DistanciaFenetica=DistanciaFenetica,CorrelacaoCofenetica=CorrelacaoCofenetica,SigCorrelCofenetica=Mantel,MojenaCorte=MojenaCorte,Ordem=Arvore$order)

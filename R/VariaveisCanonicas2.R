@@ -75,7 +75,7 @@ VariaveisCanonicas2=function(Dados,Modelo=1,Factor=NULL,xlab=NULL, ylab=NULL,
 
 
   if((Modelo==4)){
-
+if(is.null(Factor)){Factor="A:B"}
   if((Factor=="A:B")){
     saida=manova(modelos[1][[1]])
     c=candisc(saida, term="Trat", sdcale = T)
@@ -104,6 +104,7 @@ VariaveisCanonicas2=function(Dados,Modelo=1,Factor=NULL,xlab=NULL, ylab=NULL,
 }
 
   if((Modelo==5)){
+    if(is.null(Factor)){Factor="A:B"}
   if((Factor=="A:B")){
     saida=manova(modelos[2][[1]])
     c=candisc(saida, term="Trat", sdcale = T)

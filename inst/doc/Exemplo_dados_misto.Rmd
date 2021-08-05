@@ -1,0 +1,164 @@
+---
+title: "Exemplo: Experimento com dados mistos sem repetições"
+author: "Alcinei Mistico Azevedo (ICA-UFMG)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+fig_caption: no
+vignette: >
+  %\VignetteIndexEntry{Exemplo: Experimento com dados mistos sem repetições}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Ativando o pacote
+Após a instalação do pacote é preciso ativa-lo. Para isso, deve-se utilizar a função `library` ou `require`
+
+```{r}
+library(MultivariateAnalysis)
+```
+# Abrindo o conjunto de dados
+Posteriormente, deve-se carregar no R o conjunto de dados a serem analizados. Isso pode ser feito de diferentes formas.
+
+Uma possibilidade é utilizando a função `read.table`. Neste exemplo vamos trabalhar com o banco de dados do pacote, o qual pode ser carregado com a função `data`.
+
+Este exemplo trata-se de dados binarios vindo do uso de marcadores moleculares em cinco individuos.
+```{r}
+data("Dados.Misto")
+Dados.Misto
+```
+# Obtenção de medidas de dissimilaridade para dados mistos
+Muitas são as opções para a obtenção de medidas de dissimilaridade para dados mistos. Vamos apresentar aqui algumas possibilidades para analise.
+
+## Método 1: Índice de Gower
+
+Uma possibilidade quando se tem dados misto é o uso do índice de Gower.
+```{r}
+#colocando nome nos individuos
+rownames(Dados.Misto)=paste0("T",1:nrow(Dados.Misto))
+Gower1=Distancia(Dados.Misto,Metodo = 21)
+round(Gower1,3)
+```
+
+Um problema desta metodologia, é que neste caso, quando as variáveis binárias (0 ou 1) indicando a presença ou ausência de bandas a informação 0-0 (ausencia de bandas em ambos os indivíduos) indica que os dois índivíduos são iguais, o que não é verdade necessáriamente. Caso queira desconsiderar essas informações (0-0) no cômputo da dissimilaridade, pode-se usar o "índice de Gower 2".
+
+## Método 2: Índice de Gower 2 
+Essa medidada deve ser utilizada quando se tem variáveis binárias (0 ou 1) indicando a presença ou ausência de bandas. Neste caso, a informação 0-0 (ausencia de bandas em ambos os indivíduos) são desconsiderados no cômputo da dissimilaridade, raciocícnio similar ao indice de Jacard.
+```{r}
+Gower2=Distancia(Dados.Misto,Metodo = 22)
+round(Gower2,3)
+```
+
+## Método 3: Calcular a medida de dissimilaridade mais apropriada para cada variável e fazer a média ponderada posteriormente.
+Neste caso, vamos usar o índice de jacard para os dados binários, índice de discordância para os dados multicategóricos e distância euclidiana padronizada para os dados quantitativos.
+
+```{r}
+#Indice de jacard
+DistBin=Distancia(Dados.Misto[,c(1:5)],Metodo = 12)
+#Indice de discordancia
+DistCat=Distancia(Dados.Misto[,c(8,9,11)],Metodo = 10)
+#Distancia euclidiana padronizada
+DadosQanti=Distancia(Dados.Misto[,c(6,7,10)],Metodo = 5)
+
+#Criando list com as matrizes
+dissimilaridades=list(DistBin,DistCat,DadosQanti)
+
+#Calculando a media ponderada
+Metodo3=MediaDistancia(dissimilaridades,n=c(5,3,3))
+Metodo3
+
+```
+
+## Metodo 4: Transformar os dados quantitativos em qualitativos e considerar tudo como multicategórico
+Os dados quantitativos podem ser transformados em qualitativos. Para isso, pode-se usar a funcao `Quant2Quali`. Assim basta indicar o numero maximo de classes desejadas e a funcao demonstrará para cada individuo a classe que ele pertence. Essa classe é obtida considerando intervalos equidistantes entre o menor e maior valor de cada variavel, considerando-se o número de classes. 
+
+```{r}
+DadosQuanti=Dados.Misto[,c(6,7,10)]
+DadosQuanti
+Mat=Quant2Quali(DadosQuanti,nclasses = 4)
+Mat
+
+#Substituido nos dados os valores quatitativos por qualitativos
+Dados.Misto2=Dados.Misto
+Dados.Misto2[,c(6,7,10)]=Mat
+Dados.Misto2
+```
+
+Agora, podemos considerar todos os dados como qualitativos e considerar o índice de discordancia com medida de dissimilaridade.
+
+
+```{r}
+Metodo4=Distancia(Dados.Misto2,Metodo = 10)
+Metodo4
+```
+
+
+# Após obter a matriz de dissimilaridade, podemos fazer o dendograma.
+
+A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um dendograma com o auxilio da função `dendograma`. Varios algoritimos podem ser utilizados para a construção deste dendograma. Para isso, deve-se indicar no argumento `Metodo`:
+
+1 = Ligacao simples (Metodo do vizinho mais proximo).
+
+2 = Ligacao completa (Metodo do vizinho distante).
+
+3 = Ligacao media entre grupo (UPGMA).
+
+4 = Metodo de Ward.
+
+5 = Metodo de ward (d2).
+
+6= Metodo da mediana (WPGMC).
+
+7= Metodo do centroide (UPGMC).
+
+8 = Metodo mcquitty (WPGMA).
+
+
+```{r}
+Dendograma(Gower1,Metodo=3,Titulo="Gower1")
+```
+
+```{r}
+Dendograma(Gower2,Metodo=3,Titulo="Gower2")
+```
+
+```{r}
+Dendograma(Metodo3,Metodo=3,Titulo="Metodo3")
+```
+
+```{r}
+Dendograma(Metodo4,Metodo=4,Titulo="Metodo4")
+```
+
+
+# Para comparar as metodologias pode-se estimar a correlação dos metodos dois a dois
+
+```{r}
+mat=cbind(Gower1=Gower1,Gower2=Gower2,Metodo3=Metodo3,Metodo4=Metodo4)
+Cor=cor(mat)
+Cor
+```
+
+
+# Uma opção de biplot legal para dados mistos é o PCAmixed.
+```{r}
+ComponentesPrincipais.Misto(Dados.Misto,plot = "individuos")
+```
+
+```{r}
+CPM=ComponentesPrincipais.Misto(Dados.Misto,plot = "nivel")
+```
+
+```{r}
+CPM=ComponentesPrincipais.Misto(Dados.Misto,plot = "correlacao")
+```
+
+```{r}
+CPM=ComponentesPrincipais.Misto(Dados.Misto,plot = "pesos")
+```

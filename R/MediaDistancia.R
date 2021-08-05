@@ -6,13 +6,12 @@
 #' essas matrizes em funcao do numero de variaveis consideradas na estimativa
 #' de cada uma dessas dissimilaridade. Essa funcao e importante quando se trabalha
 #' com dados mistos.
-#' @usage MediaDistancia(Dist1,Dist2,n1=NULL,n2=NULL)
-#' @param Dist1 Matriz contendo as medidas dissimilaridade da primeira matriz.
-#' @param Dist2 Matriz contendo as medidas dissimilaridade da segunda matriz.
-#' @param n1 Numero de variaveis utilizadas para a obtencao das medidas
-#' dissimilaridade da primeira matriz.
-#' @param n2 Numero de variaveis utilizadas para a obtencao das medidas
-#' dissimilaridade da segunda matriz.
+#' @usage MediaDistancia(Distancias,n,Normatizar=TRUE)
+#' @param Distancias Objeto do tipo list contendo as matrizes de dissimilaridade.
+#' @param n Vetor com o numero de variaveis consideradas na estimacao de cada medida
+#' de dissimilaridade.
+#' @param Normatizar Valor Logico. Se TRUE a matriz de dissimilaridade sera normatizada
+#' para que os valores variem entre 0 e 1.
 #' @return Retorna a media ponderada de duas matrizes de dissimilaridade.
 #' @seealso \code{\link{dist}}
 #' @references
@@ -28,26 +27,55 @@
 #'  HAIR, J.F. Multivariate Data Analysis.  (2016) 6ed. Pearson Prentice HalL.
 #'   (ISBN 13:978 0138132637)
 #' @examples
+#'
+#' #Obentendo as dados de exemplo
 #' DadosQuanti=matrix(rnorm(100,100,5),ncol=4)
 #' DadosQuali=matrix(round(runif(200,1,5),0),ncol=8)
-#' rownames(DadosQuanti)=rownames(DadosQuali)=paste("T",1:25,sep="_")
+#' DadosBin=matrix(round(rbinom(400 ,1,0.5),0),ncol=16)
+#' rownames(DadosQuanti)=rownames(DadosQuali)=rownames(DadosBin)=paste("T",1:25,sep="_")
+#'
+#' #Obentendo as matrizes de dissimilaridade
 #' DistQuant=Distancia(DadosQuanti,4)
 #' DistQuali=Distancia(DadosQuali,10)
-#' Dist=MediaDistancia(DistQuant, DistQuali,ncol(DadosQuanti),ncol(DadosQuali))
-#' Dist
-#' Dendograma(Dist,3)
+#' Distbin=Distancia(DadosBin,12)
+#'
+#' #Criando os argumentos
+#' Distancias=list(DistQuant,DistQuali,Distbin)
+#' n=c(ncol(DadosQuanti),ncol(DadosQuali),ncol(DadosBin))
+#'
+#' #obentedo a media ponderada das matrizes
+#' Dist=MediaDistancia(Distancias,n,Normatizar = TRUE)
 #' @export
 
 
 
 
 
-MediaDistancia=function(Dist1,Dist2,n1=NULL,n2=NULL){
-  DistQuali=Dist1
-  DistQuanti=Dist2
-  DistQualiN=Normatiza(DistQuali,DistQuali,LimiteInferior = 0,LimiteSuperior = 1,Metodo = 2)
-  DistQuantiN=Normatiza(DistQuanti,DistQuanti,LimiteInferior = 0,LimiteSuperior = 1,Metodo = 2)
+MediaDistancia=function(Distancias,n,Normatizar=TRUE){
 
-  DadosMix=(n1*DistQualiN+n2*DistQuantiN)/(n1+n2)
-  return(DadosMix)
+
+
+  for(i in 1:length(Distancias)){
+    Distancias[[i]]=as.matrix(Distancias[[i]])
+
+  }
+
+
+
+  if(Normatizar==TRUE){
+    for(i in 1:length(Distancias)){
+      Distancias[[i]]=(Normatiza(Distancias[[i]],Metodo = 2))
+
+    }
+  }
+
+  for(i in 1:length(Distancias)){
+    Distancias[[i]]=Distancias[[i]]*n[i]
+  }
+
+  Dist=Distancias[[i]]*0
+  for(i in 1:length(Distancias)){
+    Dist=Dist+Distancias[[i]]/sum(n)
+  }
+  as.dist(Dist)
 }

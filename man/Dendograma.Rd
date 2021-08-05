@@ -4,7 +4,11 @@
 \alias{Dendograma}
 \title{Dendograma}
 \usage{
-Dendograma(Dissimilaridade,Metodo=3,nperm=999)
+Dendograma(Dissimilaridade,
+                  Metodo=3,
+                  nperm=999,
+                  Titulo="",
+                  corte="Mojena1")
 }
 \arguments{
 \item{Dissimilaridade}{Matriz contendo a estimativa das distancias entre
@@ -16,7 +20,7 @@ tratamentos.}
 \item  2 = Ligacao completa (Metodo do vizinho distante).
  \item  3 = Ligacao media entre grupo (UPGMA).
  \item  4 = Metodo de Ward.
- \item  5 = Metodo de ward (d2).
+ \item  5 = Metodo de Ward (d2).
  \item  6= Metodo da mediana (WPGMC).
  \item  7= Metodo do centroide (UPGMC).
  \item  8 = Metodo mcquitty (WPGMA).
@@ -24,6 +28,18 @@ tratamentos.}
 
 \item{nperm}{Numero de permutacoes do teste mantel para testar a significancia
 pelo teste Mantel.}
+
+\item{Titulo}{Texto com o titulo a ser apresentado no grafico}
+
+\item{corte}{Indica a metodologia considerada para estabelecer a linha de
+corte no dendograma:
+  \itemize{
+ \item  FALSE = Indica que o ponto de corte nao sera apresentado.
+ \item  Mojena1 = Coeficiente de mojena considerando o K=1.25.
+ \item  Mojena2 = Coeficiente de mojena considerando o K=2.00.
+ \item   `Numeric`= Valor numerico indicando onde se deseja plotar a linha
+ de corte.
+ }}
 }
 \value{
 A funcao retorna o dendograma, distancias feneticas e correlacao
@@ -46,12 +62,17 @@ PlayList "Curso de Analise Multivariada":
 
 
 CRUZ, C.D. and CARNEIRO, P.C.S.  Modelos biometricos aplicados ao
-  melhoramento genetico. 3nd Edition. Vicosa, UFV, v.2, 2014. 668p.  (ISBN: 8572691510)
+  melhoramento genetico. 3nd Edition. Vicosa, UFV, v.2, 2014. 668p.
+    (ISBN: 8572691510)
 
-FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p. (ISBN 13:978 8581270630)
+FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p.
+ (ISBN 13:978 8581270630)
 
  HAIR, J.F. Multivariate Data Analysis.  (2016) 6ed. Pearson Prentice HalL.
   (ISBN 13:978 0138132637)
+
+  MOJENA, R. Hierarquical grouping method and stopping rules: an evaluation.
+   Computer Journal, v.20, p.359-363, 1977.
 }
 \seealso{
 \code{\link{hclust}}, \code{\link{dist}}

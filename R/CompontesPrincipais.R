@@ -1,9 +1,18 @@
 #' Componentes principais
 #'
 #' @description Esta funcao possibilita o estudo dos componentes principais .
-#' @usage ComponentesPrincipais(D,padronizar=TRUE,xlab="PCA 1", ylab="PCA 2",
-#'   CR=TRUE,CorPlot=TRUE,CorCol="red",VarCol="blue",
-#'   Perc=0.1,NomeTrat=NULL,NomeVar=NULL, bty="L")
+#' @usage ComponentesPrincipais(D,
+#'                              padronizar=TRUE,
+#'                              xlab="PCA 1",
+#'                              ylab="PCA 2",
+#'                              CR=TRUE,
+#'                              CorPlot=TRUE,
+#'                              CorCol="red",
+#'                              VarCol="blue",
+#'                              Perc=0.1,
+#'                              NomeTrat=NULL,
+#'                              NomeVar=NULL,
+#'                               bty="L")
 #' @param D Matriz com os valores para obtencao dos componentes principais.Esta
 #'   matriz deve conter os valores observados, sendo as variaveis respostas na
 #'   coluna. Esta matriz nao deve conter a identificacao dos tratamentos na
@@ -149,7 +158,7 @@ D=D2
                  `Escores dos componentes principais`=round(Escores,4),
                  `Correlacao entre as variaveis e os comp. principais`=round(cor(D,Escores),4),
                  `Explicacao dos componentes principais`=round(Imp,4))
-  print(Resultado)
+
   return(Resultado)
 
 

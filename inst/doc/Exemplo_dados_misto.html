@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Alcinei Mistico Azevedo (ICA-UFMG)" />
+
+<meta name="date" content="2021-08-04" />
+
+<title>Exemplo: Experimento com dados mistos sem repetições</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Exemplo: Experimento com dados mistos sem repetições</h1>
+<h4 class="author">Alcinei Mistico Azevedo (ICA-UFMG)</h4>
+<h4 class="date">2021-08-04</h4>
+
+
+
+<div id="ativando-o-pacote" class="section level1">
+<h1>Ativando o pacote</h1>
+<p>Após a instalação do pacote é preciso ativa-lo. Para isso, deve-se utilizar a função <code>library</code> ou <code>require</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MultivariateAnalysis)</span></code></pre></div>
+</div>
+<div id="abrindo-o-conjunto-de-dados" class="section level1">
+<h1>Abrindo o conjunto de dados</h1>
+<p>Posteriormente, deve-se carregar no R o conjunto de dados a serem analizados. Isso pode ser feito de diferentes formas.</p>
+<p>Uma possibilidade é utilizando a função <code>read.table</code>. Neste exemplo vamos trabalhar com o banco de dados do pacote, o qual pode ser carregado com a função <code>data</code>.</p>
+<p>Este exemplo trata-se de dados binarios vindo do uso de marcadores moleculares em cinco individuos.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Dados.Misto&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Dados.Misto</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   M1 M2 M3 M4 M5 Altura Prod  CorFlor  Crescimento NumFr Pelos</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  1  1  1  0  0     55  100   Branco        ereto    50   Sim</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  0  1  0  1  0     57  110   Branco        ereto    55   Sim</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  1  0  1  1  1     85  115   Branco     prostado    54   Sim</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  0  1  1  0  0     92  114  Amarelo     prostado    56   Nao</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  1  1  0  1  1     40   80 Vermelho semiprostado    70   Nao</span></span></code></pre></div>
+</div>
+<div id="obtenção-de-medidas-de-dissimilaridade-para-dados-mistos" class="section level1">
+<h1>Obtenção de medidas de dissimilaridade para dados mistos</h1>
+<p>Muitas são as opções para a obtenção de medidas de dissimilaridade para dados mistos. Vamos apresentar aqui algumas possibilidades para analise.</p>
+<div id="método-1-índice-de-gower" class="section level2">
+<h2>Método 1: Índice de Gower</h2>
+<p>Uma possibilidade quando se tem dados misto é o uso do índice de Gower.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#colocando nome nos individuos</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Dados.Misto)<span class="ot">=</span><span class="fu">paste0</span>(<span class="st">&quot;T&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(Dados.Misto))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Gower1<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto,<span class="at">Metodo =</span> <span class="dv">21</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Gower1,<span class="dv">3</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       T1    T2    T3    T4</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2 0.325                  </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3 0.473 0.521            </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T4 0.492 0.531 0.569      </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5 0.715 0.630 0.697 0.788</span></span></code></pre></div>
+<p>Um problema desta metodologia, é que neste caso, quando as variáveis binárias (0 ou 1) indicando a presença ou ausência de bandas a informação 0-0 (ausencia de bandas em ambos os indivíduos) indica que os dois índivíduos são iguais, o que não é verdade necessáriamente. Caso queira desconsiderar essas informações (0-0) no cômputo da dissimilaridade, pode-se usar o “índice de Gower 2”.</p>
+</div>
+<div id="método-2-índice-de-gower-2" class="section level2">
+<h2>Método 2: Índice de Gower 2</h2>
+<p>Essa medidada deve ser utilizada quando se tem variáveis binárias (0 ou 1) indicando a presença ou ausência de bandas. Neste caso, a informação 0-0 (ausencia de bandas em ambos os indivíduos) são desconsiderados no cômputo da dissimilaridade, raciocícnio similar ao indice de Jacard.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Gower2<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto,<span class="at">Metodo =</span> <span class="dv">22</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Gower2,<span class="dv">3</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       T1    T2    T3    T4</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2 0.357                  </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3 0.473 0.521            </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T4 0.601 0.649 0.569      </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5 0.715 0.693 0.697 0.788</span></span></code></pre></div>
+</div>
+<div id="método-3-calcular-a-medida-de-dissimilaridade-mais-apropriada-para-cada-variável-e-fazer-a-média-ponderada-posteriormente." class="section level2">
+<h2>Método 3: Calcular a medida de dissimilaridade mais apropriada para cada variável e fazer a média ponderada posteriormente.</h2>
+<p>Neste caso, vamos usar o índice de jacard para os dados binários, índice de discordância para os dados multicategóricos e distância euclidiana padronizada para os dados quantitativos.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Indice de jacard</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>DistBin<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)],<span class="at">Metodo =</span> <span class="dv">12</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Indice de discordancia</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>DistCat<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto[,<span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">11</span>)],<span class="at">Metodo =</span> <span class="dv">10</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Distancia euclidiana padronizada</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>DadosQanti<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto[,<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">10</span>)],<span class="at">Metodo =</span> <span class="dv">5</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Criando list com as matrizes</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>dissimilaridades<span class="ot">=</span><span class="fu">list</span>(DistBin,DistCat,DadosQanti)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculando a media ponderada</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>Metodo3<span class="ot">=</span><span class="fu">MediaDistancia</span>(dissimilaridades,<span class="at">n=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">3</span>))</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>Metodo3</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           T1        T2        T3        T4</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2 0.4945408                              </span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3 0.5603724 0.6408972                    </span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T4 0.6125539 0.7682414 0.6664392          </span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5 0.8316672 0.7685447 0.7721730 0.9090909</span></span></code></pre></div>
+</div>
+<div id="metodo-4-transformar-os-dados-quantitativos-em-qualitativos-e-considerar-tudo-como-multicategórico" class="section level2">
+<h2>Metodo 4: Transformar os dados quantitativos em qualitativos e considerar tudo como multicategórico</h2>
+<p>Os dados quantitativos podem ser transformados em qualitativos. Para isso, pode-se usar a funcao <code>Quant2Quali</code>. Assim basta indicar o numero maximo de classes desejadas e a funcao demonstrará para cada individuo a classe que ele pertence. Essa classe é obtida considerando intervalos equidistantes entre o menor e maior valor de cada variavel, considerando-se o número de classes.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>DadosQuanti<span class="ot">=</span>Dados.Misto[,<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">10</span>)]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>DadosQuanti</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Altura Prod NumFr</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T1     55  100    50</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2     57  110    55</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3     85  115    54</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T4     92  114    56</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5     40   80    70</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>Mat<span class="ot">=</span><span class="fu">Quant2Quali</span>(DadosQuanti,<span class="at">nclasses =</span> <span class="dv">4</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>Mat</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Altura Prod NumFr</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T1 &quot;C2&quot;   &quot;C3&quot; &quot;C1&quot; </span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2 &quot;C2&quot;   &quot;C4&quot; &quot;C2&quot; </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3 &quot;C4&quot;   &quot;C4&quot; &quot;C1&quot; </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T4 &quot;C4&quot;   &quot;C4&quot; &quot;C2&quot; </span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5 &quot;C1&quot;   &quot;C1&quot; &quot;C4&quot;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Substituido nos dados os valores quatitativos por qualitativos</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>Dados.Misto2<span class="ot">=</span>Dados.Misto</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>Dados.Misto2[,<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">10</span>)]<span class="ot">=</span>Mat</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>Dados.Misto2</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    M1 M2 M3 M4 M5 Altura Prod  CorFlor  Crescimento NumFr Pelos</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T1  1  1  1  0  0     C2   C3   Branco        ereto    C1   Sim</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2  0  1  0  1  0     C2   C4   Branco        ereto    C2   Sim</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3  1  0  1  1  1     C4   C4   Branco     prostado    C1   Sim</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T4  0  1  1  0  0     C4   C4  Amarelo     prostado    C2   Nao</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5  1  1  0  1  1     C1   C1 Vermelho semiprostado    C4   Nao</span></span></code></pre></div>
+<p>Agora, podemos considerar todos os dados como qualitativos e considerar o índice de discordancia com medida de dissimilaridade.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Metodo4<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto2,<span class="at">Metodo =</span> <span class="dv">10</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Metodo4</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           T1        T2        T3        T4</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2 0.4545455                              </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3 0.5454545 0.6363636                    </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T4 0.6363636 0.5454545 0.6363636          </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5 0.8181818 0.7272727 0.7272727 0.8181818</span></span></code></pre></div>
+</div>
+</div>
+<div id="após-obter-a-matriz-de-dissimilaridade-podemos-fazer-o-dendograma." class="section level1">
+<h1>Após obter a matriz de dissimilaridade, podemos fazer o dendograma.</h1>
+<p>A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um dendograma com o auxilio da função <code>dendograma</code>. Varios algoritimos podem ser utilizados para a construção deste dendograma. Para isso, deve-se indicar no argumento <code>Metodo</code>:</p>
+<p>1 = Ligacao simples (Metodo do vizinho mais proximo).</p>
+<p>2 = Ligacao completa (Metodo do vizinho distante).</p>
+<p>3 = Ligacao media entre grupo (UPGMA).</p>
+<p>4 = Metodo de Ward.</p>
+<p>5 = Metodo de ward (d2).</p>
+<p>6= Metodo da mediana (WPGMC).</p>
+<p>7= Metodo do centroide (UPGMC).</p>
+<p>8 = Metodo mcquitty (WPGMA).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendograma</span>(Gower1,<span class="at">Metodo=</span><span class="dv">3</span>,<span class="at">Titulo=</span><span class="st">&quot;Gower1&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; $DistanciaFenetica
+#&gt;           T1        T2        T3        T4
+#&gt; T2 0.3249251                              
+#&gt; T3 0.4971279 0.4971279                    
+#&gt; T4 0.5306693 0.5306693 0.5306693          
+#&gt; T5 0.7075175 0.7075175 0.7075175 0.7075175
+#&gt; 
+#&gt; $CorrelacaoCofenetica
+#&gt; [1] 0.9486072
+#&gt; 
+#&gt; $SigCorrelCofenetica
+#&gt; 
+#&gt;             Mantel&#39;s permutation test
+#&gt; 
+#&gt; Correlation: 0.9486072
+#&gt; p-value: 0.024, based on 999 matrix permutations
+#&gt; Alternative hypothesis: true correlation is greater than 0 
+#&gt; 
+#&gt; $MojenaCorte
+#&gt;    k=1.25       k=2 
+#&gt; 0.7110568 0.8286550 
+#&gt; 
+#&gt; $Ordem
+#&gt; [1] 5 4 3 1 2</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendograma</span>(Gower2,<span class="at">Metodo=</span><span class="dv">3</span>,<span class="at">Titulo=</span><span class="st">&quot;Gower2&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; $DistanciaFenetica
+#&gt;           T1        T2        T3        T4
+#&gt; T2 0.3574176                              
+#&gt; T3 0.4971279 0.4971279                    
+#&gt; T4 0.6064195 0.6064195 0.6064195          
+#&gt; T5 0.7232767 0.7232767 0.7232767 0.7232767
+#&gt; 
+#&gt; $CorrelacaoCofenetica
+#&gt; [1] 0.9655169
+#&gt; 
+#&gt; $SigCorrelCofenetica
+#&gt; 
+#&gt;             Mantel&#39;s permutation test
+#&gt; 
+#&gt; Correlation: 0.9655169
+#&gt; p-value: 0.011, based on 999 matrix permutations
+#&gt; Alternative hypothesis: true correlation is greater than 0 
+#&gt; 
+#&gt; $MojenaCorte
+#&gt;    k=1.25       k=2 
+#&gt; 0.7410889 0.8581060 
+#&gt; 
+#&gt; $Ordem
+#&gt; [1] 5 4 3 1 2</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendograma</span>(Metodo3,<span class="at">Metodo=</span><span class="dv">3</span>,<span class="at">Titulo=</span><span class="st">&quot;Metodo3&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; $DistanciaFenetica
+#&gt;           T1        T2        T3        T4
+#&gt; T2 0.4945408                              
+#&gt; T3 0.6006348 0.6006348                    
+#&gt; T4 0.6824115 0.6824115 0.6824115          
+#&gt; T5 0.8203690 0.8203690 0.8203690 0.8203690
+#&gt; 
+#&gt; $CorrelacaoCofenetica
+#&gt; [1] 0.8987349
+#&gt; 
+#&gt; $SigCorrelCofenetica
+#&gt; 
+#&gt;             Mantel&#39;s permutation test
+#&gt; 
+#&gt; Correlation: 0.8987349
+#&gt; p-value: 0.011, based on 999 matrix permutations
+#&gt; Alternative hypothesis: true correlation is greater than 0 
+#&gt; 
+#&gt; $MojenaCorte
+#&gt;    k=1.25       k=2 
+#&gt; 0.8213046 0.9243939 
+#&gt; 
+#&gt; $Ordem
+#&gt; [1] 5 4 3 1 2</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendograma</span>(Metodo4,<span class="at">Metodo=</span><span class="dv">4</span>,<span class="at">Titulo=</span><span class="st">&quot;Metodo4&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; $DistanciaFenetica
+#&gt;           T1        T2        T3        T4
+#&gt; T2 0.4545455                              
+#&gt; T3 0.6363636 0.6363636                    
+#&gt; T4 0.6363636 0.6363636 0.6363636          
+#&gt; T5 0.8909091 0.8909091 0.8909091 0.8909091
+#&gt; 
+#&gt; $CorrelacaoCofenetica
+#&gt; [1] 0.9256188
+#&gt; 
+#&gt; $SigCorrelCofenetica
+#&gt; 
+#&gt;             Mantel&#39;s permutation test
+#&gt; 
+#&gt; Correlation: 0.9256188
+#&gt; p-value: 0.027, based on 999 matrix permutations
+#&gt; Alternative hypothesis: true correlation is greater than 0 
+#&gt; 
+#&gt; $MojenaCorte
+#&gt;    k=1.25       k=2 
+#&gt; 0.8787674 1.0133006 
+#&gt; 
+#&gt; $Ordem
+#&gt; [1] 5 4 3 1 2</code></pre>
+</div>
+<div id="para-comparar-as-metodologias-pode-se-estimar-a-correlação-dos-metodos-dois-a-dois" class="section level1">
+<h1>Para comparar as metodologias pode-se estimar a correlação dos metodos dois a dois</h1>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mat<span class="ot">=</span><span class="fu">cbind</span>(<span class="at">Gower1=</span>Gower1,<span class="at">Gower2=</span>Gower2,<span class="at">Metodo3=</span>Metodo3,<span class="at">Metodo4=</span>Metodo4)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Cor<span class="ot">=</span><span class="fu">cor</span>(mat)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Cor</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            Gower1    Gower2   Metodo3   Metodo4</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Gower1  1.0000000 0.9370078 0.9399261 0.9468470</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Gower2  0.9370078 1.0000000 0.9600371 0.8780937</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Metodo3 0.9399261 0.9600371 1.0000000 0.8509176</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Metodo4 0.9468470 0.8780937 0.8509176 1.0000000</span></span></code></pre></div>
+</div>
+<div id="uma-opção-de-biplot-legal-para-dados-mistos-é-o-pcamixed." class="section level1">
+<h1>Uma opção de biplot legal para dados mistos é o PCAmixed.</h1>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ComponentesPrincipais.Misto</span>(Dados.Misto,<span class="at">plot =</span> <span class="st">&quot;individuos&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; $Autovalores
+#&gt;       Eigenvalue Proportion Cumulative
+#&gt; dim 1   5.853056   45.02351   45.02351
+#&gt; dim 2   2.986940   22.97646   67.99997
+#&gt; dim 3   2.837528   21.82714   89.82712
+#&gt; dim 4   1.322475   10.17288  100.00000
+#&gt; 
+#&gt; $Escores
+#&gt;         dim 1      dim 2      dim 3       dim 4
+#&gt; T1  1.0397489 -1.0987370 -1.5175138 -1.85414540
+#&gt; T2  0.3765185 -1.0657093 -1.8859019  1.75994227
+#&gt; T3  1.2444265 -1.5736106  2.8577009  0.19372558
+#&gt; T4  2.0574396  3.1198194  0.1928201  0.08184657
+#&gt; T5 -4.7181335  0.6182376  0.3528947 -0.18136902
+#&gt; 
+#&gt; $CorrelacaoQuanti
+#&gt;             dim 1       dim 2     dim 3     dim 4
+#&gt; Altura  0.7814370  0.33600164 0.5084262 0.1340218
+#&gt; Prod    0.9237992 -0.02618815 0.1790451 0.3374198
+#&gt; NumFr  -0.9121228  0.33060980 0.1780682 0.1643801
+#&gt; 
+#&gt; $ImportanciaQuali
+#&gt;                  dim 1      dim 2      dim 3        dim 4
+#&gt; M1          0.16869111 0.23543425 0.16836988 4.275047e-01
+#&gt; M2          0.06614482 0.20725644 0.71950417 7.094577e-03
+#&gt; M3          0.53674580 0.01117258 0.13803744 3.140442e-01
+#&gt; M4          0.27315006 0.22792411 0.10307171 3.958541e-01
+#&gt; M5          0.34359939 0.05092936 0.60545201 1.924228e-05
+#&gt; CorFlor     0.98593291 0.98918493 0.01839505 6.487103e-03
+#&gt; Crescimento 0.98119162 0.26247681 0.74494354 1.138802e-02
+#&gt; Pelos       0.20158391 0.77967582 0.01749202 1.248255e-03
+#&gt; 
+#&gt; $Niveis
+#&gt;                               dim 1       dim 2      dim 3        dim 4
+#&gt; M1=0                      0.5030275  0.59426541 -0.5025483  0.800785316
+#&gt; M1=1                     -0.3353517 -0.39617694  0.3350322 -0.533856877
+#&gt; M2=0                      0.5143727 -0.91050851  1.6964718  0.168458620
+#&gt; M2=1                     -0.1285932  0.22762713 -0.4241180 -0.042114655
+#&gt; M3=0                     -0.8972841 -0.12945607 -0.4550342  0.686342674
+#&gt; M3=1                      0.5981894  0.08630405  0.3033562 -0.457561783
+#&gt; M4=0                      0.6400977  0.58471033 -0.3932017 -0.770571984
+#&gt; M4=1                     -0.4267318 -0.38980688  0.2621345  0.513714656
+#&gt; M5=0                      0.4786087  0.18426314 -0.6353225 -0.003581646
+#&gt; M5=1                     -0.7179130 -0.27639471  0.9529837  0.005372469
+#&gt; CorFlor=Amarelo           0.8504244  1.80516206  0.1144675  0.071171601
+#&gt; CorFlor=Branco            0.3665914 -0.72096039 -0.1079877  0.028847361
+#&gt; CorFlor=Vermelho         -1.9501987  0.35771910  0.2094957 -0.157713682
+#&gt; Crescimento=ereto         0.2927008 -0.62618632 -1.0102175 -0.040958269
+#&gt; Crescimento=prostado      0.6823986  0.44732678  0.9054697  0.119815110
+#&gt; Crescimento=semiprostado -1.9501987  0.35771910  0.2094957 -0.157713682
+#&gt; Pelos=Nao                -0.5498871  1.08144058  0.1619816 -0.043271041
+#&gt; Pelos=Sim                 0.3665914 -0.72096039 -0.1079877  0.028847361</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>CPM<span class="ot">=</span><span class="fu">ComponentesPrincipais.Misto</span>(Dados.Misto,<span class="at">plot =</span> <span class="st">&quot;nivel&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>CPM<span class="ot">=</span><span class="fu">ComponentesPrincipais.Misto</span>(Dados.Misto,<span class="at">plot =</span> <span class="st">&quot;correlacao&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>CPM<span class="ot">=</span><span class="fu">ComponentesPrincipais.Misto</span>(Dados.Misto,<span class="at">plot =</span> <span class="st">&quot;pesos&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

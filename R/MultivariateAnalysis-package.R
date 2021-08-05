@@ -8,7 +8,8 @@
 #'  fazer analises de variancia multivariada, estimar medidas de
 #'  disimilaridade, fazer dendogramas,componentes principais,
 #'  variaveis canonicas, etc.
-#'
+#  \cr
+# \if{html}{\figure{logo.jpg}{options:   height="4\%" alt="Figure: logo.jpg"}}
 #' @docType package
 #' @name MultivariateAnalysis package
 #' @aliases MultivariateAnalysis

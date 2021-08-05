@@ -79,7 +79,7 @@ abline(lm(cof~D),col=2)
 }
 
 out=list(#call = match.call(),
-            Tocher=x,
+            Tocher=list(x$clusters),
             DistanciaCofenetica=cof,
             DistanciaIntraInterCluster=DistanciaIntraInterCluster,
             CorrelacaoCofenetica=Mantel)

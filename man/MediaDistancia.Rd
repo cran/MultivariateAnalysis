@@ -4,18 +4,16 @@
 \alias{MediaDistancia}
 \title{Media ponderada entre as matrizes de dissimilaridade}
 \usage{
-MediaDistancia(Dist1,Dist2,n1=NULL,n2=NULL)
+MediaDistancia(Distancias,n,Normatizar=TRUE)
 }
 \arguments{
-\item{Dist1}{Matriz contendo as medidas dissimilaridade da primeira matriz.}
+\item{Distancias}{Objeto do tipo list contendo as matrizes de dissimilaridade.}
 
-\item{Dist2}{Matriz contendo as medidas dissimilaridade da segunda matriz.}
+\item{n}{Vetor com o numero de variaveis consideradas na estimacao de cada medida
+de dissimilaridade.}
 
-\item{n1}{Numero de variaveis utilizadas para a obtencao das medidas
-dissimilaridade da primeira matriz.}
-
-\item{n2}{Numero de variaveis utilizadas para a obtencao das medidas
-dissimilaridade da segunda matriz.}
+\item{Normatizar}{Valor Logico. Se TRUE a matriz de dissimilaridade sera normatizada
+para que os valores variem entre 0 e 1.}
 }
 \value{
 Retorna a media ponderada de duas matrizes de dissimilaridade.
@@ -29,14 +27,24 @@ de cada uma dessas dissimilaridade. Essa funcao e importante quando se trabalha
 com dados mistos.
 }
 \examples{
+
+#Obentendo as dados de exemplo
 DadosQuanti=matrix(rnorm(100,100,5),ncol=4)
 DadosQuali=matrix(round(runif(200,1,5),0),ncol=8)
-rownames(DadosQuanti)=rownames(DadosQuali)=paste("T",1:25,sep="_")
+DadosBin=matrix(round(rbinom(400 ,1,0.5),0),ncol=16)
+rownames(DadosQuanti)=rownames(DadosQuali)=rownames(DadosBin)=paste("T",1:25,sep="_")
+
+#Obentendo as matrizes de dissimilaridade
 DistQuant=Distancia(DadosQuanti,4)
 DistQuali=Distancia(DadosQuali,10)
-Dist=MediaDistancia(DistQuant, DistQuali,ncol(DadosQuanti),ncol(DadosQuali))
-Dist
-Dendograma(Dist,3)
+Distbin=Distancia(DadosBin,12)
+
+#Criando os argumentos
+Distancias=list(DistQuant,DistQuali,Distbin)
+n=c(ncol(DadosQuanti),ncol(DadosQuali),ncol(DadosBin))
+
+#obentedo a media ponderada das matrizes
+Dist=MediaDistancia(Distancias,n,Normatizar = TRUE)
 }
 \references{
 PlayList "Curso de Analise Multivariada":

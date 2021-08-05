@@ -49,6 +49,7 @@ Neste arquivo nao deve ter a identificacao dos tratamentos.}
   \item Dados mistos
   \itemize{
   \item  21 =Dissimilaridade de Gower
+  \item  22 =Dissimilaridade de Gower 2
   }
   }}
 
@@ -61,6 +62,14 @@ A funcao retorna a distancia estimada entre os tratamentos.
 }
 \description{
 Esta funcao retorna a distancia de dissimilaridade.
+}
+\details{
+Um problema do indice de Gower (Metodo = 21) e que quando as
+  variaveis binarias (0 ou 1) indicam a presença ou ausencia de bandas a
+  informação 0-0 (ausencia de bandas em ambos os individuos) indica que os
+  dois individuos sao iguais, o que nao e verdade necessariamente. Caso
+  queira desconsiderar essas informações (0-0) no computo da dissimilaridade,
+  pode-se usar o "indice de Gower 2" (Metodo =22)).
 }
 \examples{
 data(Dados.MED)

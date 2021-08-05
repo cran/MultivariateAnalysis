@@ -1,0 +1,102 @@
+---
+title: "Exemplo: dados multicategóricos"
+author: "Alcinei Mistico Azevedo (ICA-UFMG)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+fig_caption: yes
+vignette: >
+  %\VignetteIndexEntry{Exemplo: dados multicategóricos}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Ativando o pacote
+Após a instalação do pacote é preciso ativa-lo. Para isso, deve-se utilizar a função `library` ou `require`
+
+```{r}
+library(MultivariateAnalysis)
+```
+# Abrindo o conjunto de dados
+Posteriormente, deve-se carregar no R o conjunto de dados a serem analizados. Isso pode ser feito de diferentes formas.
+
+Uma possibilidade é utilizando a função `read.table`. Neste exemplo vamos trabalhar com o banco de dados do pacote, o qual pode ser carregado com a função `data`.
+
+
+```{r}
+data("Dados.CAT")
+Dados.CAT
+```
+# Obtenção de medidas de dissimilaridade
+Muitas são as opções que este pacote oferece de medidas de dissimilaridade. Convidamos os usuários a ler o manual da funcao `Distancia` (`?Distancia`).
+
+Para se ter diferentes medidas de dissimilaridade basta colocar o respectivo numero no argumento `Metodo` dentro da função `Distancia`:
+
+### Dados qualitativos (binários ou multicategóricos)
+
+9 = Frequencia de coincidencia.
+
+10 = Frequencia de discordancia.
+
+11 = indice Inverso de 1+coincidencia = 1/(1+c)
+
+
+```{r}
+#colocando nome nos individuos
+rownames(Dados.CAT)=paste0("T",1:nrow(Dados.CAT))
+Dist=Distancia(Dados.CAT,Metodo = 10)
+round(Dist,3)
+```
+Informações importantes podem ser obtidas dessa matriz com a função `SummaryDistancia`:
+```{r}
+resumo=SummaryDistancia(Dist)
+resumo
+```
+
+A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um dendograma com o auxilio da função `dendograma`. Varios algoritimos podem ser utilizados para a construção deste dendograma. Para isso, deve-se indicar no argumento `Metodo`:
+
+1 = Ligacao simples (Metodo do vizinho mais proximo).
+
+2 = Ligacao completa (Metodo do vizinho distante).
+
+3 = Ligacao media entre grupo (UPGMA).
+
+4 = Metodo de Ward.
+
+5 = Metodo de ward (d2).
+
+6= Metodo da mediana (WPGMC).
+
+7= Metodo do centroide (UPGMC).
+
+8 = Metodo mcquitty (WPGMA).
+
+
+```{r}
+Dendograma(Dist,Metodo=3)
+```
+Adcionalmente, pode-se fazer o agrupamento Tocher com o auxilio da função `Tocher`:
+```{r}
+Tocher(Dist)
+```
+
+Outra possibilidade é o estudo da dispersão da matriz de dissimilaridade pelas técnica de coordenadas principais:
+```{r}
+CoordenadasPrincipais(Dist)
+```
+
+
+
+
+
+
+
+
+
+
