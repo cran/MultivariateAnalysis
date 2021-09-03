@@ -4,8 +4,15 @@
 \alias{SummaryDistancia}
 \title{Resumo das informacoes de cada tratamento em funcao da dissimilaridade}
 \usage{
-SummaryDistancia(Dist,ndec=2,plot=TRUE,layout="shade", type="full", title=NULL,
-tl.cex =1, tl.col="black", col=NULL)
+SummaryDistancia(Dist,
+ndec=2,
+plot=TRUE,
+layout="shade",
+type="full",
+title=NULL,
+tl.cex =1,
+tl.col="black",
+col=NULL)
 }
 \arguments{
 \item{Dist}{Matriz de dissimilaridade}
@@ -55,7 +62,7 @@ Esta funcao apresenta informacoes que resumem a matriz de dissimilaridade
  Dist=Distancia(Dados.MED,1)
  SummaryDistancia(Dist)
  #Acrescentando nomes aos tratamentos
- Dist=as.matrix(Dist)
+ Dist=as.matrix(Dist$Distancia)
  rownames(Dist)=colnames(Dist)=paste("Trat",1:nrow(Dist))
  SummaryDistancia(Dist)
  #Diferentes configuracoes

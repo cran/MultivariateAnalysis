@@ -1,4 +1,4 @@
-#' Coordenadas principais
+#' Estudo de coordenadas principais
 #'
 #' @description Esta funcao possibilita o estudo dos componentes principais .
 #' @usage CoordenadasPrincipais(Dist,
@@ -74,7 +74,8 @@
 
 
 CoordenadasPrincipais=function(Dist,Dados=NULL,Padronizar=FALSE,main=NULL,correction="none",plot=TRUE){
-  Dist=as.dist(Dist)
+  if(class(Dist)=="Distancia"){Dist=Dist$Distancia}
+   Dist=as.dist(Dist)
   if(Padronizar==TRUE){
     Dados=apply(Dados,2,function(x) (x-mean(x))/sd(x))
   }

@@ -1,4 +1,10 @@
+# MultivariateAnalysis 0.4.1
+## Minor improvements
+* New argument `alternativa` in `CorrelacaoMantel`
+* The outputs of the functions was improved.
 
+## New functions
+* New function `HeatPlot()`
 
 # MultivariateAnalysis 0.4.0
 ## Minor improvements
@@ -6,6 +12,7 @@
 * New argument `Titulo` in `Dendograma`
 * New argument `corte` in `Dendograma`
 * New data example `Dados.DBC.misto` in `Dendograma`
+
 ## New functions
 * New function `Quant2Quali()`
 * New function `CoordenadasPrincipais()`
@@ -16,6 +23,7 @@
 *The presentation message has been changed. 
 *The print of `Tocher` output function was improved
 * New argument `nperm` in `Dendograma`
+
 ## New functions
 * New function `ComponentesPrincipais.misto()`
 

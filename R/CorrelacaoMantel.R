@@ -2,17 +2,29 @@
 #'
 #' @description Esta funcao faz a correlacao entre matrizes e estima sua
 #' significancia pelo teste Mantel.
-#' @usage CorrelacaoMantel(Mat1,Mat2,nperm=999,Plot=TRUE,xlab="Dist1",ylab="Dist2",bty="l")
+#' @usage CorrelacaoMantel(Mat1,Mat2,
+#'                         nperm=999,
+#'                         alternativa="bilateral",
+#'                         Plot=TRUE,
+#'                         xlab="Dist1",
+#'                         ylab="Dist2",
+#'                         bty="l")
 #' @param Mat1 Objeto contendo a matriz de dissimilaridade. A matriz deve ser
 #' quadrada e simetrica. Ou um objeto do tipo `dist`.
 #' @param Mat2 Objeto contendo a matriz de dissimilaridade. A matriz deve ser
 #' quadrada e simetrica. Ou um objeto do tipo `dist`.
 #' @param nperm Numero de permutacoes para identificar a signficancia pelo metodo de Mantel
+#' @param alternativa Character indicando a hipotese alternativa considerada. Pode ser:
+#' \itemize{
+#'      \item "bilateral": Testa se a correlacao e diferente de zero.
+#'      \item "maior" : Testa se a correlacao e maior de zero.
+#'      \item "menor : Testa se a correlacao e menor de zero.
+#'      }
 #' @param Plot  Valor logico (TRUE ou FALSE) indicando se aparecera o grafico de
 #' correlacao entre as matriz cofenetica e de dissimilaridade
 #' @param xlab nome do eixo x do grafico
 #' @param ylab nome do eixo y do grafico
-#' @param bty deve receber un character indicando o tipo de borda desejado no
+#' @param bty deve receber um character indicando o tipo de borda desejado no
 #'   grafico.
 #'
 #'
@@ -56,15 +68,40 @@
 #' CorrelacaoMantel(Mat1,Mat2)
 #'}
 #' @export
-#'
-#Funcao baseada na presente no pacote biotools.
+#' @exportS3Method print CorrelacaoMantel
+#
 
-CorrelacaoMantel=function(Mat1,Mat2,nperm=999,Plot=TRUE,xlab="Dist1",ylab="Dist2",bty="l"){
+CorrelacaoMantel=function(Mat1,Mat2,nperm=999,alternativa="bilateral",Plot=TRUE,
+                          xlab="Dist1",ylab="Dist2",bty="l"){
 
-if(is.matrix(Mat1)){Mat1=dist(Mat1)}
-if(is.matrix(Mat2)){Mat2=dist(Mat2)}
+  alternativa <- match.arg(alternativa, c("bilateral", "menor", "maior"))
 
-Mantel=mantelTest(Mat1,Mat2,graph = FALSE,nperm = nperm)
+  if(class(Mat1)=="Distancia"){Mat1=Mat1$Distancia}
+  if(class(Mat2)=="Distancia"){Mat2=Mat2$Distancia}
+  x=(as.matrix(Mat1))
+  y=(as.matrix(Mat2))
+
+
+  r=cor(as.dist(x),as.dist(y))
+
+  r0=NULL
+  for(i in 1:nperm){
+    id=sample(1:ncol(x),replace = FALSE)
+    r0=c(r0,cor(as.dist(x),as.dist(y[id,id])))
+  }
+
+
+
+
+  if(alternativa=="bilateral"){pv=mean(c(abs(r)<=abs(r0),1))}
+  if(alternativa=="maior"){pv=mean(c(r<=(r0),1))}
+  if(alternativa=="menor"){pv=mean(c(r>=(r0),1))}
+
+  Mantel=list(
+    correlation=r,
+    p.value=pv,
+    alternative=alternativa)
+  class(Mantel)="CorrelacaoMantel"
 
 if(Plot==TRUE){
   sig=ifelse(Mantel$p.value>0.05,"ns",ifelse((Mantel$p.value<0.05)&(Mantel$p.value>0.01),"*",ifelse(Mantel$p.value<0.01,"**", "")))
@@ -75,7 +112,11 @@ return(Mantel)
 }
 
 
-
+print.CorrelacaoMantel=function(x, ...){
+  cat( "Estimativa de correlacao: ",x$correlation,"\n")
+  cat( "P-valor obtido pelo teste Mantel: ",x$p.value,"\n")
+  cat( "Hipotese alternativa: ",x$alternative,"\n")
+}
 
 
 

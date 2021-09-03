@@ -15,11 +15,11 @@ Dados.Misto
 #colocando nome nos individuos
 rownames(Dados.Misto)=paste0("T",1:nrow(Dados.Misto))
 Gower1=Distancia(Dados.Misto,Metodo = 21)
-round(Gower1,3)
+round(Gower1$Distancia,3)
 
 ## -----------------------------------------------------------------------------
 Gower2=Distancia(Dados.Misto,Metodo = 22)
-round(Gower2,3)
+round(Gower2$Distancia,3)
 
 ## -----------------------------------------------------------------------------
 #Indice de jacard
@@ -65,7 +65,7 @@ Dendograma(Metodo3,Metodo=3,Titulo="Metodo3")
 Dendograma(Metodo4,Metodo=4,Titulo="Metodo4")
 
 ## -----------------------------------------------------------------------------
-mat=cbind(Gower1=Gower1,Gower2=Gower2,Metodo3=Metodo3,Metodo4=Metodo4)
+mat=cbind(Gower1=Gower1$Distancia,Gower2=Gower2$Distancia,Metodo3=Metodo3,Metodo4=Metodo4$Distancia)
 Cor=cor(mat)
 Cor
 

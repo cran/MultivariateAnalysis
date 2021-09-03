@@ -2,7 +2,7 @@
 % Please edit documentation in R/CoordenadasPrincipais.R
 \name{CoordenadasPrincipais}
 \alias{CoordenadasPrincipais}
-\title{Coordenadas principais}
+\title{Estudo de coordenadas principais}
 \usage{
 CoordenadasPrincipais(Dist,
        Dados=NULL,

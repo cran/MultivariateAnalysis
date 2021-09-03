@@ -33,7 +33,7 @@ Dendo$MojenaCorte
 
 ## -----------------------------------------------------------------------------
 #Dendograma com o metodo UPGMA
-To=Tocher(Dist,corPlot = FALSE)
+To=Tocher(Dist)
 To$Tocher
 To$DistanciaIntraInterCluster
 To$CorrelacaoCofenetica

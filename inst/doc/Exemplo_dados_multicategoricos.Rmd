@@ -51,7 +51,7 @@ Para se ter diferentes medidas de dissimilaridade basta colocar o respectivo num
 #colocando nome nos individuos
 rownames(Dados.CAT)=paste0("T",1:nrow(Dados.CAT))
 Dist=Distancia(Dados.CAT,Metodo = 10)
-round(Dist,3)
+Dist
 ```
 Informações importantes podem ser obtidas dessa matriz com a função `SummaryDistancia`:
 ```{r}

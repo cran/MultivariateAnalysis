@@ -53,14 +53,21 @@
 
 MediaDistancia=function(Distancias,n,Normatizar=TRUE){
 
+  Distancias2=vector("list", length(Distancias))
+
 
 
   for(i in 1:length(Distancias)){
-    Distancias[[i]]=as.matrix(Distancias[[i]])
+    if(class(Distancias[[i]])=="Distancia"){
+      Distancias2[[i]]=as.matrix(Distancias[[i]]$Distancia)
+    }
 
-  }
+    if(class(Distancias[[i]])!="Distancia"){
+    Distancias2[[i]]=as.matrix(Distancias[[i]])
 
+  }}
 
+  Distancias=Distancias2
 
   if(Normatizar==TRUE){
     for(i in 1:length(Distancias)){

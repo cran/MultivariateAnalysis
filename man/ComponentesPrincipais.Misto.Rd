@@ -2,9 +2,12 @@
 % Please edit documentation in R/ComponentesPrincipais.Misto.R
 \name{ComponentesPrincipais.Misto}
 \alias{ComponentesPrincipais.Misto}
-\title{Componentes principais para dados mistos (qualitativos e quantiativos)}
+\title{Componentes principais para dados mistos (qualitativos e quantitativos)}
 \usage{
-ComponentesPrincipais.Misto(Dados,plot="all",NomeTrat=NULL,NomeVar=NULL)
+ComponentesPrincipais.Misto(Dados,
+plot="all",
+NomeTrat=NULL,
+NomeVar=NULL)
 }
 \arguments{
 \item{Dados}{Dataframe com os valores para obtencao dos componentes principais.Esta

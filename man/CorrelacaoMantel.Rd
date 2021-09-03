@@ -4,7 +4,13 @@
 \alias{CorrelacaoMantel}
 \title{Estimacao da correlacao e significancia pelo metodo Mantel.}
 \usage{
-CorrelacaoMantel(Mat1,Mat2,nperm=999,Plot=TRUE,xlab="Dist1",ylab="Dist2",bty="l")
+CorrelacaoMantel(Mat1,Mat2,
+                        nperm=999,
+                        alternativa="bilateral",
+                        Plot=TRUE,
+                        xlab="Dist1",
+                        ylab="Dist2",
+                        bty="l")
 }
 \arguments{
 \item{Mat1}{Objeto contendo a matriz de dissimilaridade. A matriz deve ser
@@ -15,6 +21,13 @@ quadrada e simetrica. Ou um objeto do tipo `dist`.}
 
 \item{nperm}{Numero de permutacoes para identificar a signficancia pelo metodo de Mantel}
 
+\item{alternativa}{Character indicando a hipotese alternativa considerada. Pode ser:
+\itemize{
+     \item "bilateral": Testa se a correlacao e diferente de zero.
+     \item "maior" : Testa se a correlacao e maior de zero.
+     \item "menor : Testa se a correlacao e menor de zero.
+     }}
+
 \item{Plot}{Valor logico (TRUE ou FALSE) indicando se aparecera o grafico de
 correlacao entre as matriz cofenetica e de dissimilaridade}
 
@@ -22,7 +35,7 @@ correlacao entre as matriz cofenetica e de dissimilaridade}
 
 \item{ylab}{nome do eixo y do grafico}
 
-\item{bty}{deve receber un character indicando o tipo de borda desejado no
+\item{bty}{deve receber um character indicando o tipo de borda desejado no
   grafico.
 
 

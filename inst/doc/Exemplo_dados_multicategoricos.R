@@ -15,7 +15,7 @@ Dados.CAT
 #colocando nome nos individuos
 rownames(Dados.CAT)=paste0("T",1:nrow(Dados.CAT))
 Dist=Distancia(Dados.CAT,Metodo = 10)
-round(Dist,3)
+Dist
 
 ## -----------------------------------------------------------------------------
 resumo=SummaryDistancia(Dist)

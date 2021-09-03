@@ -121,6 +121,7 @@ To$Tocher
 ```{r}
 CP=ComponentesPrincipais(DadosMed,padronizar = TRUE)
 ```
+
 ### Porém, quando se tem repetições, o mais indicado é o estudo de variáveis canônicas:
 
 Para isso, deve-se indicar qual é o `Modelo` referente ao delineamento:

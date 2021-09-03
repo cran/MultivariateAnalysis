@@ -103,7 +103,7 @@ Dendo$MojenaCorte
 Adcionalmente, pode-se fazer o agrupamento Tocher com o auxilio da função `Tocher`:
 ```{r}
 #Dendograma com o metodo UPGMA
-To=Tocher(Dist,corPlot = FALSE)
+To=Tocher(Dist)
 To$Tocher
 To$DistanciaIntraInterCluster
 To$CorrelacaoCofenetica

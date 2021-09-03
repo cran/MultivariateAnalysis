@@ -18,7 +18,7 @@ Res
 ## -----------------------------------------------------------------------------
 DadosMed=Res$Med
 DistMaha=Distancia(DadosMed,Metodo = 7,Cov = Res$CovarianciaResidual)
-round(DistMaha,3)
+DistMaha
 
 ## -----------------------------------------------------------------------------
 resumo=SummaryDistancia(DistMaha)
@@ -35,7 +35,7 @@ rownames(Dadosquali2)=Dados.DBC.Misto[id,1]
 
 
 Distquali=Distancia(Dadosquali2,Metodo = 10)
-round(Distquali,3)
+round(Distquali$Distancia,3)
 
 ## -----------------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ Dendograma(Distquali,Metodo=3, Titulo="Dados qualitativos")
 Dendograma(DistMisto,Metodo=3,Titulo= "Qualitativos + Quantiativos")
 
 ## -----------------------------------------------------------------------------
-Tocher(DistMisto,corPlot = FALSE)
+Tocher(DistMisto)
 
 ## -----------------------------------------------------------------------------
 CorrelacaoMantel(DistMaha,DistMisto)

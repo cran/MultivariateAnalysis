@@ -5,17 +5,17 @@
 \title{Componentes principais}
 \usage{
 ComponentesPrincipais(D,
-                             padronizar=TRUE,
-                             xlab="PCA 1",
-                             ylab="PCA 2",
-                             CR=TRUE,
-                             CorPlot=TRUE,
-                             CorCol="red",
-                             VarCol="blue",
-                             Perc=0.1,
-                             NomeTrat=NULL,
-                             NomeVar=NULL,
-                              bty="L")
+padronizar=TRUE,
+xlab="PCA 1",
+ylab="PCA 2",
+CR=TRUE,
+CorPlot=TRUE,
+CorCol="red",
+VarCol="blue",
+Perc=0.1,
+NomeTrat=NULL,
+NomeVar=NULL,
+bty="L")
 }
 \arguments{
 \item{D}{Matriz com os valores para obtencao dos componentes principais.Esta

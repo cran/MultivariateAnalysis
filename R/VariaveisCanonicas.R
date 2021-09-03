@@ -3,16 +3,16 @@
 #' @description Esta funcao faz a analise dos dados pelo metodo de variaveis
 #'   canonicas.
 #' @usage VariaveisCanonicas(Dados,
-#'                           Modelo,
-#'                           Fator=NULL,
-#'                           xlab="VC 1",
-#'                            ylab="VC 2",
-#'                            CR=TRUE,
-#'                            CorPlot=TRUE,
-#'                            CorCol="red",
-#'                            VarCol ="blue",
-#'                            bty="L",
-#'                            Perc)
+#'              Modelo=1,
+#'               Fator=NULL,
+#'                xlab="VC1",
+#'                ylab="VC2",
+#'                CR=TRUE,
+#'                CorPlot=TRUE,
+#'                CorCol="red",
+#'                VarCol ="blue",
+#'                bty="L",
+#'                Perc=0.1)
 #' @param Dados Matriz contendo os dados para execucao da MANOVA. Para cada
 #'   modelo o conjunto de dados precisa estar organizado de uma forma
 #'   apropriada:
@@ -106,10 +106,34 @@
 #' VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="B")
 #'}
 #' @export
+#' @exportS3Method print VariaveisCanonicas
 
-VariaveisCanonicas=function(Dados,Modelo=1,Fator=NULL,xlab="VC 1", ylab="VC 2",
+VariaveisCanonicas=function(Dados,Modelo=1,Fator=NULL,xlab="VC1", ylab="VC2",
                         CR=TRUE, CorPlot=TRUE,CorCol="red",VarCol = "blue",
                         bty="L", Perc=0.1){
 D=Dados
-VariaveisCanonicas2(D,Modelo=Modelo,Factor=Fator,xlab=xlab, ylab=ylab,CR=CR, CorPlot=CorPlot,CorCol=CorCol,VarCol = VarCol, bty=bty, Perc=Perc)
+VC=VariaveisCanonicas2(D,Modelo=Modelo,Factor=Fator,xlab=xlab, ylab=ylab,CR=CR, CorPlot=CorPlot,CorCol=CorCol,VarCol = VarCol, bty=bty, Perc=Perc)
+class(VC)="VariaveisCanonicas"
+return(VC)
+}
+
+print.VariaveisCanonicas=function(x, ...){
+  cat("__________________________________________________________________","\n")
+  cat("Estudo das variaveis canonicas","\n")
+  cat("\n")
+ cat("Explicacao das variaveis canonicas","\n")
+ VC=x$ContribuicaoVC
+ rownames(VC)=paste0("VC",1:nrow(VC))
+ print(VC)
+ cat("\n")
+
+ cat("Escores das variaveis canonicas","\n")
+ print(x$Escores)
+ cat("\n")
+
+ cat("Importancia","\n")
+ cat("Correlacao das caracteristicas com os escores das variaveis canonicas","\n")
+ print(x$`Correlacoes (importancia relativa)`[,1:ncol(x$Escores)])
+
+ cat("__________________________________________________________________","\n")
 }

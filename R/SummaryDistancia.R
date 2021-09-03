@@ -1,8 +1,15 @@
 #' Resumo das informacoes de cada tratamento em funcao da dissimilaridade
 #'
 #' @description Esta funcao apresenta informacoes que resumem a matriz de dissimilaridade
-#' @usage SummaryDistancia(Dist,ndec=2,plot=TRUE,layout="shade", type="full", title=NULL,
-#' tl.cex =1, tl.col="black", col=NULL)
+#' @usage SummaryDistancia(Dist,
+#' ndec=2,
+#' plot=TRUE,
+#' layout="shade",
+#' type="full",
+#' title=NULL,
+#' tl.cex =1,
+#' tl.col="black",
+#' col=NULL)
 #' @param Dist Matriz de dissimilaridade
 #' @param ndec Valor numerico indicando o numero de casas decimais.
 #' @param plot Valor logico (TRUE ou FALSE). Indica se o grafico deve ser apresentado.
@@ -49,7 +56,7 @@
 #'  Dist=Distancia(Dados.MED,1)
 #'  SummaryDistancia(Dist)
 #'  #Acrescentando nomes aos tratamentos
-#'  Dist=as.matrix(Dist)
+#'  Dist=as.matrix(Dist$Distancia)
 #'  rownames(Dist)=colnames(Dist)=paste("Trat",1:nrow(Dist))
 #'  SummaryDistancia(Dist)
 #'  #Diferentes configuracoes
@@ -69,6 +76,7 @@
 #'  SummaryDistancia(Dist,type = "lower",layout = "ellipse",col=col3(200))
 #' @importFrom corrplot corrplot
 #' @export
+#' @exportS3Method print SummaryDistancia
 
 
 
@@ -83,7 +91,11 @@ SummaryDistancia=function(Dist,ndec=2,
                           tl.cex =1,
                           tl.col="black",
                           col=NULL){
-  Dist2=as.matrix(Dist)
+
+
+  if(class(Dist)[1]=="Distancia"){Dist=Dist$Distancia}
+
+  D=Dist2=as.matrix(Dist)
   diag(Dist2)=NA
   Medio=round(apply(Dist2,1,mean,na.rm=T),ndec)
   Minimo=round(apply(Dist2,1,min,na.rm=T),ndec)
@@ -114,5 +126,53 @@ if(plot==TRUE){
 
 }
 
-  data.frame(Medio=Medio, Minimo=Minimo,Maximo=Maximo,sd=sd,MaisProximo=MaisProximo,MaisDistante=MaisDistante)
+  NomeTrat=function(D,Min){
+    D=as.matrix(D)
+    x=NULL
+    for(i in 1:(ncol(D)-1)){
+      for(j in (i+1):ncol(D)){
+        if(D[i,j]==Min){
+          x=rbind(x,c(colnames(D)[i],colnames(D)[j]))
+        }
+      }
+    }
+    #x=as.matrix(x)
+    if(nrow(x)>1){x=x[1,]}
+    return(c(x))
+  }
+
+
+  tab=data.frame(Medio=Medio, Minimo=Minimo,Maximo=Maximo,sd=sd,MaisProximo=MaisProximo,MaisDistante=MaisDistante)
+
+  Resumo=list(
+  Minimo=min(as.dist(Dist)),
+  Maximo=max(as.dist(Dist)),
+  Media=mean(as.dist(Dist)) ,
+  Amplitude=max(as.dist(Dist))-min(as.dist(Dist)),
+  DesvioPadrao= sd(as.dist(Dist)),
+  CoeficienteVariacao=100*sd(as.dist(Dist))/mean(as.dist(Dist)),
+  MaisProximo=NomeTrat(Dist,min(as.dist(Dist))),
+  MaisDistante=NomeTrat(Dist,max(as.dist(Dist))))
+
+  res=list(Tabela=tab,Resumo=Resumo)
+  class(res)= "SummaryDistancia"
+return(res)
+  }
+
+
+print.SummaryDistancia=function(x, ...){
+  cat("_________________________________________________________________________","\n")
+  cat("Tabela com o resumo da matriz dissimilaridade","\n")
+  print(x$Tabela)
+  cat("\n")
+  cat("Menor Distancia:",x$Resumo$Minimo,"\n")
+  cat("Maior Distancia:",x$Resumo$Maximo,"\n")
+  cat("Media das Distancias:",x$Resumo$Media,"\n")
+  cat("Amplitude das Distancias:",x$Resumo$Amplitude,"\n")
+  cat("Desvio Padrao das Distancias:",x$Resumo$DesvioPadrao,"\n")
+  cat("Coeficiente de variacao das Distancias:",x$Resumo$CoeficienteVariacao,"\n")
+  cat("Individuos mais proximos:",x$Resumo$MaisProximo,"\n")
+  cat("Individuos mais distantes:",x$Resumo$MaisDistante,"\n")
+  cat("_________________________________________________________________________","\n")
+
 }

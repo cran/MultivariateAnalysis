@@ -19,7 +19,7 @@ Res
 #colocando nome nos individuos
 DadosMed=Res$Med
 Dist=Distancia(DadosMed,Metodo = 7,Cov = Res$CovarianciaResidual)
-round(Dist,3)
+Dist
 
 ## -----------------------------------------------------------------------------
 resumo=SummaryDistancia(Dist)

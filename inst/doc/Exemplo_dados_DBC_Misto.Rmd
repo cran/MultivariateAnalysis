@@ -77,7 +77,7 @@ Para se ter diferentes medidas de dissimilaridade basta colocar o respectivo num
 ```{r}
 DadosMed=Res$Med
 DistMaha=Distancia(DadosMed,Metodo = 7,Cov = Res$CovarianciaResidual)
-round(DistMaha,3)
+DistMaha
 ```
 Informações importantes podem ser obtidas dessa matriz com a função `SummaryDistancia`:
 ```{r}
@@ -109,7 +109,7 @@ rownames(Dadosquali2)=Dados.DBC.Misto[id,1]
 
 
 Distquali=Distancia(Dadosquali2,Metodo = 10)
-round(Distquali,3)
+round(Distquali$Distancia,3)
 ```
 
 
@@ -164,7 +164,7 @@ Dendograma(DistMisto,Metodo=3,Titulo= "Qualitativos + Quantiativos")
 ```
 Adcionalmente, pode-se fazer o agrupamento Tocher com o auxilio da função `Tocher`:
 ```{r}
-Tocher(DistMisto,corPlot = FALSE)
+Tocher(DistMisto)
 ```
 
 # Estimativas de correção entre as medidas de dissimilaridade

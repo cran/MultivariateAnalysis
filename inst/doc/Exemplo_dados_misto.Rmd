@@ -43,7 +43,7 @@ Uma possibilidade quando se tem dados misto é o uso do índice de Gower.
 #colocando nome nos individuos
 rownames(Dados.Misto)=paste0("T",1:nrow(Dados.Misto))
 Gower1=Distancia(Dados.Misto,Metodo = 21)
-round(Gower1,3)
+round(Gower1$Distancia,3)
 ```
 
 Um problema desta metodologia, é que neste caso, quando as variáveis binárias (0 ou 1) indicando a presença ou ausência de bandas a informação 0-0 (ausencia de bandas em ambos os indivíduos) indica que os dois índivíduos são iguais, o que não é verdade necessáriamente. Caso queira desconsiderar essas informações (0-0) no cômputo da dissimilaridade, pode-se usar o "índice de Gower 2".
@@ -52,7 +52,7 @@ Um problema desta metodologia, é que neste caso, quando as variáveis binárias
 Essa medidada deve ser utilizada quando se tem variáveis binárias (0 ou 1) indicando a presença ou ausência de bandas. Neste caso, a informação 0-0 (ausencia de bandas em ambos os indivíduos) são desconsiderados no cômputo da dissimilaridade, raciocícnio similar ao indice de Jacard.
 ```{r}
 Gower2=Distancia(Dados.Misto,Metodo = 22)
-round(Gower2,3)
+round(Gower2$Distancia,3)
 ```
 
 ## Método 3: Calcular a medida de dissimilaridade mais apropriada para cada variável e fazer a média ponderada posteriormente.
@@ -140,7 +140,7 @@ Dendograma(Metodo4,Metodo=4,Titulo="Metodo4")
 # Para comparar as metodologias pode-se estimar a correlação dos metodos dois a dois
 
 ```{r}
-mat=cbind(Gower1=Gower1,Gower2=Gower2,Metodo3=Metodo3,Metodo4=Metodo4)
+mat=cbind(Gower1=Gower1$Distancia,Gower2=Gower2$Distancia,Metodo3=Metodo3,Metodo4=Metodo4$Distancia)
 Cor=cor(mat)
 Cor
 ```

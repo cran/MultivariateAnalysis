@@ -15,7 +15,7 @@ Dados.MED
 #colocando nome nos individuos
 rownames(Dados.MED)=paste0("T",1:nrow(Dados.MED))
 Dist=Distancia(Dados.MED,Metodo = 5)
-round(Dist,3)
+
 
 ## -----------------------------------------------------------------------------
 resumo=SummaryDistancia(Dist)
@@ -33,5 +33,7 @@ Tocher(Dist)
 
 COp=CoordenadasPrincipais(Dist,main = "")
 CoordenadasPrincipais(Dist,Dados = Dados.MED,Padronizar = TRUE,main="")
+
+## -----------------------------------------------------------------------------
 ComponentesPrincipais(Dados.MED)
 

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Alcinei Mistico Azevedo (ICA-UFMG)" />
 
-<meta name="date" content="2021-08-04" />
+<meta name="date" content="2021-09-03" />
 
 <title>Exemplo: Experimento com dados mistos sem repetições</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Exemplo: Experimento com dados mistos sem repetições</h1>
 <h4 class="author">Alcinei Mistico Azevedo (ICA-UFMG)</h4>
-<h4 class="date">2021-08-04</h4>
+<h4 class="date">2021-09-03</h4>
 
 
 
@@ -173,7 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#colocando nome nos individuos</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Dados.Misto)<span class="ot">=</span><span class="fu">paste0</span>(<span class="st">&quot;T&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(Dados.Misto))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Gower1<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto,<span class="at">Metodo =</span> <span class="dv">21</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Gower1,<span class="dv">3</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Gower1<span class="sc">$</span>Distancia,<span class="dv">3</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       T1    T2    T3    T4</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2 0.325                  </span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3 0.473 0.521            </span></span>
@@ -185,7 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Método 2: Índice de Gower 2</h2>
 <p>Essa medidada deve ser utilizada quando se tem variáveis binárias (0 ou 1) indicando a presença ou ausência de bandas. Neste caso, a informação 0-0 (ausencia de bandas em ambos os indivíduos) são desconsiderados no cômputo da dissimilaridade, raciocícnio similar ao indice de Jacard.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Gower2<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto,<span class="at">Metodo =</span> <span class="dv">22</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Gower2,<span class="dv">3</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Gower2<span class="sc">$</span>Distancia,<span class="dv">3</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       T1    T2    T3    T4</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2 0.357                  </span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3 0.473 0.521            </span></span>
@@ -247,11 +247,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Agora, podemos considerar todos os dados como qualitativos e considerar o índice de discordancia com medida de dissimilaridade.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Metodo4<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto2,<span class="at">Metodo =</span> <span class="dv">10</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Metodo4</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           T1        T2        T3        T4</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2 0.4545455                              </span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3 0.5454545 0.6363636                    </span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T4 0.6363636 0.5454545 0.6363636          </span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5 0.8181818 0.7272727 0.7272727 0.8181818</span></span></code></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Medida de dissimilaridade: 10 = Frequencia de discordancia.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Menor Distancia: 0.4545455 </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Maior Distancia: 0.8181818 </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Media das Distancias: 0.6545455 </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Amplitude das Distancias: 0.3636364 </span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Desvio Padrao das Distancias: 0.1196874 </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coeficiente de variacao das Distancias: 18.28557 </span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Individuos mais proximos: T1 T2 </span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Individuos mais distantes: T1 T5</span></span></code></pre></div>
 </div>
 </div>
 <div id="após-obter-a-matriz-de-dissimilaridade-podemos-fazer-o-dendograma." class="section level1">
@@ -267,112 +272,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>8 = Metodo mcquitty (WPGMA).</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendograma</span>(Gower1,<span class="at">Metodo=</span><span class="dv">3</span>,<span class="at">Titulo=</span><span class="st">&quot;Gower1&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
-<pre><code>#&gt; $DistanciaFenetica
-#&gt;           T1        T2        T3        T4
-#&gt; T2 0.3249251                              
-#&gt; T3 0.4971279 0.4971279                    
-#&gt; T4 0.5306693 0.5306693 0.5306693          
-#&gt; T5 0.7075175 0.7075175 0.7075175 0.7075175
-#&gt; 
-#&gt; $CorrelacaoCofenetica
+<pre><code>#&gt; _________________________________________________________________________ 
+#&gt; Estimativa de correlacao cofenetica: 
 #&gt; [1] 0.9486072
+#&gt; Significancia da correlacao cofenetica pelo teste Mantel 
+#&gt; pvalor: 0.019 
+#&gt; Hipotese alternativa: A correlacao e maior que 0 
 #&gt; 
-#&gt; $SigCorrelCofenetica
-#&gt; 
-#&gt;             Mantel&#39;s permutation test
-#&gt; 
-#&gt; Correlation: 0.9486072
-#&gt; p-value: 0.024, based on 999 matrix permutations
-#&gt; Alternative hypothesis: true correlation is greater than 0 
-#&gt; 
-#&gt; $MojenaCorte
+#&gt; Ponto de corte pelo metodo Mojena 
 #&gt;    k=1.25       k=2 
 #&gt; 0.7110568 0.8286550 
-#&gt; 
-#&gt; $Ordem
-#&gt; [1] 5 4 3 1 2</code></pre>
+#&gt; _________________________________________________________________________</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendograma</span>(Gower2,<span class="at">Metodo=</span><span class="dv">3</span>,<span class="at">Titulo=</span><span class="st">&quot;Gower2&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
-<pre><code>#&gt; $DistanciaFenetica
-#&gt;           T1        T2        T3        T4
-#&gt; T2 0.3574176                              
-#&gt; T3 0.4971279 0.4971279                    
-#&gt; T4 0.6064195 0.6064195 0.6064195          
-#&gt; T5 0.7232767 0.7232767 0.7232767 0.7232767
-#&gt; 
-#&gt; $CorrelacaoCofenetica
+<pre><code>#&gt; _________________________________________________________________________ 
+#&gt; Estimativa de correlacao cofenetica: 
 #&gt; [1] 0.9655169
+#&gt; Significancia da correlacao cofenetica pelo teste Mantel 
+#&gt; pvalor: 0.014 
+#&gt; Hipotese alternativa: A correlacao e maior que 0 
 #&gt; 
-#&gt; $SigCorrelCofenetica
-#&gt; 
-#&gt;             Mantel&#39;s permutation test
-#&gt; 
-#&gt; Correlation: 0.9655169
-#&gt; p-value: 0.011, based on 999 matrix permutations
-#&gt; Alternative hypothesis: true correlation is greater than 0 
-#&gt; 
-#&gt; $MojenaCorte
+#&gt; Ponto de corte pelo metodo Mojena 
 #&gt;    k=1.25       k=2 
 #&gt; 0.7410889 0.8581060 
-#&gt; 
-#&gt; $Ordem
-#&gt; [1] 5 4 3 1 2</code></pre>
+#&gt; _________________________________________________________________________</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendograma</span>(Metodo3,<span class="at">Metodo=</span><span class="dv">3</span>,<span class="at">Titulo=</span><span class="st">&quot;Metodo3&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
-<pre><code>#&gt; $DistanciaFenetica
-#&gt;           T1        T2        T3        T4
-#&gt; T2 0.4945408                              
-#&gt; T3 0.6006348 0.6006348                    
-#&gt; T4 0.6824115 0.6824115 0.6824115          
-#&gt; T5 0.8203690 0.8203690 0.8203690 0.8203690
-#&gt; 
-#&gt; $CorrelacaoCofenetica
+<pre><code>#&gt; _________________________________________________________________________ 
+#&gt; Estimativa de correlacao cofenetica: 
 #&gt; [1] 0.8987349
+#&gt; Significancia da correlacao cofenetica pelo teste Mantel 
+#&gt; pvalor: 0.024 
+#&gt; Hipotese alternativa: A correlacao e maior que 0 
 #&gt; 
-#&gt; $SigCorrelCofenetica
-#&gt; 
-#&gt;             Mantel&#39;s permutation test
-#&gt; 
-#&gt; Correlation: 0.8987349
-#&gt; p-value: 0.011, based on 999 matrix permutations
-#&gt; Alternative hypothesis: true correlation is greater than 0 
-#&gt; 
-#&gt; $MojenaCorte
+#&gt; Ponto de corte pelo metodo Mojena 
 #&gt;    k=1.25       k=2 
 #&gt; 0.8213046 0.9243939 
-#&gt; 
-#&gt; $Ordem
-#&gt; [1] 5 4 3 1 2</code></pre>
+#&gt; _________________________________________________________________________</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendograma</span>(Metodo4,<span class="at">Metodo=</span><span class="dv">4</span>,<span class="at">Titulo=</span><span class="st">&quot;Metodo4&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
-<pre><code>#&gt; $DistanciaFenetica
-#&gt;           T1        T2        T3        T4
-#&gt; T2 0.4545455                              
-#&gt; T3 0.6363636 0.6363636                    
-#&gt; T4 0.6363636 0.6363636 0.6363636          
-#&gt; T5 0.8909091 0.8909091 0.8909091 0.8909091
-#&gt; 
-#&gt; $CorrelacaoCofenetica
+<pre><code>#&gt; _________________________________________________________________________ 
+#&gt; Estimativa de correlacao cofenetica: 
 #&gt; [1] 0.9256188
+#&gt; Significancia da correlacao cofenetica pelo teste Mantel 
+#&gt; pvalor: 0.019 
+#&gt; Hipotese alternativa: A correlacao e maior que 0 
 #&gt; 
-#&gt; $SigCorrelCofenetica
-#&gt; 
-#&gt;             Mantel&#39;s permutation test
-#&gt; 
-#&gt; Correlation: 0.9256188
-#&gt; p-value: 0.027, based on 999 matrix permutations
-#&gt; Alternative hypothesis: true correlation is greater than 0 
-#&gt; 
-#&gt; $MojenaCorte
+#&gt; Ponto de corte pelo metodo Mojena 
 #&gt;    k=1.25       k=2 
 #&gt; 0.8787674 1.0133006 
-#&gt; 
-#&gt; $Ordem
-#&gt; [1] 5 4 3 1 2</code></pre>
+#&gt; _________________________________________________________________________</code></pre>
 </div>
 <div id="para-comparar-as-metodologias-pode-se-estimar-a-correlação-dos-metodos-dois-a-dois" class="section level1">
 <h1>Para comparar as metodologias pode-se estimar a correlação dos metodos dois a dois</h1>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mat<span class="ot">=</span><span class="fu">cbind</span>(<span class="at">Gower1=</span>Gower1,<span class="at">Gower2=</span>Gower2,<span class="at">Metodo3=</span>Metodo3,<span class="at">Metodo4=</span>Metodo4)</span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mat<span class="ot">=</span><span class="fu">cbind</span>(<span class="at">Gower1=</span>Gower1<span class="sc">$</span>Distancia,<span class="at">Gower2=</span>Gower2<span class="sc">$</span>Distancia,<span class="at">Metodo3=</span>Metodo3,<span class="at">Metodo4=</span>Metodo4<span class="sc">$</span>Distancia)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Cor<span class="ot">=</span><span class="fu">cor</span>(mat)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Cor</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            Gower1    Gower2   Metodo3   Metodo4</span></span>

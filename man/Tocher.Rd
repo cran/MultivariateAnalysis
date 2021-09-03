@@ -4,28 +4,38 @@
 \alias{Tocher}
 \title{Agrupamento Tocher}
 \usage{
-Tocher(Dist,Metodo="original",nperm=9999, corPlot=TRUE,
-xlab="Dissimilaridade",ylab="Distancia fenetica",bty="n")
+Tocher(Dist,
+Metodo="original",
+nperm=999,
+Plot=1,
+xlab="Dissimilaridade",
+ylab="Distancia fenetica",
+bty="n")
 }
 \arguments{
 \item{Dist}{Objeto contendo a matriz de dissimilaridade}
 
 \item{Metodo}{Um character indicando o algoritimo de agrupamento.
 Ha duas possibidades: "original" (default) ou "sequential".
- O ultimo foi proposto por Vasconcelos et al. (2007), tambem chamando de metodo
- Tocher modificado.}
+ O ultimo foi proposto por Vasconcelos et al. (2007), tambem chamando de
+  metodo   Tocher modificado.}
 
-\item{nperm}{Numero de permutacoes para identificar a signficancia pelo metodo de Mantel}
+\item{nperm}{Numero de permutacoes para identificar a signficancia pelo
+metodo de Mantel}
 
-\item{corPlot}{Valor logico (TRUE ou FALSE) indicando se aparecera o grafico de
-correlacao entre as matriz cofenetica e de dissimilaridade}
+\item{Plot}{Numero indicando qual grafico devera ser plotado:
+ \itemize{
+     \item"1": Grafico com as distancias intra e intercluster
+     \item"2": Grafico com as dispersao da distancia cofenetica em funcao
+      dos valores de dissimilaridade.
+}}
 
-\item{xlab}{nome do eixo x do grafico}
+\item{xlab}{nome do eixo x do grafico. Deve ser utilizado quando o Plot=2.}
 
-\item{ylab}{nome do eixo y do grafico}
+\item{ylab}{nome do eixo y do grafico. Deve ser utilizado quando o Plot=2.}
 
 \item{bty}{deve receber un character indicando o tipo de borda desejado no
-  grafico.
+  grafico. Deve ser utilizado quando o Plot=2.
 
 
    \itemize{

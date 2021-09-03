@@ -32,6 +32,7 @@
 #' Dist=Distancia(DadosQuali,1)
 #' Dendo=Dendograma(Dist, 3)
 #' @importFrom grDevices colorRampPalette
+#' @importFrom graphics points
 #' @export
 #'
 #'

@@ -54,6 +54,7 @@
 #' MANOVA(Dados.Fat2.DBC,5)
 #' }
 #' @export
+#' @exportS3Method print MANOVA
 
 MANOVA=function(Dados,Modelo=2){
 D=Dados
@@ -117,5 +118,31 @@ if(Modelo>3){
   Med=apply(Y,2,function(x) tapply(x,FatorA:FatorB,mean))
 }
 Resultado=list(Manova=MANOVAS,CovarianciaResidual=Cov,GLres=GLR,Med=Med)
-
+class(Resultado)="MANOVA"
  return(Resultado)}
+
+
+print.MANOVA=function(x,...){
+  cat("__________________________________________________________________________","\n")
+  cat("MANOVA com o teste Pillai","\n")
+  print(x$Manova$Teste_Pillai)
+  cat(" ","\n")
+
+  cat("MANOVA com o teste Wilks","\n")
+  print(x$Manova$Teste_Wilks)
+  cat(" ","\n")
+  cat("MANOVA com o teste Hotelling","\n")
+  print(x$Manova$Teste_HotellingL)
+  cat(" ","\n")
+  cat("MANOVA com o teste Roy","\n")
+  print(x$Manova$Teste_Roy)
+  cat(" ","\n")
+  cat("As medias dos tratamentos podem ser acessados com o $Med","\n")
+  cat("Os Graus de liberdade do residuo podem ser acessados com o $GLres","\n")
+  cat("A matriz de (co)variancias residuais pode ser acessada com o $CovarianciaResidual","\n")
+
+  cat("__________________________________________________________________________","\n")
+
+
+
+  }

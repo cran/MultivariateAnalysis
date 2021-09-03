@@ -1,8 +1,11 @@
-#' Componentes principais para dados mistos (qualitativos e quantiativos)
+#' Componentes principais para dados mistos (qualitativos e quantitativos)
 #'
 #' @description Esta funcao possibilita o estudo dos componentes principais
 #' considerando dados quantitativos e qualitativos simultaneamente.
-#' @usage ComponentesPrincipais.Misto(Dados,plot="all",NomeTrat=NULL,NomeVar=NULL)
+#' @usage ComponentesPrincipais.Misto(Dados,
+#' plot="all",
+#' NomeTrat=NULL,
+#' NomeVar=NULL)
 #' @param Dados Dataframe com os valores para obtencao dos componentes principais.Esta
 #'   matriz deve conter os valores observados, sendo as variaveis respostas na
 #'   coluna. Esta matriz nao deve conter a identificacao dos tratamentos na

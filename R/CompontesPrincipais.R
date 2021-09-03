@@ -2,17 +2,17 @@
 #'
 #' @description Esta funcao possibilita o estudo dos componentes principais .
 #' @usage ComponentesPrincipais(D,
-#'                              padronizar=TRUE,
-#'                              xlab="PCA 1",
-#'                              ylab="PCA 2",
-#'                              CR=TRUE,
-#'                              CorPlot=TRUE,
-#'                              CorCol="red",
-#'                              VarCol="blue",
-#'                              Perc=0.1,
-#'                              NomeTrat=NULL,
-#'                              NomeVar=NULL,
-#'                               bty="L")
+#' padronizar=TRUE,
+#' xlab="PCA 1",
+#' ylab="PCA 2",
+#' CR=TRUE,
+#' CorPlot=TRUE,
+#' CorCol="red",
+#' VarCol="blue",
+#' Perc=0.1,
+#' NomeTrat=NULL,
+#' NomeVar=NULL,
+#' bty="L")
 #' @param D Matriz com os valores para obtencao dos componentes principais.Esta
 #'   matriz deve conter os valores observados, sendo as variaveis respostas na
 #'   coluna. Esta matriz nao deve conter a identificacao dos tratamentos na
@@ -105,15 +105,17 @@ D=D2
   Avl=Eig$values
   Avt=Eig$vectors
 
-  Escores=as.matrix(D)%*%Avt
-  Escores2=apply(Escores,2,function(x) (x-mean(x))/sd(x))
+  Escores=as.matrix(D)%*%(Avt)
+# as.matrix(D)%*%Avt
+#t(Avt)%*%as.matrix(D)
+  Escores2=as.matrix(apply(Escores,2,function(x) (x-mean(x))/sd(x)))
 
 
   ############################################################################
   ###########################################################################
 
 
- if(CorPlot==TRUE) {Escores2=Normatiza(Escores2,Escores2,-1,1)}
+ if(CorPlot==TRUE) {Escores2=(Normatiza(Escores2,Escores2,-1,1))}
 
 
 

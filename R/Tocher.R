@@ -1,20 +1,31 @@
 #' Agrupamento Tocher
 #'
 #' @description Esta funcao faz o agrupamento pelo metodo Tocher
-#' @usage Tocher(Dist,Metodo="original",nperm=9999, corPlot=TRUE,
-#' xlab="Dissimilaridade",ylab="Distancia fenetica",bty="n")
+#' @usage Tocher(Dist,
+#' Metodo="original",
+#' nperm=999,
+#' Plot=1,
+#' xlab="Dissimilaridade",
+#' ylab="Distancia fenetica",
+#' bty="n")
 #' @param Dist Objeto contendo a matriz de dissimilaridade
 #' @param Metodo Um character indicando o algoritimo de agrupamento.
 #'  Ha duas possibidades: "original" (default) ou "sequential".
-#'   O ultimo foi proposto por Vasconcelos et al. (2007), tambem chamando de metodo
-#'   Tocher modificado.
-#' @param nperm Numero de permutacoes para identificar a signficancia pelo metodo de Mantel
-#' @param corPlot  Valor logico (TRUE ou FALSE) indicando se aparecera o grafico de
-#' correlacao entre as matriz cofenetica e de dissimilaridade
-#' @param xlab nome do eixo x do grafico
-#' @param ylab nome do eixo y do grafico
+#'   O ultimo foi proposto por Vasconcelos et al. (2007), tambem chamando de
+#'    metodo   Tocher modificado.
+#' @param nperm Numero de permutacoes para identificar a signficancia pelo
+#' metodo de Mantel
+#' @param Plot  Numero indicando qual grafico devera ser plotado:
+#'  \itemize{
+#'      \item"1": Grafico com as distancias intra e intercluster
+#'      \item"2": Grafico com as dispersao da distancia cofenetica em funcao
+#'       dos valores de dissimilaridade.
+#' }
+#'
+#' @param xlab nome do eixo x do grafico. Deve ser utilizado quando o Plot=2.
+#' @param ylab nome do eixo y do grafico. Deve ser utilizado quando o Plot=2.
 #' @param bty deve receber un character indicando o tipo de borda desejado no
-#'   grafico.
+#'   grafico. Deve ser utilizado quando o Plot=2.
 #'
 #'
 #'    \itemize{
@@ -53,37 +64,110 @@
 #' Dist=Distancia(Dados.MED,Metodo=6)
 #' Tocher(Dist)
 #'}
-#' @importFrom biotools tocher  mantelTest
+#' @importFrom biotools tocher
 #' @importFrom graphics abline
 #' @importFrom stats cophenetic lm
 #' @export
+#' @exportS3Method print Tocher
 #'
+#'
+#'
+Tocher=function(Dist,Metodo="original",nperm=999, Plot=1,xlab="Dissimilaridade",ylab="Distancia fenetica",bty="n") {
+  #    rownames(Dados.MED)=paste0("T",1:10)
+  #   Dist=Distancia(Dados.MED,5)0=
+  Dist0=Dist
+  if(class(Dist)=="Distancia"){Dist=Dist$Distancia}
 
-Tocher=function(Dist,Metodo="original",nperm=9999, corPlot=TRUE,xlab="Dissimilaridade",ylab="Distancia fenetica",bty="n") {
-  D=dist(Dist)
 
+  D=as.dist(Dist)
 
-x=tocher(D,algorithm = Metodo)
-cof=cophenetic(x)
+  #Passo 0
 
 
 
-DistanciaIntraInterCluster=x$distClust
+  x=tocher(D,algorithm = Metodo)
 
-Mantel=mantelTest(D,cof,graph = FALSE,nperm = nperm)
+  cof=cophenetic(x)
 
-if(corPlot==TRUE){
-sig=ifelse(Mantel$p.value>0.05,"ns",ifelse((Mantel$p.value<0.05)&(Mantel$p.value>0.01),"*",ifelse(Mantel$p.value<0.01,"**", "")))
-plot(D,cof,col="blue",bty=bty,main=paste("r=", round(Mantel$correlation,4),sig),xlab=xlab,ylab=ylab)
-abline(lm(cof~D),col=2)
-}
 
-out=list(#call = match.call(),
-            Tocher=list(x$clusters),
-            DistanciaCofenetica=cof,
-            DistanciaIntraInterCluster=DistanciaIntraInterCluster,
-            CorrelacaoCofenetica=Mantel)
-class(out) <- "Tocher"
+
+  DistanciaIntraInterCluster=x$distClust
+
+ # Mantel=biotools::mantelTest(D,cof,graph = FALSE,nperm = nperm)
+
+  Mantel=CorrelacaoMantel(D,cof,nperm = nperm,alternativa = "maior")
+
+  if(Plot==2){
+    sig=ifelse(Mantel$p.value>0.05,"ns",ifelse((Mantel$p.value<0.05)&(Mantel$p.value>0.01),"*",ifelse(Mantel$p.value<0.01,"**", "")))
+    plot(D,cof,col="blue",bty=bty,main=paste("r=", round(Mantel$correlation,4),sig),xlab=xlab,ylab=ylab)
+    abline(lm(cof~D),col=2)
+  }
+
+
+
+  if(Plot==1){
+    D=DistanciaIntraInterCluster
+    CP=CoordenadasPrincipais(as.dist(D),plot = FALSE)
+    xy=CP$vectors
+    if(ncol(xy)>1){dif=(max(xy[,2])-min(xy[,2]))*.04}
+    if(ncol(xy)==1){xy=cbind(xy,0.0)
+    dif=.06}
+    xy=xy[,1:2]
+
+
+    xy2=xy3=NULL
+    for(i in 1:(nrow(xy)-1)){
+      for(j in (i+1):nrow(xy)){
+        v=rbind(xy[i,],xy[j,])
+        xy2=rbind(xy2,v)
+        xy3=rbind(xy3,c(colMeans(v),D[i,j]))
+      }
+    }
+
+    par(mar=c(0,0,1,0)+0.1)
+    plot(1.5*xy,col=0,axes = F,ylab="",xlab="",main="Distancia intra e intercluster")
+    lines(xy2[,1],xy2[,2],col="blue",lwd=8)
+    points(xy[,1],xy[,2],cex=8,pch=16,col="white")
+    points(xy[,1],xy[,2],cex=8)
+
+    text(xy[,1],xy[,2]+dif,paste0("C",1:nrow(xy)))
+    XXX=(round(diag(D)+0.001,2))
+    XXX[XXX==0]="0.00"
+    text(xy[,1],xy[,2]-dif,XXX)
+    #points(xy3[,1],xy3[,2],cex=6,pch=15,col="white")
+    text(xy3[,1],xy3[,2],round(xy3[,3],2))
+
+  }
+
+
+
+
+
+  out=list(#call = match.call(),
+
+    Tocher=x$clusters,
+    DistanciaCofenetica=cof,
+    DistanciaIntraInterCluster=DistanciaIntraInterCluster,
+    CorrelacaoCofenetica=Mantel)
+  class(out) <- "Tocher"
+
+
+  if(class(Dist0)=="Distancia"){
+
+     out=list(#call = match.call(),
+      Tocher=x$clusters,
+      DistanciaCofenetica=cof,
+      DistanciaIntraInterCluster=DistanciaIntraInterCluster,
+      CorrelacaoCofenetica=Mantel,
+      Distancia=Dist0)
+    class(out) <- "Tocher"
+
+  }
+
+
+
+
+
 
 
 
@@ -93,23 +177,31 @@ return(out)
 }
 
 
-#
-# print.Tocher=  function (x, ...){
-#   cat("_________________________________________________________________________","\n")
-#   #cat("Agrupamento Tocher","\n")
-#   print(x$Tocher)
-#   cat("Distancia intra e intercluster:","\n")
-#   print(x$DistanciaIntraInterCluster)
-#   cat("\n")
-#   cat("\n")
-#   cat("Correlacao Cofenetica (teste Mantel):","\n")
-#   cat("Correlacao Cofenetica:",x$CorrelacaoCofenetica$correlation,"\n")
-#   cat("pvalor:",x$CorrelacaoCofenetica$p.value,"baseado no teste Mantel","\n")
-#   cat("Hipotese alternativa: A correlacao e maior que 0","\n")
-#
-#   #print(x$CorrelacaoCofenetica)
-#   cat("_________________________________________________________________________","\n")
-#   invisible(x)
-# }
-#
-#
+
+print.Tocher=  function (x, ...){
+  cat("_________________________________________________________________________","\n")
+  cat("Agrupamento Tocher","\n")
+
+  for(i in 1:length(x$Tocher)){
+    nomes=unlist(x$Tocher[[i]])
+    cat(paste0 ("Cluster",i,":"),"\n")
+    cat(nomes,"\n")
+    cat("\n")
+  }
+
+
+  cat("Distancia intra e intercluster:","\n")
+  Cluster=x$DistanciaIntraInterCluster
+  colnames(Cluster)=rownames(Cluster)=paste0("Cluster",1:ncol(Cluster))
+  print(Cluster)
+  cat("\n")
+  cat("\n")
+
+  cat("Correlacao Cofenetica:",x$CorrelacaoCofenetica$correlation,"\n")
+  cat("pvalor:",x$CorrelacaoCofenetica$p.value,"baseado no teste Mantel","\n")
+  cat("Hipotese alternativa: A correlacao e maior que 0","\n")
+  cat("_________________________________________________________________________","\n")
+  invisible(x)
+}
+
+

@@ -145,7 +145,7 @@ if(is.null(Factor)){Factor="A:B"}
   Escores2=Escores
   if(CorPlot==TRUE){Escores2=Normatiza(Escores2,Escores2,-1,1)}
   Escores2=apply(Escores,2,function(x) (x-mean(x))/sd(x))
-  Escores2=cbind(Escores2[,x],Escores2[,y])
+ # Escores2=cbind(Escores2[,x],Escores2[,y])
   Escores2=Normatiza(Escores2,Escores2,-1,1)
 
   PercX=Perc*(max(Escores2[,1])-min(Escores2[,1]))
@@ -192,7 +192,7 @@ if(is.null(Factor)){Factor="A:B"}
 
 
 
-  Resultado=list(Manova=MANOVAS,CovarianciaResidual=round(Cov,4),GLres=GLR,ContribuicaoVC=round(ContribuicaoVC,4),Escores=round(Escores2,4), `Correlacoes (importancia relativa)`=round(Cor,4))
+  Resultado=list(Manova=MANOVAS,CovarianciaResidual=round(Cov,4),GLres=GLR,ContribuicaoVC=round(ContribuicaoVC,4),Escores=round(Escores,4), `Correlacoes (importancia relativa)`=round(Cor,4))
 
   return(Resultado)
 }

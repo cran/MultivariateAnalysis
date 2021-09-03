@@ -42,6 +42,9 @@
 
 
 Normatiza=function(DadosEntrada, DadosBase=NULL, LimiteInferior=0, LimiteSuperior=1,Metodo=1){
+  if(suppressWarnings(class(DadosEntrada)[1]=="Distancia")){DadosEntrada=DadosEntrada$Distancia}
+  if(suppressWarnings(class(DadosBase)[1]=="Distancia")){DadosBase=DadosBase$Distancia}
+
   #DadosEntrada=as.matrix(DadosEntrada)
   if(is.null(DadosBase)){DadosBase=DadosEntrada}
   #DadosBase=as.matrix(DadosBase)

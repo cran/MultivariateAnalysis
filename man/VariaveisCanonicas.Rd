@@ -5,16 +5,16 @@
 \title{Analise de variaveis canonicas}
 \usage{
 VariaveisCanonicas(Dados,
-                          Modelo,
-                          Fator=NULL,
-                          xlab="VC 1",
-                           ylab="VC 2",
-                           CR=TRUE,
-                           CorPlot=TRUE,
-                           CorCol="red",
-                           VarCol ="blue",
-                           bty="L",
-                           Perc)
+             Modelo=1,
+              Fator=NULL,
+               xlab="VC1",
+               ylab="VC2",
+               CR=TRUE,
+               CorPlot=TRUE,
+               CorCol="red",
+               VarCol ="blue",
+               bty="L",
+               Perc=0.1)
 }
 \arguments{
 \item{Dados}{Matriz contendo os dados para execucao da MANOVA. Para cada

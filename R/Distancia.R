@@ -129,6 +129,7 @@
 #'   data(Dados.Misto)
 #'   Distancia(Dados.Misto,21)
 #' @export
+#' @exportS3Method print Distancia
 
 Distancia=function(Dados,Metodo=1,Cov=NULL){
   CRE=Cov
@@ -481,8 +482,48 @@ if(Metodo==22){
 
 Distb=as.matrix(Dist)
 colnames(Distb)=rownames(Distb)=rownames(D)
-
 Distb=as.dist(Distb)
-return(Distb)
+
+Res=list(Distancia=Distb,Dados=Dados,MetodoDist=Metodo,Cov=Cov)
+class(Res)="Distancia"
+return(Res)
 }
 
+
+print.Distancia=function(x,...){
+  Met=c("1 = Distancia euclidiana.
+    "," 2= Distancia euclidiana media.
+    ","3 = Quadrado da distancia euclidiana media.
+    ","4 = Distancia euclidiana padronizada.
+    ","5 = Distancia euclidiana padronizada media.
+    ","6 = Quadrado da distancia euclidiana padronizada media.
+    ","7 = Distancia de Mahalanobis.
+    ","8 = Distancia de Cole Rodgers.
+    ","9 = Frequencia de coincidencia.
+    ","10 = Frequencia de discordancia.
+    ","11 = indice Inverso de 1+coincidencia = 1/(1+c)
+    ","12 = Dissimilaridade de Jacard: 1-a/(a+b+c).
+    ","13 = Dissimilaridade de Sorensen Dice: 1-2a/(2a+b+c).
+    ","14 = Dissimilaridade de Sokal e Sneath: 1-2(a+d)/(2(a+d)+b+c)
+    ","15 = Dissimilaridade de Roger e Tanimoto: 1-(a+d)/(a+2(b+c)+d)
+    ","16 = Dissimilaridade de Russel e Rao: 1-a/(a+b+c+d).
+    ","17 = Dissimilaridade de Ochiai: 1-a/sqrt((a+b)(a+c)).
+    ","18 = Dissimilaridade de Ochiai II: 1-ab/sqrt((a+b)(a+c)(b+d)(c+d)).
+    ","19 = Dissimilaridade de Haman: 1-((a+d)-(b+c))/(a+b+c+d).
+    ","20 = Dissimilaridade de Yule: 1-(ad-bc)/(ad+bc).
+    "," 21 =Dissimilaridade de Gower
+    "," 22 =Dissimilaridade de Gower 2")
+
+
+
+  cat(paste("Medida de dissimilaridade:",Met[x$MetodoDist]),"\n")
+  y=SummaryDistancia(x$Distancia,plot = F)
+  cat("Menor Distancia:",y$Resumo$Minimo,"\n")
+  cat("Maior Distancia:",y$Resumo$Maximo,"\n")
+  cat("Media das Distancias:",y$Resumo$Media,"\n")
+  cat("Amplitude das Distancias:",y$Resumo$Amplitude,"\n")
+  cat("Desvio Padrao das Distancias:",y$Resumo$DesvioPadrao,"\n")
+  cat("Coeficiente de variacao das Distancias:",y$Resumo$CoeficienteVariacao,"\n")
+  cat("Individuos mais proximos:",y$Resumo$MaisProximo,"\n")
+  cat("Individuos mais distantes:",y$Resumo$MaisDistante,"\n")
+}
