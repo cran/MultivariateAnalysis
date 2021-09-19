@@ -3,7 +3,7 @@ VariaveisCanonicas2=function(Dados,Modelo=1,Factor=NULL,xlab=NULL, ylab=NULL,
 
   xlab=ifelse(is.null(xlab),paste("VC",x),xlab)
   ylab=ifelse(is.null(ylab),paste("VC",y),ylab)
-  D=Dados
+  D=data.frame(Dados)
 
   modelos=list(
     Y~Trat,

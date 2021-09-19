@@ -57,7 +57,7 @@
 #' @exportS3Method print MANOVA
 
 MANOVA=function(Dados,Modelo=2){
-D=Dados
+D=data.frame(Dados)
 modelos=list(
   Y~Trat,
   Y~Trat+Bloco,

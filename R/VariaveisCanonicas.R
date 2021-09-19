@@ -111,7 +111,7 @@
 VariaveisCanonicas=function(Dados,Modelo=1,Fator=NULL,xlab="VC1", ylab="VC2",
                         CR=TRUE, CorPlot=TRUE,CorCol="red",VarCol = "blue",
                         bty="L", Perc=0.1){
-D=Dados
+D=data.frame(Dados)
 VC=VariaveisCanonicas2(D,Modelo=Modelo,Factor=Fator,xlab=xlab, ylab=ylab,CR=CR, CorPlot=CorPlot,CorCol=CorCol,VarCol = VarCol, bty=bty, Perc=Perc)
 class(VC)="VariaveisCanonicas"
 return(VC)
