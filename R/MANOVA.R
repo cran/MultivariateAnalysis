@@ -11,11 +11,16 @@
 #'  colunas devem conter as informacoes dos tratamentos, linhas e colunas, e
 #'  posteriormente, os valores da variavel resposta. \item Modelos 4 e 5: as
 #'  primeiras colunas precisam ter a informacao do fator A, fator B,
-#'  repeticao/bloco, e posteriormente, as variaveis respostas. }
+#'  repeticao/bloco, e posteriormente, as variaveis respostas.
+#'   \item Modelos 6 e 7: as primeiras colunas precisam ter a
+#'   informacao do fator A, fator B, fator C, repeticao/bloco, e posteriormente, as
+#'   variaveis respostas.}
 #' @param Modelo    Valor numerico indicando o delineamento: \itemize{ \item 1 =
 #'  Delineamento inteiramente casualizado (DIC) \item 2 = Delineamento em blocos
 #'  casualizados (DBC) \item 3 = Delineamento em quadrado latino (DQL) \item 4 =
-#'  Esquema fatorial em DIC \item 5 = Esquema fatorial em DBC }
+#'  Esquema fatorial duplo em DIC \item 5 = Esquema fatorial duplo em DBC
+#'  \item 6 =
+#'  Esquema fatorial triplo em DIC \item 7 = Esquema fatorial triplo em DBC }
 #' @return A funcao retorna a MANOVA, a matriz de (co)variancia residual e o
 #'  numero dos graus de liberdade do residuo.
 #' @seealso \code{\link{lm}}, \code{\link{manova}}
@@ -45,13 +50,21 @@
 #' data(Dados.DQL)
 #' MANOVA(Dados.DQL,3)
 #'
-#' #Esquema fatorial em DIC
+#' #Esquema fatorial duplo em DIC
 #' data(Dados.Fat2.DIC)
 #' MANOVA(Dados.Fat2.DIC,4)
 #'
-#' #Esquema fatorial em DBC
+#' #Esquema fatorial duplo em DBC
 #' data(Dados.Fat2.DBC)
 #' MANOVA(Dados.Fat2.DBC,5)
+#'
+#' #' #Esquema fatorial triplo em DIC
+#' data(Dados.Fat3.DIC)
+#' MANOVA(Dados.Fat3.DIC,6)
+#'
+#' #Esquema fatorial triplo em DBC
+#' data(Dados.Fat3.DBC)
+#' MANOVA(Dados.Fat3.DBC,7)
 #' }
 #' @export
 #' @exportS3Method print MANOVA
@@ -63,7 +76,10 @@ modelos=list(
   Y~Trat+Bloco,
   Y~Trat+Linha+Coluna,
   Y~FatorA*FatorB,
-  Y~FatorA*FatorB+Bloco)
+  Y~FatorA*FatorB+Bloco,
+  Y~FatorA*FatorB*FatorC,
+  Y~FatorA*FatorB*FatorC+Bloco
+  )
 
 #Dic
 if(Modelo==1){
@@ -100,6 +116,23 @@ if(Modelo==5){
   Y=as.matrix(D[,-(1:3)])
 }
 
+#Fat3Dic
+if(Modelo==6){
+  FatorA= as.factor(D[,1])
+  FatorB= as.factor(D[,2])
+  FatorC= as.factor(D[,3])
+  Y=as.matrix(D[,-(1:4)])
+}
+
+#Fat3Dbc
+if(Modelo==7){
+  FatorA= as.factor(D[,1])
+  FatorB= as.factor(D[,2])
+  FatorC= as.factor(D[,3])
+  Bloco= as.factor(D[,4])
+  Y=as.matrix(D[,-(1:4)])
+}
+
 ajuste=manova(modelos[[Modelo]])
 
 MANOVAS=list(Teste_Pillai=summary(ajuste,"Pillai")$stats,
@@ -117,6 +150,11 @@ if(Modelo<4){
 if(Modelo>3){
   Med=apply(Y,2,function(x) tapply(x,FatorA:FatorB,mean))
 }
+
+if(Modelo>5){
+  Med=apply(Y,2,function(x) tapply(x,FatorA:FatorB:FatorC,mean))
+}
+
 Resultado=list(Manova=MANOVAS,CovarianciaResidual=Cov,GLres=GLR,Med=Med)
 class(Resultado)="MANOVA"
  return(Resultado)}

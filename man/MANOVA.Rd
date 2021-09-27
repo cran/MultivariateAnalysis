@@ -15,12 +15,17 @@ observanos nas variaveis respostas. \item Modelo 3: As tres primeiras
 colunas devem conter as informacoes dos tratamentos, linhas e colunas, e
 posteriormente, os valores da variavel resposta. \item Modelos 4 e 5: as
 primeiras colunas precisam ter a informacao do fator A, fator B,
-repeticao/bloco, e posteriormente, as variaveis respostas. }}
+repeticao/bloco, e posteriormente, as variaveis respostas.
+ \item Modelos 6 e 7: as primeiras colunas precisam ter a
+ informacao do fator A, fator B, fator C, repeticao/bloco, e posteriormente, as
+ variaveis respostas.}}
 
 \item{Modelo}{Valor numerico indicando o delineamento: \itemize{ \item 1 =
 Delineamento inteiramente casualizado (DIC) \item 2 = Delineamento em blocos
 casualizados (DBC) \item 3 = Delineamento em quadrado latino (DQL) \item 4 =
-Esquema fatorial em DIC \item 5 = Esquema fatorial em DBC }}
+Esquema fatorial duplo em DIC \item 5 = Esquema fatorial duplo em DBC
+\item 6 =
+Esquema fatorial triplo em DIC \item 7 = Esquema fatorial triplo em DBC }}
 }
 \value{
 A funcao retorna a MANOVA, a matriz de (co)variancia residual e o
@@ -44,13 +49,21 @@ MANOVA(Dados.DBC,2)
 data(Dados.DQL)
 MANOVA(Dados.DQL,3)
 
-#Esquema fatorial em DIC
+#Esquema fatorial duplo em DIC
 data(Dados.Fat2.DIC)
 MANOVA(Dados.Fat2.DIC,4)
 
-#Esquema fatorial em DBC
+#Esquema fatorial duplo em DBC
 data(Dados.Fat2.DBC)
 MANOVA(Dados.Fat2.DBC,5)
+
+#' #Esquema fatorial triplo em DIC
+data(Dados.Fat3.DIC)
+MANOVA(Dados.Fat3.DIC,6)
+
+#Esquema fatorial triplo em DBC
+data(Dados.Fat3.DBC)
+MANOVA(Dados.Fat3.DBC,7)
 }
 }
 \references{

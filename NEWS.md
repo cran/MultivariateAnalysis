@@ -1,3 +1,7 @@
+# MultivariateAnalysis 0.4.3
+## Minor improvements
+* The functions `MANOVA()` and `VariaveisCanonicas()` were edited to make possible to analyze trhee-way experiments
+
 # MultivariateAnalysis 0.4.2
 ## Minor improvements
 * The functions `MANOVA()` and `VariaveisCanonicas()` were edited to make possible to import the data using the `readxl` package without error

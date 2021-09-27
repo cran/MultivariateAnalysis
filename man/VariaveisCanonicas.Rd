@@ -30,6 +30,9 @@ da variavel resposta.
 \item Modelos 4 e 5: as primeiras colunas precisam ter a
 informacao do fator A, fator B, repeticao/bloco, e posteriormente, as
 variaveis respostas.
+\item Modelos 6 e 7: as primeiras colunas precisam ter a
+informacao do fator A, fator B, fator C, repeticao/bloco, e posteriormente, as
+variaveis respostas.
 }}
 
 \item{Modelo}{Valor numerico indicando o delineamento:
@@ -38,8 +41,10 @@ variaveis respostas.
 \item 2 = Delineamento em blocos casualizados (DBC)
 \item 3 = Delineamento em quadrado
   latino (DQL)
-  \item 4 = Esquema fatorial em DIC
-  \item 5 = Esquema fatorial em DBC
+  \item 4 = Esquema fatorial duplo em DIC
+  \item 5 = Esquema fatorial duplo em DBC
+  \item 6 = Esquema fatorial triplo em DIC
+  \item 7 = Esquema fatorial triplo em DBC
   }}
 
 \item{Fator}{Indica qual fator deve ser estudado na representacao grafica. Tal
@@ -51,7 +56,13 @@ de esquema fatorial (Design 4 ou 5)
 \item "B" = Para obter a presentacao grafica apenas dos niveis do fator B em caso
 de esquema fatorial (Design 4 ou 5)
 \item "A:B" = Para obter a presentacao grafica de todos os tratamentos (combinacoes
-entre os niveis do fator A e B) em caso de esquema fatorial (Design 4 ou 5)
+entre os niveis do fator A e B) em caso de esquema fatorial (Design 4, 5, 6 ou 7)
+\item "A:C" = Para obter a presentacao grafica de todos os tratamentos (combinacoes
+entre os niveis do fator A e C) em caso de esquema fatorial (Design 6 ou 7)
+\item "B:C" = Para obter a presentacao grafica de todos os tratamentos (combinacoes
+entre os niveis do fator B e C) em caso de esquema fatorial (Design 6 ou 7)
+\item "A:B:C" = Para obter a presentacao grafica de todos os tratamentos (combinacoes
+entre os niveis do fator A, B e C) em caso de esquema fatorial (Design 6 ou 7)
   }}
 
 \item{xlab}{nome do eixo x do grafico de variaveis canonicas}
@@ -101,17 +112,34 @@ VariaveisCanonicas(Dados.DBC,2,CorCol = "red",VarCol = "red")
 #Delineamento em quadrado latino (DQL)
 data(Dados.DQL)
 VariaveisCanonicas(Dados.DQL,3)
-#Esquema fatorial em DIC
+
+#Esquema fatorial duplo em DIC
 data(Dados.Fat2.DIC)
 VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="A:B")
 VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="A")
 VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="B")
 
-#Esquema fatorial em DBC
+#Esquema fatorial duplo em DBC
 data(Dados.Fat2.DBC)
 VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="A:B")
 VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="A")
 VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="B")
+
+
+#Esquema fatorial triplo em DIC
+data(Dados.Fat3.DIC)
+VariaveisCanonicas(Dados.Fat3.DIC,6,Fator="A:B")
+VariaveisCanonicas(Dados.Fat3.DIC,6,Fator="A")
+VariaveisCanonicas(Dados.Fat3.DIC,6,Fator="B")
+
+#Esquema fatorial triplo em DBC
+data(Dados.Fat3.DBC)
+VariaveisCanonicas(Dados.Fat3.DBC,7,Fator="A:B")
+VariaveisCanonicas(Dados.Fat3.DBC,7,Fator="A")
+VariaveisCanonicas(Dados.Fat3.DBC,7,Fator="B")
+
+
+
 }
 }
 \references{
@@ -128,5 +156,5 @@ FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p. (ISBN 13:978 85
   (ISBN 13:978 0138132637)
 }
 \seealso{
-/code{/link{lm}}, /code{/link{manova}}
+\code{\link{lm}}, \code{\link{manova}}
 }
