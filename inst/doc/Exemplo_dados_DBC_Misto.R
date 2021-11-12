@@ -48,14 +48,14 @@ DistMisto
 
 
 ## -----------------------------------------------------------------------------
-#Dendograma com o metodo UPGMA
-Dendograma(DistMaha,Metodo=3,Titulo="Dados quantiativos")
+#Dendrograma com o metodo UPGMA
+Dendrograma(DistMaha,Metodo=3,Titulo="Dados quantiativos")
 
 ## -----------------------------------------------------------------------------
-Dendograma(Distquali,Metodo=3, Titulo="Dados qualitativos")
+Dendrograma(Distquali,Metodo=3, Titulo="Dados qualitativos")
 
 ## -----------------------------------------------------------------------------
-Dendograma(DistMisto,Metodo=3,Titulo= "Qualitativos + Quantiativos")
+Dendrograma(DistMisto,Metodo=3,Titulo= "Qualitativos + Quantiativos")
 
 ## -----------------------------------------------------------------------------
 Tocher(DistMisto)

@@ -136,6 +136,7 @@ Tocher=function(Dist,Metodo="original",nperm=999, Plot=1,xlab="Dissimilaridade",
     text(xy[,1],xy[,2]-dif,XXX)
     #points(xy3[,1],xy3[,2],cex=6,pch=15,col="white")
     text(xy3[,1],xy3[,2],round(xy3[,3],2))
+par(mar=c(5, 4, 4, 2) + 0.1)
 
   }
 

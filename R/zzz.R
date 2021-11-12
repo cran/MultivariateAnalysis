@@ -49,4 +49,54 @@ NomeTrat=function(D,Min){
 }
 
 
+##############################################################
+CompMed=function(n,Pvalor,Sig){
+  if(length(Pvalor)==1){
+ if(Pvalor>Sig){Tabela=data.frame(Trat=c(1,2),Letters=c("a","a"))}
+    if(Pvalor<=Sig){Tabela=data.frame(Trat=c(1,2),Letters=c("a","b"))}
+  }
+
+  if(length(Pvalor)>1){
+  PV=matrix(0,n,n)
+  a=0
+  rownames(PV)=colnames(PV)=1:n
+  for(i in 1:(n-1)){
+    for(j in (i+1): n){
+      a=a+1
+      PV[i,j]=Pvalor[a]
+      PV[j,i]=Pvalor[a]
+
+     nam=unlist(strsplit(names(Pvalor)[a],split = " - "))
+    colnames(PV)[i]=nam[1]
+    rownames(PV)[j]=nam[2]
+     }
+  }
+
+  colnames(PV)[length(colnames(PV))]= rownames(PV)[length(colnames(PV))]
+
+  Pvalor=PV
+  Medias=n:1
+  Medias1=Medias
+  rank=order(-Medias1)
+  Medias=Medias1[rank]
+  diag(Pvalor)=1
+  NumTrat=length(Medias)
+  Letras=rep("",NumTrat)
+  Ref=1
+  Outro=2
+  l=1
+  #Colocar Letras
+  while(Ref!=Inf){
+    Letras[(Pvalor[,rank[Ref]]>Sig)*1:NumTrat]=paste(Letras[(Pvalor[,rank[Ref]]>Sig)*1:NumTrat],letters[l],sep="")
+    Ref=suppressWarnings(min(((Letras[rank]=="")*1:NumTrat)[(Letras[rank]=="")*1:NumTrat>0]));l=l+1
+  }
+
+  Tabela=data.frame(Trat=(1:NumTrat)[rank],Medias,Letters=Letras[rank])[,-2]
+  Tabela[,1]=colnames(PV)
+  }
+  return(Tabela)
+}
+##################################################################
+
+
 

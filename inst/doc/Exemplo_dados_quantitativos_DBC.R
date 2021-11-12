@@ -26,11 +26,11 @@ resumo=SummaryDistancia(Dist)
 resumo
 
 ## -----------------------------------------------------------------------------
-#Dendograma com o metodo UPGMA
-Dendograma(Dist,Metodo=3)
+#Dendrograma com o metodo UPGMA
+Dendrograma(Dist,Metodo=3)
 
 ## -----------------------------------------------------------------------------
-#Dendograma com o metodo UPGMA
+#Dendrograma com o metodo UPGMA
 Tocher(Dist)
 
 ## -----------------------------------------------------------------------------

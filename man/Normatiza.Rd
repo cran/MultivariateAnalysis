@@ -34,9 +34,9 @@ Para isso, os valores das matrizes sao calculados a fim de variar entre um
 \examples{
 data("Dados.MED")
 Dist=Distancia(Dados.MED,3)
-Dendograma(Dist)
+Dendrograma(Dist)
 DistN=Normatiza((Dist),LimiteInferior = 0,LimiteSuperior = 1,Metodo = 2)
-Dendograma(DistN)
+Dendrograma(DistN)
 }
 \references{
 PlayList "Curso de Analise Multivariada":

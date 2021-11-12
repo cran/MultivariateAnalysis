@@ -155,7 +155,7 @@ if(Modelo>5){
   Med=apply(Y,2,function(x) tapply(x,FatorA:FatorB:FatorC,mean))
 }
 
-Resultado=list(Manova=MANOVAS,CovarianciaResidual=Cov,GLres=GLR,Med=Med)
+Resultado=list(Data=D,Modelo=Modelo,Manova=MANOVAS,CovarianciaResidual=Cov,GLres=GLR,Med=Med)
 class(Resultado)="MANOVA"
  return(Resultado)}
 

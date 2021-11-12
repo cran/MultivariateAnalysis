@@ -1,7 +1,7 @@
 Package: MultivariateAnalysis
 Type: Package
 Title: Pacote Para Analise Multivariada
-Version: 0.4.3
+Version: 0.4.4
 Authors@R: 
     person(given = "Alcinei Mistico",
            family = "Azevedo",
@@ -20,11 +20,11 @@ LazyData: false
 RoxygenNote: 7.1.1
 Language: pt-BR
 NeedsCompilation: no
-Packaged: 2021-09-27 14:39:32 UTC; AlcineiAzevedo
+Packaged: 2021-11-12 13:46:53 UTC; Alcinei
 Author: Alcinei Mistico Azevedo [aut, cre]
     (<https://orcid.org/0000-0001-5196-0851>)
 Maintainer: Alcinei Mistico Azevedo <alcineimistico@hotmail.com>
 Repository: CRAN
-Date/Publication: 2021-09-27 15:10:21 UTC
+Date/Publication: 2021-11-12 16:10:02 UTC
 Suggests: rmarkdown, knitr
 VignetteBuilder: knitr

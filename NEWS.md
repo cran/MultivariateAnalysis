@@ -1,3 +1,11 @@
+# MultivariateAnalysis 0.4.4
+## Minor improvements
+* The functions `HeatPlot()` to show normalized values on the graph.
+
+## New functions
+* New function `PairComp()`
+
+
 # MultivariateAnalysis 0.4.3
 ## Minor improvements
 * The functions `MANOVA()` and `VariaveisCanonicas()` were edited to make possible to analyze trhee-way experiments

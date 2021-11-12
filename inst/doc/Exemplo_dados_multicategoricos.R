@@ -22,7 +22,7 @@ resumo=SummaryDistancia(Dist)
 resumo
 
 ## -----------------------------------------------------------------------------
-Dendograma(Dist,Metodo=3)
+Dendrograma(Dist,Metodo=3)
 
 ## -----------------------------------------------------------------------------
 Tocher(Dist)

@@ -99,9 +99,9 @@ Metodo4
 ```
 
 
-# Após obter a matriz de dissimilaridade, podemos fazer o dendograma.
+# Após obter a matriz de dissimilaridade, podemos fazer o Dendrograma.
 
-A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um dendograma com o auxilio da função `dendograma`. Varios algoritimos podem ser utilizados para a construção deste dendograma. Para isso, deve-se indicar no argumento `Metodo`:
+A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um Dendrograma com o auxilio da função `Dendrograma`. Varios algoritimos podem ser utilizados para a construção deste Dendrograma. Para isso, deve-se indicar no argumento `Metodo`:
 
 1 = Ligacao simples (Metodo do vizinho mais proximo).
 
@@ -121,19 +121,19 @@ A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar
 
 
 ```{r}
-Dendograma(Gower1,Metodo=3,Titulo="Gower1")
+Dendrograma(Gower1,Metodo=3,Titulo="Gower1")
 ```
 
 ```{r}
-Dendograma(Gower2,Metodo=3,Titulo="Gower2")
+Dendrograma(Gower2,Metodo=3,Titulo="Gower2")
 ```
 
 ```{r}
-Dendograma(Metodo3,Metodo=3,Titulo="Metodo3")
+Dendrograma(Metodo3,Metodo=3,Titulo="Metodo3")
 ```
 
 ```{r}
-Dendograma(Metodo4,Metodo=4,Titulo="Metodo4")
+Dendrograma(Metodo4,Metodo=4,Titulo="Metodo4")
 ```
 
 

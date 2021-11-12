@@ -26,13 +26,13 @@ resumo=SummaryDistancia(Dist)
 resumo
 
 ## -----------------------------------------------------------------------------
-#Dendograma com o metodo UPGMA
-Dendo=Dendograma(Dist,Metodo=3)
+#Dendrograma com o metodo UPGMA
+Dendo=Dendrograma(Dist,Metodo=3)
 Dendo$SigCorrelCofenetica
 Dendo$MojenaCorte
 
 ## -----------------------------------------------------------------------------
-#Dendograma com o metodo UPGMA
+#Dendrograma com o metodo UPGMA
 To=Tocher(Dist)
 To$Tocher
 To$DistanciaIntraInterCluster

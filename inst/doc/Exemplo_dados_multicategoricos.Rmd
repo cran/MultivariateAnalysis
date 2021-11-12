@@ -59,7 +59,7 @@ resumo=SummaryDistancia(Dist)
 resumo
 ```
 
-A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um dendograma com o auxilio da função `dendograma`. Varios algoritimos podem ser utilizados para a construção deste dendograma. Para isso, deve-se indicar no argumento `Metodo`:
+A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um Dendrograma com o auxilio da função `Dendrograma`. Varios algoritimos podem ser utilizados para a construção deste Dendrograma. Para isso, deve-se indicar no argumento `Metodo`:
 
 1 = Ligacao simples (Metodo do vizinho mais proximo).
 
@@ -79,7 +79,7 @@ A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar
 
 
 ```{r}
-Dendograma(Dist,Metodo=3)
+Dendrograma(Dist,Metodo=3)
 ```
 Adcionalmente, pode-se fazer o agrupamento Tocher com o auxilio da função `Tocher`:
 ```{r}

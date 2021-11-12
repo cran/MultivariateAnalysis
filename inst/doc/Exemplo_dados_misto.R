@@ -53,16 +53,16 @@ Metodo4=Distancia(Dados.Misto2,Metodo = 10)
 Metodo4
 
 ## -----------------------------------------------------------------------------
-Dendograma(Gower1,Metodo=3,Titulo="Gower1")
+Dendrograma(Gower1,Metodo=3,Titulo="Gower1")
 
 ## -----------------------------------------------------------------------------
-Dendograma(Gower2,Metodo=3,Titulo="Gower2")
+Dendrograma(Gower2,Metodo=3,Titulo="Gower2")
 
 ## -----------------------------------------------------------------------------
-Dendograma(Metodo3,Metodo=3,Titulo="Metodo3")
+Dendrograma(Metodo3,Metodo=3,Titulo="Metodo3")
 
 ## -----------------------------------------------------------------------------
-Dendograma(Metodo4,Metodo=4,Titulo="Metodo4")
+Dendrograma(Metodo4,Metodo=4,Titulo="Metodo4")
 
 ## -----------------------------------------------------------------------------
 mat=cbind(Gower1=Gower1$Distancia,Gower2=Gower2$Distancia,Metodo3=Metodo3,Metodo4=Metodo4$Distancia)

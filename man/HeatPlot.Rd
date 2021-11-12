@@ -2,17 +2,17 @@
 % Please edit documentation in R/HeatPlot.R
 \name{HeatPlot}
 \alias{HeatPlot}
-\title{Grafico de calor para a interpretacao do dendograma}
+\title{Grafico de calor para a interpretacao do Dendrograma}
 \usage{
 HeatPlot(Dendo,Col=NULL)
 }
 \arguments{
-\item{Dendo}{Objeto criado pela funcao `Dendograma`.}
+\item{Dendo}{Objeto criado pela funcao `Dendrograma`.}
 
 \item{Col}{Paleta de cores. Veja os exemplos.}
 }
 \description{
-Esta funcao apresenta um mapa de calor junto com o dendograma.
+Esta funcao apresenta um mapa de calor junto com o Dendrograma.
 }
 \examples{
  ################################################
@@ -22,7 +22,7 @@ Esta funcao apresenta um mapa de calor junto com o dendograma.
 data("Dados.MED")
 dist=Distancia(Dados.MED,Metodo = 3)
 dist
-Dendo=Dendograma(dist)
+Dendo=Dendrograma(dist)
 HeatPlot(Dendo)
 #Distancia Mahalanobis
 data("Dados.DBC")
@@ -30,7 +30,7 @@ m=MANOVA(Dados.DBC,Modelo = 2)
 m
 dist=Distancia(m$Med,Cov=m$CovarianciaResidual,Metodo = 7)
 dist
-Dendo=Dendograma(dist)
+Dendo=Dendrograma(dist)
 HeatPlot(Dendo)
 col0 = colorRampPalette(c('white', 'cyan', '#007FFF', 'blue','#00007F'))
 col1 = colorRampPalette(c('#7F0000', 'red', '#FF7F00', 'yellow', 'white',
@@ -50,7 +50,7 @@ HeatPlot(Dendo,Col=col4)
 data("Dados.BIN")
 Dist=Distancia(Dados.BIN,Metodo=12)
 Dist
-Dend=Dendograma(Dist)
+Dend=Dendrograma(Dist)
 HeatPlot(Dend)
 HeatPlot(Dend,Col=col3)
 
@@ -59,7 +59,7 @@ data("Dados.CAT")
 row.names(Dados.CAT)=paste0("T",1:nrow(Dados.CAT))
 Dist=Distancia(Dados.CAT,Metodo=10)
 Dist
-Dend=Dendograma(Dist)
+Dend=Dendrograma(Dist)
 HeatPlot(Dend)
 
 
@@ -78,5 +78,5 @@ FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p. (ISBN 13:978 85
   (ISBN 13:978 0138132637)
 }
 \seealso{
-/code{/link{Distancia}/} ,/code{/link{Dendograma}/}, /code{/link{heatplot}/}
+/code{/link{Distancia}/} ,/code{/link{Dendrograma}/}, /code{/link{heatplot}/}
 }

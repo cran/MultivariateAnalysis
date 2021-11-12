@@ -64,6 +64,8 @@
 
 
 ComponentesPrincipais.Misto=function(Dados,plot="all",NomeTrat=NULL,NomeVar=NULL){
+  Dados=as.data.frame(Dados)
+
   if(is.null(NomeTrat)==F){rownames(Dados)=NomeTrat}
 
   mat=D=Dados
@@ -97,9 +99,12 @@ ComponentesPrincipais.Misto=function(Dados,plot="all",NomeTrat=NULL,NomeVar=NULL
     plot(res,choice ="sqload" )
     par(mfrow=c(1,1))
   }
+  if(isFALSE((plot=="all")|(plot=="individuos")|(plot=="nivel")|(plot=="correlacao")|(plot=="pesos"))){
+    warning("O objeto 'plot' deve conter os textos, 'all', 'individuos', 'nivel', 'correlacao' ou 'pesos' ")
+  }
 
   if(plot=="individuos"){ plot(res,choice ="ind" ) }
-  if(plot=="niveis"){ plot(res,choice ="ind" ) }
+  if(plot=="nivel"){ plot(res,choice ="ind" ) }
   if(plot=="correlacao"){ plot(res,choice ="cor" ) }
   if(plot=="pesos"){ plot(res,choice ="sqload" ) }
 

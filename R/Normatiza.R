@@ -33,9 +33,9 @@
 #' @examples
 #' data("Dados.MED")
 #' Dist=Distancia(Dados.MED,3)
-#' Dendograma(Dist)
+#' Dendrograma(Dist)
 #' DistN=Normatiza((Dist),LimiteInferior = 0,LimiteSuperior = 1,Metodo = 2)
-#' Dendograma(DistN)
+#' Dendrograma(DistN)
 #' @export
 
 

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Alcinei Mistico Azevedo (ICA-UFMG)" />
 
-<meta name="date" content="2021-09-27" />
+<meta name="date" content="2021-11-12" />
 
 <title>Exemplo: dados binários</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Exemplo: dados binários</h1>
 <h4 class="author">Alcinei Mistico Azevedo (ICA-UFMG)</h4>
-<h4 class="date">2021-09-27</h4>
+<h4 class="date">2021-11-12</h4>
 
 
 
@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Individuos mais proximos: Indiv_1 Indiv_4 </span></span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Individuos mais distantes: Indiv_4 Indiv_5 </span></span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; _________________________________________________________________________</span></span></code></pre></div>
-<p>A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um dendograma com o auxilio da função <code>dendograma</code>. Varios algoritimos podem ser utilizados para a construção deste dendograma. Para isso, deve-se indicar no argumento <code>Metodo</code>:</p>
+<p>A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um Dendrograma com o auxilio da função <code>Dendrograma</code>. Varios algoritimos podem ser utilizados para a construção deste Dendrograma. Para isso, deve-se indicar no argumento <code>Metodo</code>:</p>
 <p>1 = Ligacao simples (Metodo do vizinho mais proximo).</p>
 <p>2 = Ligacao completa (Metodo do vizinho distante).</p>
 <p>3 = Ligacao media entre grupo (UPGMA).</p>
@@ -231,13 +231,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>7= Metodo do centroide (UPGMC).</p>
 <p>8 = Metodo mcquitty (WPGMA).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendograma</span>(Dist,<span class="at">Metodo=</span><span class="dv">3</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendrograma</span>(Dist,<span class="at">Metodo=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <pre><code>#&gt; _________________________________________________________________________ 
 #&gt; Estimativa de correlacao cofenetica: 
 #&gt; [1] 0.7586138
 #&gt; Significancia da correlacao cofenetica pelo teste Mantel 
-#&gt; pvalor: 0.03 
+#&gt; pvalor: 0.032 
 #&gt; Hipotese alternativa: A correlacao e maior que 0 
 #&gt; 
 #&gt; Ponto de corte pelo metodo Mojena 
@@ -267,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt; 
 #&gt; 
 #&gt; Correlacao Cofenetica: 0.7973581 
-#&gt; pvalor: 0.036 baseado no teste Mantel 
+#&gt; pvalor: 0.045 baseado no teste Mantel 
 #&gt; Hipotese alternativa: A correlacao e maior que 0 
 #&gt; _________________________________________________________________________</code></pre>
 <p>Outra possibilidade é o estudo da dispersão da matriz de dissimilaridade pelas técnica de coordenadas principais:</p>

@@ -27,8 +27,8 @@ resumo=SummaryDistancia(Dist)
 resumo
 
 ## -----------------------------------------------------------------------------
-#Dendograma com o metodo UPGMA
-Dendo=Dendograma(Dist,Metodo=3)
+#Dendrograma com o metodo UPGMA
+Dendo=Dendrograma(Dist,Metodo=3)
 
 ## -----------------------------------------------------------------------------
 To=Tocher(Dist)

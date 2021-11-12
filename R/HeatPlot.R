@@ -1,10 +1,10 @@
-#' Grafico de calor para a interpretacao do dendograma
+#' Grafico de calor para a interpretacao do Dendrograma
 #'
-#' @description Esta funcao apresenta um mapa de calor junto com o dendograma.
+#' @description Esta funcao apresenta um mapa de calor junto com o Dendrograma.
 #' @usage HeatPlot(Dendo,Col=NULL)
-#' @param Dendo Objeto criado pela funcao `Dendograma`.
+#' @param Dendo Objeto criado pela funcao `Dendrograma`.
 #' @param Col Paleta de cores. Veja os exemplos.
-#' @seealso /code{/link{Distancia}/} ,/code{/link{Dendograma}/}, /code{/link{heatplot}/}
+#' @seealso /code{/link{Distancia}/} ,/code{/link{Dendrograma}/}, /code{/link{heatplot}/}
 #' @references
 #' PlayList "Curso de Analise Multivariada":
 #'  https://www.youtube.com/playlist?list=PLvth1ZcREyK72M3lFl7kBaHiVh5W53mlR
@@ -27,7 +27,7 @@
 #' data("Dados.MED")
 #' dist=Distancia(Dados.MED,Metodo = 3)
 #' dist
-#' Dendo=Dendograma(dist)
+#' Dendo=Dendrograma(dist)
 #' HeatPlot(Dendo)
 
 #' #Distancia Mahalanobis
@@ -36,7 +36,7 @@
 #' m
 #' dist=Distancia(m$Med,Cov=m$CovarianciaResidual,Metodo = 7)
 #' dist
-#' Dendo=Dendograma(dist)
+#' Dendo=Dendrograma(dist)
 #' HeatPlot(Dendo)
 
 #Criando paleta de cores
@@ -58,7 +58,7 @@
 #' data("Dados.BIN")
 #' Dist=Distancia(Dados.BIN,Metodo=12)
 #' Dist
-#' Dend=Dendograma(Dist)
+#' Dend=Dendrograma(Dist)
 #' HeatPlot(Dend)
 #' HeatPlot(Dend,Col=col3)
 #'
@@ -67,7 +67,7 @@
 #' row.names(Dados.CAT)=paste0("T",1:nrow(Dados.CAT))
 #' Dist=Distancia(Dados.CAT,Metodo=10)
 #' Dist
-#' Dend=Dendograma(Dist)
+#' Dend=Dendrograma(Dist)
 #' HeatPlot(Dend)
 #'
 #'
@@ -110,11 +110,15 @@ HeatPlot=function(Dendo,Col=NULL){
                                 '#4393C3', '#2166AC', '#053061'))
   }
 
-  med=suppressWarnings(Normatiza(Dendo$Distancia$Dados))
+  #med=suppressWarnings(Normatiza(Dendo$Distancia$Dados,Metodo = 1))
+  med=Dendo$Distancia$Dados
   Met=c( "single","complete","average","ward.D","ward.D2","median","centroid","mcquitty" )[ Dendo$MetodoDendo]
 n=length(unique(c(as.matrix(med))))
-  heatmap(x =as.matrix(med)*100,col = Cor(n),
-          distfun = function(c) Distancia(Dendo$Distancia$Dados,Metodo = Dendo$Distancia$MetodoDist,Cov=Dendo$Distancia$Cov)$Distancia,
-          hclustfun = function(x) hclust(x,method =Met),Colv = NA)
+par(mar=c(1,1,1,1)+.1)
+
+  heatmap(x =as.matrix(med),col = Cor(n),
+          distfun = function(c) Distancia(med,Metodo = Dendo$Distancia$MetodoDist,Cov=Dendo$Distancia$Cov)$Distancia,
+          hclustfun = function(x) hclust(x,method =Met),Colv = NA,scale="column")
   #legend(x="top", legend=c(1:n),fill=Cor(100))
+  par(mar=c(5, 4, 4, 2) + 0.1)
 }

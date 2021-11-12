@@ -129,9 +129,9 @@ DistMisto
 
 ```
 
-# Obtendo dendograma para as 3 medidas de dissimilaridade
+# Obtendo Dendrograma para as 3 medidas de dissimilaridade
 
-A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um dendograma com o auxilio da função `dendograma`. Varios algoritimos podem ser utilizados para a construção deste dendograma. Para isso, deve-se indicar no argumento `Metodo`:
+A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um Dendrograma com o auxilio da função `Dendrograma`. Varios algoritimos podem ser utilizados para a construção deste Dendrograma. Para isso, deve-se indicar no argumento `Metodo`:
 
 1 = Ligacao simples (Metodo do vizinho mais proximo).
 
@@ -151,16 +151,16 @@ A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar
 
 
 ```{r}
-#Dendograma com o metodo UPGMA
-Dendograma(DistMaha,Metodo=3,Titulo="Dados quantiativos")
+#Dendrograma com o metodo UPGMA
+Dendrograma(DistMaha,Metodo=3,Titulo="Dados quantiativos")
 ```
 
 ```{r}
-Dendograma(Distquali,Metodo=3, Titulo="Dados qualitativos")
+Dendrograma(Distquali,Metodo=3, Titulo="Dados qualitativos")
 ```
 
 ```{r}
-Dendograma(DistMisto,Metodo=3,Titulo= "Qualitativos + Quantiativos")
+Dendrograma(DistMisto,Metodo=3,Titulo= "Qualitativos + Quantiativos")
 ```
 Adcionalmente, pode-se fazer o agrupamento Tocher com o auxilio da função `Tocher`:
 ```{r}
