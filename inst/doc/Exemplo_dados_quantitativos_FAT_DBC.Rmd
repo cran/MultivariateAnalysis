@@ -121,7 +121,6 @@ To$Tocher
 ```{r}
 CP=ComponentesPrincipais(DadosMed,padronizar = TRUE)
 ```
-
 ### Porém, quando se tem repetições, o mais indicado é o estudo de variáveis canônicas:
 
 Para isso, deve-se indicar qual é o `Modelo` referente ao delineamento:
@@ -138,13 +137,16 @@ Para isso, deve-se indicar qual é o `Modelo` referente ao delineamento:
 
 ```{r}
 VC=VariaveisCanonicas(Dados.Fat2.DBC,Modelo = 5,Fator = "A:B")
+VC
 ```
 
 Se a interação tivesse sido não significativa, uma boa opção seria fazer a dispersão gráfica das variáveis canônicas apenas para os efeitos principais.
 
 ```{r}
 VC=VariaveisCanonicas(Dados.Fat2.DBC,Modelo = 5,Fator = "A")
+VC
 VC=VariaveisCanonicas(Dados.Fat2.DBC,Modelo = 5,Fator = "B")
+VC
 ```
 
 

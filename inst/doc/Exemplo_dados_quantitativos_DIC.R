@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -19,7 +19,7 @@ Res
 #colocando nome nos individuos
 DadosMed=Res$Med
 Dist=Distancia(DadosMed,Metodo = 7,Cov = Res$CovarianciaResidual)
-Dist
+round(Dist$Distancia,3)
 
 ## -----------------------------------------------------------------------------
 resumo=SummaryDistancia(Dist)

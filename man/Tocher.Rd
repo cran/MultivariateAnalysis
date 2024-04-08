@@ -51,7 +51,7 @@ metodo de Mantel}
 A funcao retorna resultados do teste Tocher.
 }
 \description{
-Esta funcao faz o agrupamento pelo metodo Tocher
+Esta funcao faz o agrupamento pelo metodo Tocher.
 }
 \examples{
 \donttest{

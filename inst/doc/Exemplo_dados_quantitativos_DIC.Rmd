@@ -79,7 +79,7 @@ Para se ter diferentes medidas de dissimilaridade basta colocar o respectivo num
 #colocando nome nos individuos
 DadosMed=Res$Med
 Dist=Distancia(DadosMed,Metodo = 7,Cov = Res$CovarianciaResidual)
-Dist
+round(Dist$Distancia,3)
 ```
 Informações importantes podem ser obtidas dessa matriz com a função `SummaryDistancia`:
 ```{r}

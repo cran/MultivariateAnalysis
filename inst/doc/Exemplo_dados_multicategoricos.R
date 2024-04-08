@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -15,7 +15,7 @@ Dados.CAT
 #colocando nome nos individuos
 rownames(Dados.CAT)=paste0("T",1:nrow(Dados.CAT))
 Dist=Distancia(Dados.CAT,Metodo = 10)
-Dist
+round(Dist$Distancia,3)
 
 ## -----------------------------------------------------------------------------
 resumo=SummaryDistancia(Dist)

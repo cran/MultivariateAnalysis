@@ -61,7 +61,7 @@ Para se ter diferentes medidas de dissimilaridade basta colocar o respectivo num
 #colocando nome nos individuos
 rownames(Dados.MED)=paste0("T",1:nrow(Dados.MED))
 Dist=Distancia(Dados.MED,Metodo = 5)
-
+round(Dist$Distancia,3)
 ```
 Informações importantes podem ser obtidas dessa matriz com a função `SummaryDistancia`:
 ```{r}
@@ -102,10 +102,7 @@ Outra possibilidade é o estudo da dispersão da matriz de dissimilaridade pelas
 ```{r}
 
 COp=CoordenadasPrincipais(Dist,main = "")
-CoordenadasPrincipais(Dist,Dados = Dados.MED,Padronizar = TRUE,main="")
-```
-
-```{r}
+CoordenadasPrincipais(Dist)
 ComponentesPrincipais(Dados.MED)
 ```
 Logo, quando se tem dados quantitativos faz mais sentido utilizar os componentes principais que coordenadas principais em situações quando irá se considerar a distância euclidiana padronizada.

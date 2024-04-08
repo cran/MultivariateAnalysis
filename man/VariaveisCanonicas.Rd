@@ -7,14 +7,17 @@
 VariaveisCanonicas(Dados,
              Modelo=1,
               Fator=NULL,
+              layout=1,
                xlab="VC1",
                ylab="VC2",
+               cols=c(1,2),
                CR=TRUE,
                CorPlot=TRUE,
                CorCol="red",
                VarCol ="blue",
                bty="L",
-               Perc=0.1)
+               Perc=0.1,
+               length = 0.25)
 }
 \arguments{
 \item{Dados}{Matriz contendo os dados para execucao da MANOVA. Para cada
@@ -65,9 +68,15 @@ entre os niveis do fator B e C) em caso de esquema fatorial (Design 6 ou 7)
 entre os niveis do fator A, B e C) em caso de esquema fatorial (Design 6 ou 7)
   }}
 
+\item{layout}{Deve ser um numero variando de 1 a 9. Para cada numero teremos
+um layout diferente.}
+
 \item{xlab}{nome do eixo x do grafico de variaveis canonicas}
 
 \item{ylab}{nome do eixo y do grafico de variaveis canonicas}
+
+\item{cols}{Numero das variaveis canonicas que se pretende apresentar no grafico.
+O padrao e `c(1,2)`.}
 
 \item{CR}{Valor logico (TRUE ou FALSE) indicando se aparecera no grafico
 a contriuicao relativa de cada eixo.}
@@ -93,6 +102,8 @@ grafico.
    }}
 
 \item{Perc}{Valor entre 0 e 1 indicando o recuo dos eixos.}
+
+\item{length}{Refere-se ao tamanho da seta. O default e 0.25.}
 }
 \value{
 A funcao retorna resultados associados as variaveis canonicas.
@@ -100,6 +111,7 @@ A funcao retorna resultados associados as variaveis canonicas.
 \description{
 Esta funcao faz a analise dos dados pelo metodo de variaveis
   canonicas.
+  @name VariaveisCanonicas
 }
 \examples{
 \donttest{
@@ -111,17 +123,17 @@ data(Dados.DBC)
 VariaveisCanonicas(Dados.DBC,2,CorCol = "red",VarCol = "red")
 #Delineamento em quadrado latino (DQL)
 data(Dados.DQL)
-VariaveisCanonicas(Dados.DQL,3)
+VariaveisCanonicas(Dados.DQL,3,layout=2)
 
 #Esquema fatorial duplo em DIC
 data(Dados.Fat2.DIC)
 VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="A:B")
-VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="A")
-VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="B")
+VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="A",layout=3)
+VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="B",layout=4)
 
 #Esquema fatorial duplo em DBC
 data(Dados.Fat2.DBC)
-VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="A:B")
+VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="A:B",layout=5)
 VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="A")
 VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="B")
 

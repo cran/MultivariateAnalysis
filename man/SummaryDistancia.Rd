@@ -55,7 +55,7 @@ demais como distancia media, menor distancia, maior distancia, tratamento
 mais proximo, tratamento mais distante etc.
 }
 \description{
-Esta funcao apresenta informacoes que resumem a matriz de dissimilaridade
+Esta funcao apresenta informacoes que resumem a matriz de dissimilaridade.
 }
 \examples{
  data(Dados.MED)
@@ -95,5 +95,5 @@ FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p. (ISBN 13:978 85
   (ISBN 13:978 0138132637)
 }
 \seealso{
-/code{/link{dist}/}
+\code{\link[stats]{dist}}
 }

@@ -19,10 +19,10 @@ Pode ser: "holm", "hochberg", "hommel", "bonferroni", "BH", "BY",
 \item{Sig}{Significancia a ser considerado. Default e 0.05.}
 }
 \value{
-A funcao as comparacoes multiplas para os tratamentos.
+A funcao as comparações multiplas para os tratamentos.
 }
 \description{
-Esta funcao retorna o resultado das comparacoes multiplas (dois a dois)
+Esta funcao retorna o resultado da comparacao multiplas (dois a dois)
 com abordagem multivariada.
 }
 \examples{

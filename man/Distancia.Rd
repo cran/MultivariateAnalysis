@@ -145,5 +145,5 @@ FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p. (ISBN 13:978 85
   (ISBN 13:978 0138132637)
 }
 \seealso{
-/code{/link{dist}/}
+\code{\link[stats]{dist}}
 }

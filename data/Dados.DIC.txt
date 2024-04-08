@@ -1,4 +1,4 @@
-trat	bloco	1Contagem	Germ	SemAnormais	SemMortas	Retencao75	Retencao55	RetencaoFundo
+trat	rep	1Contagem	Germ	SemAnormais	SemMortas	Retencao75	Retencao55	RetencaoFundo
 Trat1	1	82	90	3.31662479	1	16.4924225	5.567764363	1.732050808
 Trat2	1	80	98	1.732050808	1.732050808	15.96871942	5	1.414213562
 Trat3	1	66	96	2.236067977	1	16.2788206	4.898979486	1

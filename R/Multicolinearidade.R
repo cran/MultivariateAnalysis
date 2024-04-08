@@ -4,6 +4,7 @@
 #'   indicativo de multicolinearidade a presenca de pelo menos um fator de
 #'   inflacao de variancia maior que 10 ou numero de condicao maior que 100
 #'   (Cruz et al.,2014).
+#'   @name Multicolinearidade
 #' @usage Multicolinearidade(Matriz)
 #' @param Matriz Matriz na qual se deseja verificar a presenca de
 #'   multicolinearidade.

@@ -1,10 +1,15 @@
 #' Grafico de calor para a interpretacao do Dendrograma
 #'
 #' @description Esta funcao apresenta um mapa de calor junto com o Dendrograma.
-#' @usage HeatPlot(Dendo,Col=NULL)
+#' @name HeatPlot
+#' @usage HeatPlot(Dendo,Col=NULL,layout=1,cut=1000)
 #' @param Dendo Objeto criado pela funcao `Dendrograma`.
 #' @param Col Paleta de cores. Veja os exemplos.
-#' @seealso /code{/link{Distancia}/} ,/code{/link{Dendrograma}/}, /code{/link{heatplot}/}
+#' @param layout Deve ser um numero variando de 1 a 3. Para cada numero teremos
+#' um layout diferente.
+#' @param cut Valor do corte no dendrograma para o estabelecimento de cluster.
+#'
+#' @seealso \code{\link[MultivariateAnalysis]{Distancia}} ,\code{\link[MultivariateAnalysis]{Dendrograma}}
 #' @references
 #' PlayList "Curso de Analise Multivariada":
 #'  https://www.youtube.com/playlist?list=PLvth1ZcREyK72M3lFl7kBaHiVh5W53mlR
@@ -79,9 +84,9 @@
 
 
 
-HeatPlot=function(Dendo,Col=NULL){
+HeatPlot=function(Dendo,Col=NULL,layout=1,cut=1000){
 
-
+Trat=value=NULL
 
 
 
@@ -114,11 +119,100 @@ HeatPlot=function(Dendo,Col=NULL){
   med=Dendo$Distancia$Dados
   Met=c( "single","complete","average","ward.D","ward.D2","median","centroid","mcquitty" )[ Dendo$MetodoDendo]
 n=length(unique(c(as.matrix(med))))
-par(mar=c(1,1,1,1)+.1)
 
-  heatmap(x =as.matrix(med),col = Cor(n),
+if(layout==1){
+heatmap(x =as.matrix(med),col = Cor(n),
           distfun = function(c) Distancia(med,Metodo = Dendo$Distancia$MetodoDist,Cov=Dendo$Distancia$Cov)$Distancia,
           hclustfun = function(x) hclust(x,method =Met),Colv = NA,scale="column")
   #legend(x="top", legend=c(1:n),fill=Cor(100))
-  par(mar=c(5, 4, 4, 2) + 0.1)
+
+}
+
+if(layout==2){
+  Met=c( "single","complete","average","ward.D","ward.D2","median","centroid","mcquitty" )[ Dendo$MetodoDendo]
+  hc     <- hclust(Dendo$Distancia$Distancia,method = Met)
+  hcdata <- dendro_data_k(hc, cut)
+
+  p <- plot_ggdendro(hcdata,
+                      direction   = "lr",
+                     # scale.color = cols,
+                      expand.y    = 0.25) +
+    theme(axis.text.x      = element_text(color = "#ffffff"),
+          panel.background = element_rect(fill  = "#ffffff"),
+          axis.ticks       = element_blank()) +
+    scale_color_brewer(palette = "Set1") +
+    xlab(NULL) +
+    ylab(NULL)
+
+  # scale from 0 to 1 and reshape mtcars data
+DATA=Dendo$Distancia$Dados[Dendo$Ordem,]
+DATA=DATA[nrow(DATA):1,]
+scaled2 <- (Normatiza(as.matrix(DATA),Metodo = 1))
+
+#scaled2c=linearize_image(scaled2)
+  scaled2c=data.frame(Trat=rep(1:nrow(scaled2),ncol(scaled2)),
+                      var=rep(colnames(scaled2),each=nrow(scaled2)),
+                      value=c(scaled2))
+  rownames(scaled2c)=paste0(1:nrow(scaled2c),":")
+
+
+  p2 <-  ggplot(scaled2c, aes(var, Trat,fill= value))+
+ geom_tile() +
+         scale_fill_gradientn(colours = Cor(100)) +
+         theme_minimal() +
+         theme(axis.text.y = element_blank(),
+               axis.text.x = element_text(angle=0, hjust=0)) +
+         xlab(NULL) +
+         ylab(NULL)
+
+  gridExtra::grid.arrange(p, p2, ncol = 2, widths = 2:3)
+
+}
+
+if(layout==3){
+  Met=c( "single","complete","average","ward.D","ward.D2","median","centroid","mcquitty" )[ Dendo$MetodoDendo]
+  hc     <- hclust(Dendo$Distancia$Distancia,method = Met)
+  hcdata <- dendro_data_k(hc, h = cut)
+
+  p <- plot_ggdendro(hcdata,
+                     direction   = "lr",
+                     # scale.color = cols,
+                     expand.y    = 0.15) +
+    theme(axis.text.x      = element_text(color = "#ffffff"),
+          panel.background = element_rect(fill  = "#ffffff"),
+          axis.ticks       = element_blank()) +
+    scale_color_brewer(palette = "Set1") +
+    xlab(NULL) +
+    ylab(NULL)
+
+  # scale from 0 to 1 and reshape mtcars data
+  DATA=Dendo$Distancia$Dados[Dendo$Ordem,]
+  DATA=DATA[nrow(DATA):1,]
+  scaled2 <- (Normatiza(as.matrix(DATA),Metodo = 1))
+
+  #scaled2c=linearize_image(scaled2)
+  scaled2c=data.frame(Trat=rep(1:nrow(scaled2),ncol(scaled2)),
+                      var=rep(colnames(scaled2),each=nrow(scaled2)),
+                      value=c(scaled2))
+  rownames(scaled2c)=paste0(1:nrow(scaled2c),":")
+
+
+  p2 <-  ggplot(scaled2c)+
+    geom_point(aes(x      = var,
+                   y      = Trat,
+                   size   = value,
+                   color  = value),
+               show.legend = F)+
+    scale_colour_gradientn(colours= Cor(100))+
+
+    theme_minimal() +
+    theme(axis.text.y = element_blank(),
+          axis.text.x = element_text(angle=0, hjust=0)) +
+    xlab(NULL) +
+    ylab(NULL)
+
+  gridExtra::grid.arrange(p, p2, ncol = 2, widths = 1:2)
+
+}
+
 }

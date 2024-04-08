@@ -1,6 +1,7 @@
 #' Resumo das informacoes de cada tratamento em funcao da dissimilaridade
 #'
-#' @description Esta funcao apresenta informacoes que resumem a matriz de dissimilaridade
+#' @description Esta funcao apresenta informacoes que resumem a matriz de dissimilaridade.
+#' @name SummaryDistancia
 #' @usage SummaryDistancia(Dist,
 #' ndec=2,
 #' plot=TRUE,
@@ -38,7 +39,7 @@
 #' @return Retorna informacoes importantes sobre cada tratamento em relacao aos
 #' demais como distancia media, menor distancia, maior distancia, tratamento
 #' mais proximo, tratamento mais distante etc.
-#' @seealso /code{/link{dist}/}
+#' @seealso \code{\link[stats]{dist}}
 #' @references
 #' PlayList "Curso de Analise Multivariada":
 #'  https://www.youtube.com/playlist?list=PLvth1ZcREyK72M3lFl7kBaHiVh5W53mlR

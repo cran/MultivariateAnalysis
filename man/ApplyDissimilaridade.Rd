@@ -28,7 +28,9 @@ para os tratamentos.
 data(Dados.FMI.Quali)
 DadosQuali=ApplyDissimilaridade(Dados.FMI.Quali[,6:10],Dados.FMI.Quali[,2])
 Dist=Distancia(DadosQuali,1)
+Dist
 Dendo=Dendrograma(Dist, 3)
+Dendo
 }
 \references{
 PlayList "Curso de Analise Multivariada":

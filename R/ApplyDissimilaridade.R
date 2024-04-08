@@ -4,6 +4,7 @@
 #' qualitativos cujos individuos que compoe cada tratamento possuem valores
 #' diferentes. Desta forma, obtem se o a porcentagem de cada classificao
 #' para os tratamentos.
+#' @name ApplyDissimilaridade
 #' @usage ApplyDissimilaridade(Dados,Factor)
 #' @param Dados    Matriz contendo os dados qualitativos. Nesta matriz
 #'  deve conter apenas os dados qualitativos. Nao pode ter a identificacao
@@ -30,10 +31,20 @@
 #' data(Dados.FMI.Quali)
 #' DadosQuali=ApplyDissimilaridade(Dados.FMI.Quali[,6:10],Dados.FMI.Quali[,2])
 #' Dist=Distancia(DadosQuali,1)
+#' Dist
 #' Dendo=Dendrograma(Dist, 3)
+#' Dendo
 #' @importFrom grDevices colorRampPalette
-#' @importFrom graphics points
-#'
+#' @importFrom graphics points layout
+#' @importFrom methods is
+#' @importFrom magrittr `%>%`
+#' @importFrom ggplot2  geom_vline geom_hline position_stack geom_bar scale_color_manual scale_fill_gradientn scale_y_continuous expand_limits  scale_y_reverse scale_x_continuous
+#' @importFrom plotly plot_ly  add_markers add_text
+#' @importFrom ggdendro segment label dendro_data ggdendrogram  theme_dendro
+#' @importFrom ecodist pco
+#' @importFrom NbClust NbClust
+#' @importFrom factoextra fviz_nbclust
+#' @importFrom stats aov anova pf kmeans aggregate
 #' @export
 #'
 #'

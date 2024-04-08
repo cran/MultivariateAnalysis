@@ -4,12 +4,17 @@
 \alias{HeatPlot}
 \title{Grafico de calor para a interpretacao do Dendrograma}
 \usage{
-HeatPlot(Dendo,Col=NULL)
+HeatPlot(Dendo,Col=NULL,layout=1,cut=1000)
 }
 \arguments{
 \item{Dendo}{Objeto criado pela funcao `Dendrograma`.}
 
 \item{Col}{Paleta de cores. Veja os exemplos.}
+
+\item{layout}{Deve ser um numero variando de 1 a 3. Para cada numero teremos
+um layout diferente.}
+
+\item{cut}{Valor do corte no dendrograma para o estabelecimento de cluster.}
 }
 \description{
 Esta funcao apresenta um mapa de calor junto com o Dendrograma.
@@ -78,5 +83,5 @@ FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p. (ISBN 13:978 85
   (ISBN 13:978 0138132637)
 }
 \seealso{
-/code{/link{Distancia}/} ,/code{/link{Dendrograma}/}, /code{/link{heatplot}/}
+\code{\link[MultivariateAnalysis]{Distancia}} ,\code{\link[MultivariateAnalysis]{Dendrograma}}
 }

@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -18,7 +18,7 @@ Res
 ## -----------------------------------------------------------------------------
 DadosMed=Res$Med
 DistMaha=Distancia(DadosMed,Metodo = 7,Cov = Res$CovarianciaResidual)
-DistMaha
+
 
 ## -----------------------------------------------------------------------------
 resumo=SummaryDistancia(DistMaha)
@@ -35,7 +35,7 @@ rownames(Dadosquali2)=Dados.DBC.Misto[id,1]
 
 
 Distquali=Distancia(Dadosquali2,Metodo = 10)
-round(Distquali$Distancia,3)
+
 
 ## -----------------------------------------------------------------------------
 

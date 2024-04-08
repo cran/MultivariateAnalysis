@@ -2,6 +2,7 @@
 #'
 #' @description Esta funcao faz a correlacao entre matrizes e estima sua
 #' significancia pelo teste Mantel.
+#' @name CorrelacaoMantel
 #' @usage CorrelacaoMantel(Mat1,Mat2,
 #'                         nperm=999,
 #'                         alternativa="bilateral",
@@ -76,8 +77,8 @@ CorrelacaoMantel=function(Mat1,Mat2,nperm=999,alternativa="bilateral",Plot=TRUE,
 
   alternativa <- match.arg(alternativa, c("bilateral", "menor", "maior"))
 
-  if(class(Mat1)=="Distancia"){Mat1=Mat1$Distancia}
-  if(class(Mat2)=="Distancia"){Mat2=Mat2$Distancia}
+  if(is(Mat1)=="Distancia"){Mat1=Mat1$Distancia}
+  if(is(Mat2)=="Distancia"){Mat2=Mat2$Distancia}
   x=(as.matrix(Mat1))
   y=(as.matrix(Mat2))
 
@@ -101,7 +102,7 @@ CorrelacaoMantel=function(Mat1,Mat2,nperm=999,alternativa="bilateral",Plot=TRUE,
     correlation=r,
     p.value=pv,
     alternative=alternativa)
-  class(Mantel)="CorrelacaoMantel"
+   class(Mantel)="CorrelacaoMantel"
 
 if(Plot==TRUE){
   sig=ifelse(Mantel$p.value>0.05,"ns",ifelse((Mantel$p.value<0.05)&(Mantel$p.value>0.01),"*",ifelse(Mantel$p.value<0.01,"**", "")))

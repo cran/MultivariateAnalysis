@@ -1,3 +1,20 @@
+# MultivariateAnalysis 0.5.0
+## Minor improvements
+* New argument `layout` in `ComponentesPrincipais()`
+* The argument `corretion` was exclude of `CoordenadasPrincipais()`
+* New argument `length` in `HeatPlot()`
+* New argument `length` and `cols` in `VariaveisCanonicas()`
+* New cut options in `Dendrograma()`
+
+## New functions
+* New function plot3D()
+* Dendrograma_NumeroOtimo
+* Kmeans_NumeroOtimo
+* Kmeans_NumeroOtimo2
+* Kmeans
+* ContribuicaoRelativa
+* AnovaCluster
+
 # MultivariateAnalysis 0.4.4
 ## Minor improvements
 * The functions `HeatPlot()` to show normalized values on the graph.

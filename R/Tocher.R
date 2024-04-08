@@ -1,6 +1,7 @@
 #' Agrupamento Tocher
 #'
-#' @description Esta funcao faz o agrupamento pelo metodo Tocher
+#' @description Esta funcao faz o agrupamento pelo metodo Tocher.
+#' @name Tocher
 #' @usage Tocher(Dist,
 #' Metodo="original",
 #' nperm=999,
@@ -76,7 +77,7 @@ Tocher=function(Dist,Metodo="original",nperm=999, Plot=1,xlab="Dissimilaridade",
   #    rownames(Dados.MED)=paste0("T",1:10)
   #   Dist=Distancia(Dados.MED,5)0=
   Dist0=Dist
-  if(class(Dist)=="Distancia"){Dist=Dist$Distancia}
+  if(is(Dist)=="Distancia"){Dist=Dist$Distancia}
 
 
   D=as.dist(Dist)
@@ -142,21 +143,25 @@ par(mar=c(5, 4, 4, 2) + 0.1)
 
 
 
-
-
+classe=x$class
+names(classe)=colnames(as.matrix(Dist))
   out=list(#call = match.call(),
 
     Tocher=x$clusters,
+    Classe=classe,
     DistanciaCofenetica=cof,
     DistanciaIntraInterCluster=DistanciaIntraInterCluster,
     CorrelacaoCofenetica=Mantel)
   class(out) <- "Tocher"
 
 
-  if(class(Dist0)=="Distancia"){
+  if(is(Dist0)=="Distancia"){
+    classe=x$class
+    names(classe)=colnames(as.matrix(Dist))
 
-     out=list(#call = match.call(),
+    out=list(#call = match.call(),
       Tocher=x$clusters,
+      Classe=classe,
       DistanciaCofenetica=cof,
       DistanciaIntraInterCluster=DistanciaIntraInterCluster,
       CorrelacaoCofenetica=Mantel,

@@ -45,6 +45,7 @@ n=c(ncol(DadosQuanti),ncol(DadosQuali),ncol(DadosBin))
 
 #obentedo a media ponderada das matrizes
 Dist=MediaDistancia(Distancias,n,Normatizar = TRUE)
+Dist
 }
 \references{
 PlayList "Curso de Analise Multivariada":

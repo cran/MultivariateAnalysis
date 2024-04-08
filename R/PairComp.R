@@ -1,7 +1,8 @@
 #'Comparacoes multiplas multivariadas
 #'
-#' @description Esta funcao retorna o resultado das comparacoes multiplas (dois a dois)
+#' @description Esta funcao retorna o resultado da comparacao multiplas (dois a dois)
 #' com abordagem multivariada.
+#' @name PairComp
 #' @usage PairComp(MANOVA,adjust="bonferroni",test="Pillai",Sig=0.05)
 #' @param MANOVA    Resultado da funcao MANOVA
 #' @param adjust    Ajuste da significancia para o teste de comparacao multipla.
@@ -10,7 +11,7 @@
 #' @param test Teste considerado na MANOVA. Pode ser:"Pillai", "Wilks",
 #'  "Hotelling-Lawley" ou "Roy"
 #' @param Sig Significancia a ser considerado. Default e 0.05.
-#' @return A funcao as comparacoes multiplas para os tratamentos.
+#' @return A funcao as comparações multiplas para os tratamentos.
 #' @seealso \code{\link{lm}}, \code{\link{manova}}
 #' @references
 #' PlayList "Curso de Analise Multivariada":

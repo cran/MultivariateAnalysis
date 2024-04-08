@@ -1,0 +1,161 @@
+#' Numero otimo de clusters
+#'
+#' @description Esta funcao retorna o numero otimo de clusters para o metodo kmeans
+#'  considerando dieferentes criterios.
+#'  @name Kmeans_NumeroOtimo
+
+#' @usage Kmeans_NumeroOtimo(Dados,design=1,nboot=100,method="silhouette",NumMax=NULL)
+
+#' @param Dados Matriz contendo os dados para execucao da analise. Para cada
+#'  modelo o conjunto de dados precisa estar organizado de uma forma apropriada:
+#'  \itemize{ \item Design 1: Deve ter apenas os dados numericos da pesquisa.
+#'   Na primeira linha não deve ter o nome dos individuos/tratamentos.
+#'    \item Design 2 e 3: As duas primeiras colunas devem conter a
+#'  identificacao dos tratamentos e repeticoes/blocos, e as demais os valores
+#'  observanos nas variaveis respostas. \item Modelo 4: As tres primeiras
+#'  colunas devem conter as informacoes dos tratamentos, linhas e colunas, e
+#'  posteriormente, os valores da variavel resposta. \item Modelos 5 e 6: as
+#'  primeiras colunas precisam ter a informacao do fator A, fator B,
+#'  repeticao/bloco, e posteriormente, as variaveis respostas.}
+#' @param design    Valor numerico indicando o delineamento:
+#' \itemize{
+#' \item 1 =  Experimento sem repeticoes.
+#' \item 2 =  Delineamento inteiramente casualizado (DIC) .
+#'  \item 3 = Delineamento em blocos casualizados (DBC).
+#'  \item 4 = Delineamento em quadrado latino (DQL).
+#'   \item 5 =Esquema fatorial duplo em DIC.
+#'   \item 6 = Esquema fatorial duplo em DBC.}
+#' @param nboot numero de reamostragens desejadas para o metodo bootstrap.
+#' @param method Criterio utilizado para a estimacao do numero otimo de clusters.
+#' Pode-se utilizar as seguintes opcoes:
+#' \itemize{
+#' \item "silhouette" (for average silhouette width).
+#' \item "wss" (for total within sum of square).
+#'  \item "gap_stat" (for gap statistics).
+#' }
+#' @param NumMax Numero maximo de clustes a ser considerado (Obs: Deve ser no minimo 2).
+
+#' @return A funcao retorna o numero otimo de clusters a ser considerado no metodo kmeans.
+#' @seealso \code{\link{Kmeans}}, \code{\link{Kmeans_NumeroOtimo2}} , \code{\link{ContribuicaoRelativa}}
+#' @references
+#' PlayList "Curso de Analise Multivariada":
+#'  https://www.youtube.com/playlist?list=PLvth1ZcREyK72M3lFl7kBaHiVh5W53mlR
+#'
+#'
+#' CRUZ, C.D. and CARNEIRO, P.C.S.  Modelos biometricos aplicados ao
+#'   melhoramento genetico. 3nd Edition. Vicosa, UFV, v.2, 2014. 668p.  (ISBN: 8572691510)
+#'
+#' FERREIRA, D.F. Estatistica Multivariada. (2018) 3ed. UFLA. 624p. (ISBN 13:978 8581270630)
+#'
+#'  HAIR, J.F. Multivariate Data Analysis.  (2016) 6ed. Pearson Prentice HalL.
+#'   (ISBN 13:978 0138132637)
+#'
+#' @export
+#' @examples
+#'  \donttest{
+#'
+#'   #Dados sem repeticao
+#'   data("Dados.MED")
+#'   Dados=Dados.MED
+#'   rownames(Dados)=paste("Genotipo",1:10,sep="_")
+#'   Kmeans_NumeroOtimo(Dados,design=1,nboot=100,method="silhouette",NumMax=NULL)
+#'   Kmeans(Dados,design=1,nclusters=3,iter.max = 10,nstart = 1,
+#'       algorithm = "Hartigan-Wong")
+#'
+#'   #Dados de experimento em dic
+#'   data("Dados.DIC")
+#'   Kmeans_NumeroOtimo(Dados=Dados.DIC,design=2,nboot=100,method="wss",NumMax=NULL)
+#'   Kmeans(Dados=Dados.DIC,design=2,nclusters=2,iter.max = 20,nstart = 1,
+#'       algorithm = "Hartigan-Wong")
+#'
+#'   #Dados de experimento em dbc
+#'   data("Dados.DBC")
+#'   Kmeans_NumeroOtimo(Dados=Dados.DBC,design=3,nboot=100,method="gap_stat",NumMax=NULL)
+#'   Kmeans(Dados=Dados.DBC,design=3,nclusters=2,iter.max = 20,nstart = 1,
+#'      algorithm = "Hartigan-Wong")
+#'
+#'   #Dados de experimento em DQL
+#'   data("Dados.DQL")
+#'   Kmeans_NumeroOtimo(Dados=Dados.DQL,design=4,nboot=100,method="silhouette",NumMax=NULL)
+#'   Kmeans(Dados=Dados.DQL,design=4,nclusters=2,iter.max = 20,nstart = 1,
+#'      algorithm = "Hartigan-Wong")
+#'
+#'   #Dados de experimento em Esquema fatorial em DIC
+#'   data("Dados.Fat2.DIC")
+#'   Kmeans_NumeroOtimo(Dados=Dados.Fat2.DIC,design=5,nboot=100,method="silhouette",NumMax=NULL)
+#'   Kmeans(Dados=Dados.Fat2.DIC,design=5,nclusters=2,iter.max = 20,nstart = 1,
+#'     algorithm = "Hartigan-Wong")
+#'
+#'   #Dados de experimento em Esquema fatorial em DBC
+#'   data("Dados.Fat2.DBC")
+#'   Kmeans_NumeroOtimo(Dados=Dados.Fat2.DBC,design=6,nboot=100,method="silhouette",NumMax=NULL)
+#'   Kmeans(Dados=Dados.Fat2.DBC,design=6,nclusters=2,iter.max = 20,nstart = 1,
+#'     algorithm = "Hartigan-Wong")
+#'     }
+
+
+
+Kmeans_NumeroOtimo=function(Dados,design=1,nboot=100,method="silhouette",NumMax=NULL){
+
+if(design==1){
+    if(is.null(NumMax)){NumMax=(nrow(Dados)-1)}
+    p1=fviz_nbclust(Dados,FUNcluster =  stats::kmeans, method = method,k.max = NumMax,nboot=nboot)
+    print(p1)
+  }
+
+if(design==2){
+  Dmed=aggregate(Dados[,-c(1,2)],by = list(Dados[,1]),mean,na.rm=TRUE)
+  rownames(Dmed)=Dmed[,1]
+  Dmed=Dmed[,-1]
+
+  if(is.null(NumMax)){NumMax=(nrow(Dmed)-1)}
+  p1=fviz_nbclust(Dmed, stats::kmeans, method = method,k.max = NumMax,nboot=nboot)
+  print(p1)
+}
+
+if(design==3){
+  Dmed=aggregate(Dados[,-c(1,2)],by = list(Dados[,1]),mean,na.rm=TRUE)
+  rownames(Dmed)=Dmed[,1]
+  Dmed=Dmed[,-1]
+
+  if(is.null(NumMax)){NumMax=(nrow(Dmed)-1)}
+  p1=fviz_nbclust(Dmed, stats::kmeans, method = method,k.max = NumMax,nboot=nboot)
+  print(p1)
+}
+
+if(design==4){
+  Dmed=aggregate(Dados[,-c(1,2,3)],by = list(Dados[,1]),mean,na.rm=TRUE)
+  rownames(Dmed)=Dmed[,1]
+  Dmed=Dmed[,-1]
+
+  if(is.null(NumMax)){NumMax=(nrow(Dmed)-1)}
+  p1=fviz_nbclust(Dmed, stats::kmeans, method = method,k.max = NumMax,nboot=nboot)
+  print(p1)
+}
+
+if(design==5){
+  Trat=paste(Dados[,1],Dados[,2],sep="_")
+  Dmed=aggregate(Dados[,-c(1,2,3)],by = list(Trat),mean,na.rm=TRUE)
+  rownames(Dmed)=Dmed[,1]
+  Dmed=Dmed[,-1]
+
+  if(is.null(NumMax)){NumMax=(nrow(Dmed)-1)}
+  p1=fviz_nbclust(Dmed, stats::kmeans, method = method,k.max = NumMax,nboot=nboot)
+  print(p1)
+}
+
+if(design==6){
+  Trat=paste(Dados[,1],Dados[,2],sep="_")
+  Dmed=aggregate(Dados[,-c(1,2,3)],by = list(Trat),mean,na.rm=TRUE)
+  rownames(Dmed)=Dmed[,1]
+  Dmed=Dmed[,-1]
+
+  if(is.null(NumMax)){NumMax=(nrow(Dmed)-1)}
+  p1=fviz_nbclust(Dmed, stats::kmeans, method = method,k.max = NumMax,nboot=nboot)
+  print(p1)
+}
+
+}
+
+
+

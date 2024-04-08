@@ -19,6 +19,7 @@ Esta funcao retorna o diagnostico de multicolinearidade. E
   indicativo de multicolinearidade a presenca de pelo menos um fator de
   inflacao de variancia maior que 10 ou numero de condicao maior que 100
   (Cruz et al.,2014).
+  @name Multicolinearidade
 }
 \examples{
 data(Dados.MED)

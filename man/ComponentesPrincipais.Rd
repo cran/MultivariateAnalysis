@@ -6,6 +6,8 @@
 \usage{
 ComponentesPrincipais(D,
 padronizar=TRUE,
+layout=8,
+cols=c(1,2),
 xlab="PCA 1",
 ylab="PCA 2",
 CR=TRUE,
@@ -27,6 +29,12 @@ conter apenas as medias dos tratamentos.}
 \item{padronizar}{Se for TRUE (default) os dados serao padronizados para ter
 media 0 e variancia igual a 1. Se for FALSE os componentes principais
 considerarao os valores originais.}
+
+\item{layout}{Deve ser um numero variando de 1 a 9. Para cada numero teremos
+um layout diferente.}
+
+\item{cols}{vetor contendo dois numeros indicando os componentes principais que
+serao utilizados na representacao bidimencional. Default = c(1,2).}
 
 \item{xlab}{Nome do eixo X do grafico de componentes principais.}
 
@@ -71,7 +79,7 @@ Esta funcao retorna informacoes importantes para o estudo de
   o grafico de dispersao dos CPs.
 }
 \description{
-Esta funcao possibilita o estudo dos componentes principais .
+Esta funcao possibilita o estudo dos componentes principais.
 }
 \examples{
 \donttest{
@@ -80,6 +88,18 @@ ComponentesPrincipais(Dados.MED)
 #Atribuindo nome aos tratamentos
 Trat=paste("T_",1:nrow(Dados.MED),sep="")
 ComponentesPrincipais(Dados.MED,NomeTrat = Trat)
+
+ComponentesPrincipais(Dados.MED,NomeTrat = Trat,layout=1)
+ComponentesPrincipais(Dados.MED,NomeTrat = Trat,layout=2)
+ComponentesPrincipais(Dados.MED,NomeTrat = Trat,layout=3)
+ComponentesPrincipais(Dados.MED,NomeTrat = Trat,layout=4)
+ComponentesPrincipais(Dados.MED,NomeTrat = Trat,layout=5)
+ComponentesPrincipais(Dados.MED,NomeTrat = Trat,layout=6)
+ComponentesPrincipais(Dados.MED,NomeTrat = Trat,layout=7)
+ComponentesPrincipais(Dados.MED,NomeTrat = Trat,layout=8)
+ComponentesPrincipais(Dados.MED,NomeTrat = Trat,layout=9)
+
+
 ComponentesPrincipais(Dados.MED,NomeTrat = Trat,CorPlot = FALSE)
 ComponentesPrincipais(Dados.MED,NomeTrat = Trat,CorPlot = TRUE,
 CorCol = "blue",VarCol="red" )

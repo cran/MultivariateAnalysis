@@ -6,6 +6,7 @@
 \usage{
 Dendrograma(Dissimilaridade,
                   Metodo=3,
+                  layout=2,
                   nperm=999,
                   Titulo="",
                   corte="Mojena1")
@@ -15,16 +16,19 @@ Dendrograma(Dissimilaridade,
 tratamentos.}
 
 \item{Metodo}{Valor numerico indicando o metodo a ser utilizado:
- \itemize{
+\itemize{
 \item  1 = Ligacao simples (Metodo do vizinho mais proximo).
 \item  2 = Ligacao completa (Metodo do vizinho distante).
- \item  3 = Ligacao media entre grupo (UPGMA).
- \item  4 = Metodo de Ward.
- \item  5 = Metodo de Ward (d2).
- \item  6= Metodo da mediana (WPGMC).
- \item  7= Metodo do centroide (UPGMC).
- \item  8 = Metodo mcquitty (WPGMA).
- }}
+\item  3 = Ligacao media entre grupo (UPGMA).
+\item  4 = Metodo de Ward.
+\item  5 = Metodo de Ward (d2).
+\item  6 = Metodo da mediana (WPGMC).
+\item  7 = Metodo do centroide (UPGMC).
+\item  8 = Metodo mcquitty (WPGMA).
+}}
+
+\item{layout}{Deve ser um numero variando de 1 a 10. Para cada numero teremos
+um layout diferente.}
 
 \item{nperm}{Numero de permutacoes do teste mantel para testar a significancia
 pelo teste Mantel.}
@@ -33,13 +37,16 @@ pelo teste Mantel.}
 
 \item{corte}{Indica a metodologia considerada para estabelecer a linha de
 corte no Dendrograma:
-  \itemize{
- \item  FALSE = Indica que o ponto de corte nao sera apresentado.
- \item  Mojena1 = Coeficiente de mojena considerando o K=1.25.
- \item  Mojena2 = Coeficiente de mojena considerando o K=2.00.
- \item   `Numeric`= Valor numerico indicando onde se deseja plotar a linha
- de corte.
- }}
+\itemize{
+  \item FALSE = Indica que o ponto de corte nao sera apresentado.
+  \item Mojena1 = Coeficiente de mojena considerando o K=1.25.
+  \item Mojena2 = Coeficiente de mojena considerando o K=2.00.
+  \item Cindex = Considera o metodo Cindex para determinar o numero de clusters.
+  \item Frey = Considera o metodo Frey para determinar o numero de clusters.
+  \item Mcclain = Considera o metodo Frey para determinar o numero de clusters.
+  \item Dunn = Considera o metodo Dunn para determinar o numero de clusters.
+  \item Numeric= Valor numerico indicando onde se deseja plotar a linhade corte.
+}}
 }
 \value{
 A funcao retorna o Dendrograma, distancias feneticas e correlacao
@@ -51,12 +58,22 @@ Esta funcao retorna a figura do Dendrograma, distancias feneticas
 }
 \examples{
 data(Dados.MED)
+rownames(Dados.MED)=paste0("Treatment ",1:10)
 Dist=Distancia(Dados.MED,2)
-Dendrograma(Dist,2)
+Dendrograma(Dist,Metodo = 2)
+Dendrograma(Dist,2,layout =1,corte = "Mojena2")
+Dendrograma(Dist,2,layout =2,corte="Cindex")
+Dendrograma(Dist,2,layout =3,corte="Frey")
+Dendrograma(Dist,2,layout =4,corte="Mcclain")
+Dendrograma(Dist,2,layout =5,corte="Dunn")
+Dendrograma(Dist,2,layout =6)
+Dendrograma(Dist,2,layout =7,corte=3)
+Dendrograma(Dist,2,layout =8)
+Dendrograma(Dist,2,layout =9)
+Dendrograma(Dist,2,layout =10,corte=2)
+
 }
 \references{
-
-
 PlayList "Curso de Analise Multivariada":
  https://www.youtube.com/playlist?list=PLvth1ZcREyK72M3lFl7kBaHiVh5W53mlR
 

@@ -34,6 +34,7 @@ A funcao retorna a MANOVA, a matriz de (co)variancia residual e o
 \description{
 Esta funcao retorna o resultado da analise de variancia
  multivariada (MANOVA).
+ @name MANOVA
 }
 \examples{
 \donttest{

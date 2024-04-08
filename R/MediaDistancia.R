@@ -6,6 +6,7 @@
 #' essas matrizes em funcao do numero de variaveis consideradas na estimativa
 #' de cada uma dessas dissimilaridade. Essa funcao e importante quando se trabalha
 #' com dados mistos.
+#' @name MediaDistancia
 #' @usage MediaDistancia(Distancias,n,Normatizar=TRUE)
 #' @param Distancias Objeto do tipo list contendo as matrizes de dissimilaridade.
 #' @param n Vetor com o numero de variaveis consideradas na estimacao de cada medida
@@ -45,6 +46,7 @@
 #'
 #' #obentedo a media ponderada das matrizes
 #' Dist=MediaDistancia(Distancias,n,Normatizar = TRUE)
+#' Dist
 #' @export
 
 
@@ -58,11 +60,11 @@ MediaDistancia=function(Distancias,n,Normatizar=TRUE){
 
 
   for(i in 1:length(Distancias)){
-    if(class(Distancias[[i]])=="Distancia"){
+    if(is(Distancias[[i]])=="Distancia"){
       Distancias2[[i]]=as.matrix(Distancias[[i]]$Distancia)
     }
 
-    if(class(Distancias[[i]])!="Distancia"){
+    if(is(Distancias[[i]])!="Distancia"){
     Distancias2[[i]]=as.matrix(Distancias[[i]])
 
   }}

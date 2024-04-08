@@ -4,6 +4,7 @@
 #' deve-se apenas indicar o numero de classes desejadas. A funcao retorna a classificacao
 #' de cada individuo em funcao de intervalos equidistantes formados considerando o numero
 #' de classes almejados.
+#' @name Quant2Quali
 #' @usage Quant2Quali(Dados,nclasses)
 #' @param Dados Objeto com os dados quantitativos a serem convertidos em qualitativos.
 #' @param nclasses Numero maximo de classes desejado.

@@ -2,17 +2,22 @@
 #'
 #' @description Esta funcao faz a analise dos dados pelo metodo de variaveis
 #'   canonicas.
+#'   @name VariaveisCanonicas
 #' @usage VariaveisCanonicas(Dados,
 #'              Modelo=1,
 #'               Fator=NULL,
+#'               layout=1,
 #'                xlab="VC1",
 #'                ylab="VC2",
+#'                cols=c(1,2),
 #'                CR=TRUE,
 #'                CorPlot=TRUE,
 #'                CorCol="red",
 #'                VarCol ="blue",
 #'                bty="L",
-#'                Perc=0.1)
+#'                Perc=0.1,
+#'                length = 0.25)
+#'
 #' @param Dados Matriz contendo os dados para execucao da MANOVA. Para cada
 #'   modelo o conjunto de dados precisa estar organizado de uma forma
 #'   apropriada:
@@ -57,11 +62,14 @@
 #' entre os niveis do fator B e C) em caso de esquema fatorial (Design 6 ou 7)
 #' \item "A:B:C" = Para obter a presentacao grafica de todos os tratamentos (combinacoes
 #' entre os niveis do fator A, B e C) em caso de esquema fatorial (Design 6 ou 7)
-
-
 #'   }
+#' @param layout Deve ser um numero variando de 1 a 9. Para cada numero teremos
+#' um layout diferente.
+
 #' @param xlab nome do eixo x do grafico de variaveis canonicas
 #' @param ylab nome do eixo y do grafico de variaveis canonicas
+#' @param cols Numero das variaveis canonicas que se pretende apresentar no grafico.
+#' O padrao e `c(1,2)`.
 #' @param CR  Valor logico (TRUE ou FALSE) indicando se aparecera no grafico
 #'   a contriuicao relativa de cada eixo.
 #' @param CorPlot Valor logico. Se for TRUE sera apresentado no grafico as
@@ -81,6 +89,7 @@
 #'      \item"U": Direita + Abaixo + Direita
 #'      }
 #' @param Perc  Valor entre 0 e 1 indicando o recuo dos eixos.
+#' @param length Refere-se ao tamanho da seta. O default e 0.25.
 #' @return A funcao retorna resultados associados as variaveis canonicas.
 #' @seealso \code{\link{lm}}, \code{\link{manova}}
 #' @references
@@ -105,17 +114,17 @@
 #' VariaveisCanonicas(Dados.DBC,2,CorCol = "red",VarCol = "red")
 #' #Delineamento em quadrado latino (DQL)
 #' data(Dados.DQL)
-#' VariaveisCanonicas(Dados.DQL,3)
+#' VariaveisCanonicas(Dados.DQL,3,layout=2)
 #'
 #' #Esquema fatorial duplo em DIC
 #' data(Dados.Fat2.DIC)
 #' VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="A:B")
-#' VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="A")
-#' VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="B")
+#' VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="A",layout=3)
+#' VariaveisCanonicas(Dados.Fat2.DIC,4,Fator="B",layout=4)
 #'
 #' #Esquema fatorial duplo em DBC
 #' data(Dados.Fat2.DBC)
-#' VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="A:B")
+#' VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="A:B",layout=5)
 #' VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="A")
 #' VariaveisCanonicas(Dados.Fat2.DBC,5,Fator="B")
 #'
@@ -139,11 +148,17 @@
 #' @export
 #' @exportS3Method print VariaveisCanonicas
 
-VariaveisCanonicas=function(Dados,Modelo=1,Fator=NULL,xlab="VC1", ylab="VC2",
+VariaveisCanonicas=function(Dados,Modelo=1,Fator=NULL,layout=1,xlab="VC1", ylab="VC2",
+                            cols=c(1,2),
                         CR=TRUE, CorPlot=TRUE,CorCol="red",VarCol = "blue",
-                        bty="L", Perc=0.1){
-D=data.frame(Dados)
-VC=VariaveisCanonicas2(D,Modelo=Modelo,Factor=Fator,xlab=xlab, ylab=ylab,CR=CR, CorPlot=CorPlot,CorCol=CorCol,VarCol = VarCol, bty=bty, Perc=Perc)
+                        bty="L", Perc=0.1,length = 0.25){
+
+D=as.data.frame(Dados)
+VC=VariaveisCanonicas2(D,Modelo=Modelo,Factor=Fator,layout=layout,x = cols[1],
+                       y = cols[2],xlab=xlab, ylab=ylab,CR=CR, CorPlot=CorPlot,
+                       CorCol=CorCol,VarCol = VarCol, bty=bty, Perc=Perc,
+                       length = length)
+print("a")
 class(VC)="VariaveisCanonicas"
 return(VC)
 }

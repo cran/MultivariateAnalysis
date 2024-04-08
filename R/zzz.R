@@ -14,8 +14,33 @@
 
 }
 
+sq = function(Fator, Y) {
+  X = as.factor(Fator)
+  NumTrat = length(unique(as.factor(Fator)))
+  NomeTrat = unique(as.factor(Fator))
+  NumParc = length(X)
+  Matrizout = matrix(0, ncol = NumTrat, nrow = NumParc)
+  for (i in 1:NumParc) {
+    for (j in 1:NumTrat) {
+      if (X[i] == NomeTrat[j]) {
+        Matrizout[i, j] = 1
+      }
+    }
+  }
+  X = Matrizout
+  return(c(GL = NumTrat - 1, SQ = sum((X %*% solve(t(X) %*%
+                                                     X) %*% t(X) %*% Y - mean(Y))^2)))
+}
 
-
+sqI2 = function(Fator1, Fator2, Y) {
+  Fator1 = as.factor(Fator1)
+  Fator2 = as.factor(Fator2)
+  X = paste(Fator1, Fator2)
+  sqA = sq(Fator1, Y)
+  sqB = sq(Fator2, Y)
+  sqA.B = sq(X, Y)
+  return(sqA.B - sqA - sqB)
+}
 
 linearizar=function(Dist){
   res=NULL
@@ -97,6 +122,5 @@ CompMed=function(n,Pvalor,Sig){
   return(Tabela)
 }
 ##################################################################
-
 
 

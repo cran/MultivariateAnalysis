@@ -3,6 +3,7 @@
 #' @description Esta funcao faz a padronizacao da matriz a fim de retirar a escala.
 #' Para isso, os valores das matrizes sao calculados a fim de variar entre um
 #' "LimiteInferior" e um "LimiteSuperior".
+#' @name Normatiza
 #' @usage Normatiza(DadosEntrada, DadosBase=NULL, LimiteInferior=0, LimiteSuperior=1,Metodo=1)
 #' @param DadosEntrada Matriz contendo os dados sendo normatizados.
 #' @param DadosBase Matriz contendo o conjunto de dados referencia para a normatizacao.
@@ -17,7 +18,7 @@
 #'  }
 #'
 #' @return Retorna a matriz normatizada.
-#' @seealso /code{/link{dist}/}
+#' @seealso \code{\link[stats]{dist}}
 #' @references
 #' PlayList "Curso de Analise Multivariada":
 #'  https://www.youtube.com/playlist?list=PLvth1ZcREyK72M3lFl7kBaHiVh5W53mlR

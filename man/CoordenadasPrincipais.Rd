@@ -4,30 +4,31 @@
 \alias{CoordenadasPrincipais}
 \title{Estudo de coordenadas principais}
 \usage{
-CoordenadasPrincipais(Dist,
-       Dados=NULL,
-       Padronizar=FALSE,
-       main=NULL,
-       correction="none",
-       plot=TRUE)
+CoordenadasPrincipais(Dist, layout = 1,
+main = NULL, NomeTrat = NULL, xlab = "PCoA 1", ylab ="PCoA 2",
+ColVars = c(1, 2), CR = TRUE, Perc = 0.01, plot = TRUE)
 }
 \arguments{
 \item{Dist}{Matriz com as medidas de dissimilaridade.}
 
-\item{Dados}{Matriz com os valores de cada variavel.Deve ser utilizada
-quando se pretende apresentar no grafico a correlacao entre as variaveis
-respostas e as coordenadas principais. Esses dados devem ser acrescentados
-apenas em situacoes quando as variaveis sao quantitativas, caso contrario escreva
-`NULL` (default).}
+\item{layout}{Deve ser um numero variando de 1 a 8. Para cada numero teremos
+um layout diferente.}
 
-\item{Padronizar}{Se for TRUE (default) os dados serao padronizados para ter
-media 0 e variancia igual a 1. Se for FALSE serao considerados os valores originais.
-Essa informacao e utilizada apenas quando o argumento Dados nao esta com `NULL`.}
+\item{main}{Titulo do grafico.}
 
-\item{main}{Texto do titulo do grafico.}
+\item{NomeTrat}{Nome dos tratamentos.}
 
-\item{correction}{Metodos de correcao para autovalores negativos: "lingoes"
-ou "cailliez". Default e: "none".}
+\item{xlab}{Nome do eixo x no grafico.}
+
+\item{ylab}{Nome do eixo y no grafico.}
+
+\item{ColVars}{Numero dos eixos que se pretende apresentar no grafico.
+O padrao e `c(1,2)`.}
+
+\item{CR}{Valor logico (TRUE ou FALSE) indicando se aparecera no grafico
+a contriuicao relativa de cada eixo.}
+
+\item{Perc}{Valor entre 0 e 1 indicando o recuo dos eixos.}
 
 \item{plot}{Valor logico.Se for TRUE o grafico sera apresentado.}
 }
@@ -36,14 +37,13 @@ Esta funcao retorna informacoes importantes para o estudo de
   coordenadas principais.
 }
 \description{
-Esta funcao possibilita o estudo dos componentes principais .
+Esta funcao possibilita o estudo dos coordenadas principais.
 }
 \examples{
 #Exemplo com dados Quantitativos
 data("Dados.MED")
 Dist=Distancia(Dados.MED,Metodo=5)
 CoordenadasPrincipais(Dist)
-CoordenadasPrincipais(Dist,Dados.MED,Padronizar = TRUE)
 #Compare os resultados com os componentes principais
 ComponentesPrincipais(Dados.MED,padronizar = TRUE)
 
@@ -77,5 +77,5 @@ and evolutionary analyses in R. (2019) Bioinformatics. 526-528.
   symmetric matrices. Psychometrika, 36, 195–203.
 }
 \seealso{
-\code{\link{pcoa}}, \code{\link{ComponentesPrincipais}}
+\code{\link{ComponentesPrincipais}}
 }

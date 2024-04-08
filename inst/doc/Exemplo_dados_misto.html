@@ -12,29 +12,42 @@
 
 <meta name="author" content="Alcinei Mistico Azevedo (ICA-UFMG)" />
 
-<meta name="date" content="2021-11-12" />
+<meta name="date" content="2024-04-08" />
 
 <title>Exemplo: Experimento com dados mistos sem repetições</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -52,55 +65,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -109,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -127,7 +146,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -139,22 +338,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<h1 class="title toc-ignore">Exemplo: Experimento com dados mistos sem repetições</h1>
+<h1 class="title toc-ignore">Exemplo: Experimento com dados mistos sem
+repetições</h1>
 <h4 class="author">Alcinei Mistico Azevedo (ICA-UFMG)</h4>
-<h4 class="date">2021-11-12</h4>
+<h4 class="date">2024-04-08</h4>
 
 
 
 <div id="ativando-o-pacote" class="section level1">
 <h1>Ativando o pacote</h1>
-<p>Após a instalação do pacote é preciso ativa-lo. Para isso, deve-se utilizar a função <code>library</code> ou <code>require</code></p>
+<p>Após a instalação do pacote é preciso ativa-lo. Para isso, deve-se
+utilizar a função <code>library</code> ou <code>require</code></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MultivariateAnalysis)</span></code></pre></div>
 </div>
 <div id="abrindo-o-conjunto-de-dados" class="section level1">
 <h1>Abrindo o conjunto de dados</h1>
-<p>Posteriormente, deve-se carregar no R o conjunto de dados a serem analizados. Isso pode ser feito de diferentes formas.</p>
-<p>Uma possibilidade é utilizando a função <code>read.table</code>. Neste exemplo vamos trabalhar com o banco de dados do pacote, o qual pode ser carregado com a função <code>data</code>.</p>
-<p>Este exemplo trata-se de dados binarios vindo do uso de marcadores moleculares em cinco individuos.</p>
+<p>Posteriormente, deve-se carregar no R o conjunto de dados a serem
+analizados. Isso pode ser feito de diferentes formas.</p>
+<p>Uma possibilidade é utilizando a função <code>read.table</code>.
+Neste exemplo vamos trabalhar com o banco de dados do pacote, o qual
+pode ser carregado com a função <code>data</code>.</p>
+<p>Este exemplo trata-se de dados binarios vindo do uso de marcadores
+moleculares em cinco individuos.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Dados.Misto&quot;</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Dados.Misto</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   M1 M2 M3 M4 M5 Altura Prod  CorFlor  Crescimento NumFr Pelos</span></span>
@@ -166,24 +371,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="obtenção-de-medidas-de-dissimilaridade-para-dados-mistos" class="section level1">
 <h1>Obtenção de medidas de dissimilaridade para dados mistos</h1>
-<p>Muitas são as opções para a obtenção de medidas de dissimilaridade para dados mistos. Vamos apresentar aqui algumas possibilidades para analise.</p>
+<p>Muitas são as opções para a obtenção de medidas de dissimilaridade
+para dados mistos. Vamos apresentar aqui algumas possibilidades para
+analise.</p>
 <div id="método-1-índice-de-gower" class="section level2">
 <h2>Método 1: Índice de Gower</h2>
-<p>Uma possibilidade quando se tem dados misto é o uso do índice de Gower.</p>
+<p>Uma possibilidade quando se tem dados misto é o uso do índice de
+Gower.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#colocando nome nos individuos</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Dados.Misto)<span class="ot">=</span><span class="fu">paste0</span>(<span class="st">&quot;T&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(Dados.Misto))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Gower1<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto,<span class="at">Metodo =</span> <span class="dv">21</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Gower1<span class="sc">$</span>Distancia,<span class="dv">3</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       T1    T2    T3    T4</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T2 0.325                  </span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3 0.473 0.521            </span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T4 0.492 0.531 0.569      </span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5 0.715 0.630 0.697 0.788</span></span></code></pre></div>
-<p>Um problema desta metodologia, é que neste caso, quando as variáveis binárias (0 ou 1) indicando a presença ou ausência de bandas a informação 0-0 (ausencia de bandas em ambos os indivíduos) indica que os dois índivíduos são iguais, o que não é verdade necessáriamente. Caso queira desconsiderar essas informações (0-0) no cômputo da dissimilaridade, pode-se usar o “índice de Gower 2”.</p>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Gower1</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Medida de dissimilaridade:  21 =Dissimilaridade de Gower</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Menor Distancia: 0.3249251 </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Maior Distancia: 0.7883117 </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Media das Distancias: 0.5741259 </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Amplitude das Distancias: 0.4633866 </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Desvio Padrao das Distancias: 0.1364548 </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coeficiente de variacao das Distancias: 23.7674 </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Individuos mais proximos: T1 T2 </span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Individuos mais distantes: T4 T5</span></span></code></pre></div>
+<p>Um problema desta metodologia, é que neste caso, quando as variáveis
+binárias (0 ou 1) indicando a presença ou ausência de bandas a
+informação 0-0 (ausencia de bandas em ambos os indivíduos) indica que os
+dois índivíduos são iguais, o que não é verdade necessáriamente. Caso
+queira desconsiderar essas informações (0-0) no cômputo da
+dissimilaridade, pode-se usar o “índice de Gower 2”.</p>
 </div>
 <div id="método-2-índice-de-gower-2" class="section level2">
 <h2>Método 2: Índice de Gower 2</h2>
-<p>Essa medidada deve ser utilizada quando se tem variáveis binárias (0 ou 1) indicando a presença ou ausência de bandas. Neste caso, a informação 0-0 (ausencia de bandas em ambos os indivíduos) são desconsiderados no cômputo da dissimilaridade, raciocícnio similar ao indice de Jacard.</p>
+<p>Essa medidada deve ser utilizada quando se tem variáveis binárias (0
+ou 1) indicando a presença ou ausência de bandas. Neste caso, a
+informação 0-0 (ausencia de bandas em ambos os indivíduos) são
+desconsiderados no cômputo da dissimilaridade, raciocícnio similar ao
+indice de Jacard.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Gower2<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto,<span class="at">Metodo =</span> <span class="dv">22</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Gower2<span class="sc">$</span>Distancia,<span class="dv">3</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       T1    T2    T3    T4</span></span>
@@ -193,8 +415,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5 0.715 0.693 0.697 0.788</span></span></code></pre></div>
 </div>
 <div id="método-3-calcular-a-medida-de-dissimilaridade-mais-apropriada-para-cada-variável-e-fazer-a-média-ponderada-posteriormente." class="section level2">
-<h2>Método 3: Calcular a medida de dissimilaridade mais apropriada para cada variável e fazer a média ponderada posteriormente.</h2>
-<p>Neste caso, vamos usar o índice de jacard para os dados binários, índice de discordância para os dados multicategóricos e distância euclidiana padronizada para os dados quantitativos.</p>
+<h2>Método 3: Calcular a medida de dissimilaridade mais apropriada para
+cada variável e fazer a média ponderada posteriormente.</h2>
+<p>Neste caso, vamos usar o índice de jacard para os dados binários,
+índice de discordância para os dados multicategóricos e distância
+euclidiana padronizada para os dados quantitativos.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Indice de jacard</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>DistBin<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)],<span class="at">Metodo =</span> <span class="dv">12</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Indice de discordancia</span></span>
@@ -215,8 +440,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5 0.8316672 0.7685447 0.7721730 0.9090909</span></span></code></pre></div>
 </div>
 <div id="metodo-4-transformar-os-dados-quantitativos-em-qualitativos-e-considerar-tudo-como-multicategórico" class="section level2">
-<h2>Metodo 4: Transformar os dados quantitativos em qualitativos e considerar tudo como multicategórico</h2>
-<p>Os dados quantitativos podem ser transformados em qualitativos. Para isso, pode-se usar a funcao <code>Quant2Quali</code>. Assim basta indicar o numero maximo de classes desejadas e a funcao demonstrará para cada individuo a classe que ele pertence. Essa classe é obtida considerando intervalos equidistantes entre o menor e maior valor de cada variavel, considerando-se o número de classes.</p>
+<h2>Metodo 4: Transformar os dados quantitativos em qualitativos e
+considerar tudo como multicategórico</h2>
+<p>Os dados quantitativos podem ser transformados em qualitativos. Para
+isso, pode-se usar a funcao <code>Quant2Quali</code>. Assim basta
+indicar o numero maximo de classes desejadas e a funcao demonstrará para
+cada individuo a classe que ele pertence. Essa classe é obtida
+considerando intervalos equidistantes entre o menor e maior valor de
+cada variavel, considerando-se o número de classes.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>DadosQuanti<span class="ot">=</span>Dados.Misto[,<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">10</span>)]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>DadosQuanti</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Altura Prod NumFr</span></span>
@@ -244,7 +475,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T3  1  0  1  1  1     C4   C4   Branco     prostado    C1   Sim</span></span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T4  0  1  1  0  0     C4   C4  Amarelo     prostado    C2   Nao</span></span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; T5  1  1  0  1  1     C1   C1 Vermelho semiprostado    C4   Nao</span></span></code></pre></div>
-<p>Agora, podemos considerar todos os dados como qualitativos e considerar o índice de discordancia com medida de dissimilaridade.</p>
+<p>Agora, podemos considerar todos os dados como qualitativos e
+considerar o índice de discordancia com medida de dissimilaridade.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Metodo4<span class="ot">=</span><span class="fu">Distancia</span>(Dados.Misto2,<span class="at">Metodo =</span> <span class="dv">10</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Metodo4</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Medida de dissimilaridade: 10 = Frequencia de discordancia.</span></span>
@@ -260,8 +492,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="após-obter-a-matriz-de-dissimilaridade-podemos-fazer-o-dendrograma." class="section level1">
-<h1>Após obter a matriz de dissimilaridade, podemos fazer o Dendrograma.</h1>
-<p>A fim de resumir as informações da matriz de dissimilaridade a fim de melhorar a visualização da dissimilaridade, pode-se fazer um Dendrograma com o auxilio da função <code>Dendrograma</code>. Varios algoritimos podem ser utilizados para a construção deste Dendrograma. Para isso, deve-se indicar no argumento <code>Metodo</code>:</p>
+<h1>Após obter a matriz de dissimilaridade, podemos fazer o
+Dendrograma.</h1>
+<p>A fim de resumir as informações da matriz de dissimilaridade a fim de
+melhorar a visualização da dissimilaridade, pode-se fazer um Dendrograma
+com o auxilio da função <code>Dendrograma</code>. Varios algoritimos
+podem ser utilizados para a construção deste Dendrograma. Para isso,
+deve-se indicar no argumento <code>Metodo</code>:</p>
 <p>1 = Ligacao simples (Metodo do vizinho mais proximo).</p>
 <p>2 = Ligacao completa (Metodo do vizinho distante).</p>
 <p>3 = Ligacao media entre grupo (UPGMA).</p>
@@ -271,33 +508,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>7= Metodo do centroide (UPGMC).</p>
 <p>8 = Metodo mcquitty (WPGMA).</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendrograma</span>(Gower1,<span class="at">Metodo=</span><span class="dv">3</span>,<span class="at">Titulo=</span><span class="st">&quot;Gower1&quot;</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAulBMVEUAAAAAADoAAGYAOpAAZrYzMzM6AAA6ADo6AGY6kNtNTU1NTW5NTY5NbqtNjshmAABmtv9uTU1uTW5uTY5ubo5ubqtuq+SOTU2OTW6OTY6Obk2ObquOyP+QOgCQtpCQ27aQ2/+rbk2rbm6rbo6rjk2ryKur5OSr5P+2ZgC22/+2///Ijk3I///bkDrb/7bb///kq27k////AAD/tmb/yI7/25D/27b/29v/5Kv//7b//8j//9v//+T////cfFOqAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAHcUlEQVR4nO2dC1vbNhSGQ0mhSVcI3YBugxW6C1lpRljIZkL8///WdPGVmXyRsGTJ+d7nKXFpjy1epCP5ImuQko0Mui5A6FAQgIIAFASgIAAFASioxt//+w4F1aAgAAUBKMgYCgJQEICCAC8KWl+PJR/uk5Px+MJnkbrELEkn339L09WnmzT5eOOuTEFhIejhSGzd7koVshAkkbUoTd8KqpHOafMn3xI7QevrM0fl2UgY/ccWglbnnfiJRlBy0lECikRQZ35iETRXw6EuJIWfpDuGggAUBKAgQBhFC6MUjYRRtDBK0UgYRQujFI2EUbQwStEIkzSAggAUBKAgQBhFC6MUjYRRtDBK0UgYRQujFI2EUbQwStEIkzSAggAUBKAgQBhFC6MUjYRxNzZkQZ5ifO+xNSgI0IWg3idpCnIQU4WCABQUwB5bg4IAFASgIACTNICCABQEoCAAkzSAggAUBKAgAJM0gIIAFASgIEDgSbqY1FuZeeiXwAWlhZiH8XcU1IgWdPv+d9agZvKmlX36ntTb9o+zDXaTejvKQTZQEICCABQE6DRJx8BOnc3bQEEACgLs1MmqDRQEoCAABQGYpAGOBS0P1Gn0m6+tH8YX7T9SXt3P0+Wwpb12xqBhq609punj8aSlvXbGawVtTtJPlxS0YY+CRcTZR+NYUA+SdMOWCaiJjaz2GhBM0gC3gpikN+5RsHwXb/bRuG5iAybpl/fYCygIwHEQwPk4SHRkUXf27sdB01G62L9raef+cS9oNoz6jMzxOGiq7MxYgxr3mOqTselg76qlfXcAu3kAL5gB3AqKuoPXOG5iMadnDU9WAY57sfihIICfJjYYRHsD0XWSltnn8XgU7y1WL928ONuI9nSMggCemli8AyLXvdhCZuhJOov2fJXdPICCAK4FzWQTi/kGva8kHS2+unmrnYeAR0HFrOeHcUeTem3w28T0IpDiy/zI6mgd4DdJF/PE4pkw5rebL7zoGuR9KWMLtvvBbAU9v2ifCUpO3ke4WLiPR/CeLYYdFz4u2pepJ8Ll1N1087oh5+Mgvd78h3vWoBfQNWg+Hu9ODur9reeS1pN0ecU+5vtiJa8cJZT7qf4lG0lHfwNaYlODkKAenKyWUBDATlDvrweVOBGUX7TvA24E9QgKArhI0j140r7EhaB4n1lowGE33w/c1KCdF9T7aeElLgT14CHOEnbzAAoCOBkHyftik2gfnqrjRNB0/6/jSU9GQ47GQXIo1I++jIIAbq4HySbG60Eb9qOuB/XCD7t5BAUBXCRp1cB6csXVgaCnS9V7PR5zoNj8vXwE3YMXdUlaF1ReDOrHuUbrSbq8nMiBYuN+KIiCtoihIOOY/j4f1FIMR9IghoJADAXVYniyCmIoCMRQEIihIOMYCgIxFARiKAjEUFAtxiBJV9Z6Xl/HN13MSy+WT6ibjymokXzO6g8/UVAjWtD6yx+6icUw67nEwo9xks5mHJ5FmYNssBKUnN5T0AsoQXPVmZ25KlNQ2DWxSLt5G2y7eQoiGgoCUBBgp05WbaAgAAUBKAjAJA2gIAAFASgIwCQNoCAABQEoCMAkDaAgAAUBKAjAJA2gIAAFASgIwCQNoCAABQEoCMAkDaAgAAUBKAjAJA2gIAAFASgIwCQNoCAABQEoCMAkDaAgAAUBKAjAJA0wElRM6pXzoeJZy/hV2E2HinCFTFusBK2/RLgCpCVW88VW56KJRTip1warZUSTjzc7VIvsZhzuUB6iIGOgILmU8frX3ejmm9jixQJxLmXcFhxJAyioBk9WARQEoCBAm4Le4v/iItb3YSkIQEEACgIwSQMoCEBBAAoCUBCAggDbC1qdqzff1rbMY5OTsdmbYasHM33bXBm7vra9qLW1IFm4+VF9yzx29elG3QawCE2N37pbib29UJdGLdha0OrHb9klxnLLPPZBltfkCnf1YKZv3a0X2ZKtBSWn9+r3X90yj5UYxVZCi7fumscmp785b2KyhuqjlVvmsams+CbvPa2EGr91t4xNTi6ULgu816DVudF7YWuHNRT0miIXeM5B6ndpQhlq/tbdSpF/di9Itoy8Fzsz7sXyCFM/9YMZ1qBK7K37JpYNKuRvxHYcJGJ1NTD5McvD2o6DsiJbPuPEkTSAggAUBKAgAAUBAhH0dKmegRuKzeXhVfHtf/7srkgZwQgaqa/1dbirrroiKEGV5YIVFFSQL3I/GyorywPR3iby60hvi4/DX8TGRLfGYao/PawpHJigxf6dEKRqzvJgIj9VpZq9+bo8EM1PfD5dDtX35Gc6qzdJF4QmSJgQgt7pmiEF/XunN4Qv/Zk1O7Vk97Mm6YLQBKkalE6rHdpCNLG9rFYdXuVrmc/0s98j1yULTNB0mFl5PB6oyiQ29q6KmlMV5L51KcISJJtM3obEttxcSBGLsgYVTWzPTw8XlCA1DsprifiUvqSI5UEpSCZn/Uf8Xw+WghFUZBRVbVTaES1OpCKRj/Y+69qk/q3azXuoRYEIChcKAlAQgIIAFASgIAAFASgIQEEACgL8B4KdYsHDEtX/AAAAAElFTkSuQmCC" /><!-- --></p>
 <pre><code>#&gt; _________________________________________________________________________ 
 #&gt; Estimativa de correlacao cofenetica: 
 #&gt; [1] 0.9486072
 #&gt; Significancia da correlacao cofenetica pelo teste Mantel 
-#&gt; pvalor: 0.02 
+#&gt; pvalor: 0.013 
 #&gt; Hipotese alternativa: A correlacao e maior que 0 
 #&gt; 
-#&gt; Ponto de corte pelo metodo Mojena 
-#&gt;    k=1.25       k=2 
-#&gt; 0.7110568 0.8286550 
+#&gt; Criterio de Corte 
+#&gt;    k=1.25 
+#&gt; 0.7110568 
+#&gt; 
+#&gt; Agrupamentos 
+#&gt;    Cluster
+#&gt; T1       1
+#&gt; T2       1
+#&gt; T3       1
+#&gt; T4       1
+#&gt; T5       1
 #&gt; _________________________________________________________________________</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendrograma</span>(Gower2,<span class="at">Metodo=</span><span class="dv">3</span>,<span class="at">Titulo=</span><span class="st">&quot;Gower2&quot;</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <pre><code>#&gt; _________________________________________________________________________ 
 #&gt; Estimativa de correlacao cofenetica: 
 #&gt; [1] 0.9655169
 #&gt; Significancia da correlacao cofenetica pelo teste Mantel 
-#&gt; pvalor: 0.026 
+#&gt; pvalor: 0.02 
 #&gt; Hipotese alternativa: A correlacao e maior que 0 
 #&gt; 
-#&gt; Ponto de corte pelo metodo Mojena 
-#&gt;    k=1.25       k=2 
-#&gt; 0.7410889 0.8581060 
+#&gt; Criterio de Corte 
+#&gt;    k=1.25 
+#&gt; 0.7410889 
+#&gt; 
+#&gt; Agrupamentos 
+#&gt;    Cluster
+#&gt; T1       1
+#&gt; T2       1
+#&gt; T3       1
+#&gt; T4       1
+#&gt; T5       1
 #&gt; _________________________________________________________________________</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendrograma</span>(Metodo3,<span class="at">Metodo=</span><span class="dv">3</span>,<span class="at">Titulo=</span><span class="st">&quot;Metodo3&quot;</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <pre><code>#&gt; _________________________________________________________________________ 
 #&gt; Estimativa de correlacao cofenetica: 
 #&gt; [1] 0.8987349
@@ -305,34 +558,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt; pvalor: 0.014 
 #&gt; Hipotese alternativa: A correlacao e maior que 0 
 #&gt; 
-#&gt; Ponto de corte pelo metodo Mojena 
-#&gt;    k=1.25       k=2 
-#&gt; 0.8213046 0.9243939 
+#&gt; Criterio de Corte 
+#&gt;    k=1.25 
+#&gt; 0.8213046 
+#&gt; 
+#&gt; Agrupamentos 
+#&gt;    Cluster
+#&gt; T1       1
+#&gt; T2       1
+#&gt; T3       1
+#&gt; T4       1
+#&gt; T5       1
 #&gt; _________________________________________________________________________</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dendrograma</span>(Metodo4,<span class="at">Metodo=</span><span class="dv">4</span>,<span class="at">Titulo=</span><span class="st">&quot;Metodo4&quot;</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <pre><code>#&gt; _________________________________________________________________________ 
 #&gt; Estimativa de correlacao cofenetica: 
 #&gt; [1] 0.9256188
 #&gt; Significancia da correlacao cofenetica pelo teste Mantel 
-#&gt; pvalor: 0.033 
+#&gt; pvalor: 0.035 
 #&gt; Hipotese alternativa: A correlacao e maior que 0 
 #&gt; 
-#&gt; Ponto de corte pelo metodo Mojena 
-#&gt;    k=1.25       k=2 
-#&gt; 0.8787674 1.0133006 
+#&gt; Criterio de Corte 
+#&gt;    k=1.25 
+#&gt; 0.8787674 
+#&gt; 
+#&gt; Agrupamentos 
+#&gt;    Cluster
+#&gt; T1       1
+#&gt; T2       1
+#&gt; T3       1
+#&gt; T4       1
+#&gt; T5       2
 #&gt; _________________________________________________________________________</code></pre>
 </div>
 <div id="para-comparar-as-metodologias-pode-se-estimar-a-correlação-dos-metodos-dois-a-dois" class="section level1">
-<h1>Para comparar as metodologias pode-se estimar a correlação dos metodos dois a dois</h1>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mat<span class="ot">=</span><span class="fu">cbind</span>(<span class="at">Gower1=</span>Gower1<span class="sc">$</span>Distancia,<span class="at">Gower2=</span>Gower2<span class="sc">$</span>Distancia,<span class="at">Metodo3=</span>Metodo3,<span class="at">Metodo4=</span>Metodo4<span class="sc">$</span>Distancia)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Cor<span class="ot">=</span><span class="fu">cor</span>(mat)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Cor</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            Gower1    Gower2   Metodo3   Metodo4</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Gower1  1.0000000 0.9370078 0.9399261 0.9468470</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Gower2  0.9370078 1.0000000 0.9600371 0.8780937</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Metodo3 0.9399261 0.9600371 1.0000000 0.8509176</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Metodo4 0.9468470 0.8780937 0.8509176 1.0000000</span></span></code></pre></div>
+<h1>Para comparar as metodologias pode-se estimar a correlação dos
+metodos dois a dois</h1>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mat<span class="ot">=</span><span class="fu">cbind</span>(<span class="at">Gower1=</span>Gower1<span class="sc">$</span>Distancia,<span class="at">Gower2=</span>Gower2<span class="sc">$</span>Distancia,<span class="at">Metodo3=</span>Metodo3,<span class="at">Metodo4=</span>Metodo4<span class="sc">$</span>Distancia)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>Cor<span class="ot">=</span><span class="fu">cor</span>(mat)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>Cor</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            Gower1    Gower2   Metodo3   Metodo4</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Gower1  1.0000000 0.9370078 0.9399261 0.9468470</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Gower2  0.9370078 1.0000000 0.9600371 0.8780937</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Metodo3 0.9399261 0.9600371 1.0000000 0.8509176</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Metodo4 0.9468470 0.8780937 0.8509176 1.0000000</span></span></code></pre></div>
 </div>
 <div id="uma-opção-de-biplot-legal-para-dados-mistos-é-o-pcamixed." class="section level1">
 <h1>Uma opção de biplot legal para dados mistos é o PCAmixed.</h1>
@@ -391,7 +663,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt; Pelos=Nao                -0.5498871  1.08144058  0.1619816 -0.043271041
 #&gt; Pelos=Sim                 0.3665914 -0.72096039 -0.1079877  0.028847361</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>CPM<span class="ot">=</span><span class="fu">ComponentesPrincipais.Misto</span>(Dados.Misto,<span class="at">plot =</span> <span class="st">&quot;nivel&quot;</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAA51BMVEUAAAAAAA0AABcAADoAAGYAOjoAOmYAOpAAWGYAZpAAZrYNADIXAAAokNs6AAA6ADo6AGY6OgA6Ojo6OmY6OpA6ZpA6ZrY6kLY6kNtRvP9mAABmADpmAGZmOgBmOjpmkLZmkNtmtrZmtttmtv9m2/+QOgCQOjqQZgCQZjqQkDqQkGaQkLaQttuQtv+Q29uQ2/+dkDq2WAC2ZgC2Zjq2ZpC2kDq2kGa2tma227a229u22/+2/9u2///beyDbkDrbkGbbtmbbtpDb27bb////nDr/tkn/tmb/22b/25D/27b//7b//9v///+5LDYmAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAMAUlEQVR4nO2da4PjNhWGTWeZgQDZTpctIaW0bEhbYGEgy6VdFrfbUJOZ5P//HnS1JCfWa8uyLcfn/TDjOLKO/EQ6kuxjOTuRvMrGLkDqIkBABAiIAAERICACBESAgAgQEAECIkBABAiIAAERICACBESAgAgQEAECIkBABAiIAAERICACBESAgAgQEAECIkBABAiIAAERICACBESAgAgQUBNAx212t7/0xS579q76pfOZJ2ibae86/r2uTJc0P0CPn9aW6ZI6A/IemSIgWGhXzQHl2c1f3mTZ7YPY9WaZ3b4ua5AyWmTZRp24SaBK9LTOVizJ+0+zLHvxUAL69j7Lbl6+Nca+Yzt+/Epsvv8t2/xsL45dvL/Pbl6dvl3KArA8v2bf3r51E1YLyfL+uLJ7x+wrROfZmuKVFtoAkrqRZyelAHEyItO7vUxsJXAAFWUeTqbmN93JHStxVkIsFTtW6l4n3lmFsRI6hVRH3b5zdruAKtma4pUWWgFiP1ieqfNc7PkPpACxPwvFQCa2EtiA2Jc/3Z8OS52O/4b703cSyEnWwV/tH9f8CJZKWl2JM1nxZNkrVQBW/Gdv+R5m1kroFHLHkwhb1d3q5zjL1iqesdAG0EaUZnEy56yddM535KZmWAncJnY6ff/Pe35eIh3L7fYb25RMm7/8pjwR/o8dK+vRnVX8jU5uJbQLqQzmld0uoEq2pnjGQgtAqt6Kk1vo05Ffsvw3ZePSNco5AVne41ey3i7KdJl2H8aSs8nNCqPSdAlInCX/0k5oF5IlLBuMtdsFVMnWFM9YCAEk87QBcSLKhm46FUC6XWW3f/p+rQGxPleew59LS4uTXXrp+GsBmS/ltl3IImsNyCqesRBYg8SPZo2DWE3+g/bf2lOfA5Jn5+Tx+Md75WDj16CNPoOGgKzidatB5z5IVmjRv5/5IHlgwb1goX3BymHxZVlmeVzx4nXVB50BqvNBZ9W8BSCreN18kOqkdpkBJLrFTZnYSiA7iMdtJn+iuz3fVDVIdFq8nWlWbMfHwjNtKr3YOaCaXswmwUY4j+tq2eV2XQ3SxQvqxYyRcpRgABVqdKE+mwTGW67M8Eg3sTfWcEZVIe0l3XHQOSCdfWUcZAqphjl8R+XHtQaKZz7IOOn24yAL0PEfSzbetediukbrkXSZgBlnnvjl12Uvdvs6N8fxgXP2ojqS/lxsigHy55fOhLeTf7OsXr51E7qFfPxqqZLYu/noTI7AL/disnilhYle7mg5oepggQABCwQIWCBAwMJEAQ0nAgREgIAIEBABAiJAQAQIiAABESAgAgREgIAIEBABAiJAQAQIiAABESAgAgREgIAIEBABAiJAQAQIiAABESAgAgREgIAMIB30uPGkxtlNRi0BmYC+47ZLXECSFfLwXASw5Tx2Usf6tQT09BubifuplRIGJP6GAoqmhAHp5zWkC5kRIGxSNTGujjWIx6N2e4jrugE9fcIDvjsRum5Ah1/uO3noNnbjKcxk215szV3XtdagTkfphDv1lELH4Mgke7FLCmhiu/KxvyHsjq0gH5Sbx2N6tzu2AqYa/HGGouuj2tfqg45b7oE+FM+9dXJC1wpI9O3HLx5A4oh246mhycoEPrgGdVSygKqXONr6IP4o2U33CnS9gGIp2V5sZEDtL9QNrm4+KF4x4mbXn2YEaKC5WCQRoGGz689kwGw+W4jHxjvd9bleQOKWiHyKvNOc/loBHbd81SS5nNPULpiFKeSKYiHXg5naZDVMVIOAgn2QQDWA3XiiXqwXkzQOinUUAWqYUK8t1K2FXS8gcXc25+sKeXv5XCPMa5Jday+m+q4dX9vJc+snZwOBp7VYPmtmgOStZ9HZewaKEuNxy9frmhkgXYMW9XXjVGLkIRKVVGNeURxosspH0dwRyRZ0WeUgcrdIqAYN1IvxGNcbPx9Tu+QCkp3sxlNS46BcDQOOWwIUphkA8jjp9tmVa36L9VizrHv4SCwlVINUhKAVKJiC0gPU7UJcdKUHKO+rdQ3kg+AsK9iuArT7KMtiBPk1MRnzKGug6J9lBduVgJ7WYhHlHggNd1fDP8sKtmt75z4c0SCA6mdZ3e3agA7LjtebmpmMeZQzWfXNsoLtOoCS6etb+yA4ywq2q57WEnUnnb4+oBcDs6xgu7oXE0vh99GNBSm9cVD52oTYoslqLyYTGij2rUkMFK/+kmufA8W+NfmBYppKaKCYphIaKKaphAaKcn9/7vsqxkF9dnAEKMxkrKNUL9bz4iaTB9T78jjX4IPiLLDU5eAhlZgPSk8ECGhGgK6im+9TSQHSsbC1/dzMAeX61mhRd4/0egE1uaJoPcdR98jL4ICsAJvyNbKygvvXSejliqK+anQ6u39ztobjoP8Pzx/Ef3YOzv53vuPaAWp2RTHFGsRl33n7zwe/F/sKsFRUP1cU9TWRpHyQe7/2vz/6Nf/HCui/SdnTFUXd4msfuhvFSduA/qZqELqLO6Mrig6gIvuZ3o4LqO8rij3KBlRkP3neE6BIGhcQ8zwHAnRuUkPh41gCdEE6TJR7if/9XA8W//Xsr55Fo2YI6LBcqW35ufiAVaGijtAMAan1otk4SH7+IfsF73Nqoo9nBOjcpNXtxwSkB4HT6+arsgDl8ZqYmIh1VlqAivrQ9faArKl6B6UFyPOzh9SgGAGWqQGq7cYCfFCUGOYk7mo0CV0PAbScppPWls01sCaR2SFNrMPzSs7VxFFkGz/ITb7Af63jmJ2TtgHpbV9k9uyc9CVA+KjG2XNN1UkrkxaTfgBZ909aljDIbjxdMNnAF856Lhb1qOkDChMBAmp9X2w1WR8UphnVoBqTwFHPHhDq6kO7+a7XhK4X0E4Fv/gXR0hxFbxhAJWXTbxPtie5Ct4gPsiaynuWCZzxKnjWOuRBq+C1tzu2AuODTt47tmmughemXgDNeBW8hoBqg2TGvKKYFKB4duNpIECmDkBAvmuP1wqolbyAJqORAEU12ixZ1MyiHEeAgAhQ7yJAcYwSoCjJCNCQmcU7rpMIUByj8wU0JREgIAIERICACBAQAQIiQEAECIgAAREgIAIERICACBDQWIB2OFRLLHcDLn8Xngeb2+VUp5EAFTiW7bhlp577X7jFw5pqH2xulVOtxgH0tMaAZCiXd60VeX/F9+LTpjnVaxxA+d2XDaMhvfWj1ZnjmnZRowA6PH9o4IOEvG8OVisINAPkfwdxrcYAxFtGQ0C1KznJb0WlaFY1/DnVawxAfH2vZoAK7KMbAgI51WsEQKJhNAKEfvXmTSy0/gwNiMdZr9QiG55lh3M5bAFB2y2cNMypXgkPFHO4cnPDbr5BTvVKF5Bc7savZgPFJjnVKl1AqiX6Tz9vMtVolFOdaLIKRICACBAQAQIiQEAECIgAAREgIAIERICACBAQAQIiQEAECIgAAREgIAIERICACBAQAQIiQEAECIgAAREgIAIERICACBDQkIB2Juyldv1z692Wx225ZJpewEfHcejoXye+97AUkaHysKdPIqyOzTUoIBGwcFh6wlWe1ibYJ5fpZMSwsxy4Dupw4nuP25VYzK9Qh8V4j8ppDEC+eBX73ZaqkqmIYTuMrAwLcgKoOML8bn/84kElirFG/yiA+O/Mz/6w/B1rNyv+ugrz8k0DQm2piOHcqnaVwDIFXAEqdMK6N5221AiA+H8JSDQQdp5WEJ0BJAPHdMTw7iPjbSqhiSq+VzSxla5AwXHRVY0BiPGQgFYn/ed8jTm59qWOGH5aC0qSkBvcWsZnCiddViD/oqvNNSqgzcn6I2UBEu3IiRhWXzqA3PheVoH0Io/W6qJdNGoT8wGSX7gRwyqd3cQq8b2sArGmqQYGUwVknDSsQZWIYdXXW066Et8rKtBKZjJdQIVYdBkDWlmHOW8yMtG/1fjeYnEqAU3WBwm3jAGZ8GfZi/FPykmXA8VqfK/ownQTm2Iv5k41ACDTjQuu6k1GcuVrFf1bje8VgyXtpCc4Dmqnjq+rivO2q5QBOYPn9priXKylOs2mJjmbn6QIEBABAiJAQAQIiAABESAgAgREgIAIEBABAiJAQAQIiAABESAgAgREgIAIEBABAiJAQAQI6P+DzEuHilaSjQAAAABJRU5ErkJggg==" /><!-- --></p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>CPM<span class="ot">=</span><span class="fu">ComponentesPrincipais.Misto</span>(Dados.Misto,<span class="at">plot =</span> <span class="st">&quot;correlacao&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>CPM<span class="ot">=</span><span class="fu">ComponentesPrincipais.Misto</span>(Dados.Misto,<span class="at">plot =</span> <span class="st">&quot;pesos&quot;</span>)</span></code></pre></div>

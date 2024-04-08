@@ -2,6 +2,7 @@
 #'
 #' @description Esta funcao retorna o resultado da analise de variancia
 #'  multivariada (MANOVA).
+#'  @name MANOVA
 #' @usage MANOVA(Dados,Modelo)
 #' @param Dados    Matriz contendo os dados para execucao da MANOVA. Para cada
 #'  modelo o conjunto de dados precisa estar organizado de uma forma apropriada:
@@ -144,15 +145,15 @@ Cov=summary(ajuste)$SS$Residuals/GLR
 
 
 if(Modelo<4){
-  Med=apply(Y,2,function(x) tapply(x,Trat,mean))
+  Med=apply(Y,2,function(x) tapply(x,Trat,mean,na.rm=T))
 }
 
 if(Modelo>3){
-  Med=apply(Y,2,function(x) tapply(x,FatorA:FatorB,mean))
+  Med=apply(Y,2,function(x) tapply(x,FatorA:FatorB,mean,na.rm=T))
 }
 
 if(Modelo>5){
-  Med=apply(Y,2,function(x) tapply(x,FatorA:FatorB:FatorC,mean))
+  Med=apply(Y,2,function(x) tapply(x,FatorA:FatorB:FatorC,mean,na.rm=T))
 }
 
 Resultado=list(Data=D,Modelo=Modelo,Manova=MANOVAS,CovarianciaResidual=Cov,GLres=GLR,Med=Med)
@@ -163,17 +164,33 @@ class(Resultado)="MANOVA"
 print.MANOVA=function(x,...){
   cat("__________________________________________________________________________","\n")
   cat("MANOVA com o teste Pillai","\n")
-  print(x$Manova$Teste_Pillai)
+  m=x
+  a=m$Manova$Teste_Pillai
+  a=as.data.frame(a)
+  a[is.na(a)]=""
+  print(a)
   cat(" ","\n")
 
   cat("MANOVA com o teste Wilks","\n")
-  print(x$Manova$Teste_Wilks)
+
+  a=x$Manova$Teste_Wilks
+  a=as.data.frame(a)
+  a[is.na(a)]=""
+  print(a)
   cat(" ","\n")
   cat("MANOVA com o teste Hotelling","\n")
-  print(x$Manova$Teste_HotellingL)
+  a=x$Manova$Teste_HotellingL
+  a=as.data.frame(a)
+  a[is.na(a)]=""
+  print(a)
+
   cat(" ","\n")
   cat("MANOVA com o teste Roy","\n")
-  print(x$Manova$Teste_Roy)
+  a=x$Manova$Teste_Roy
+  a=as.data.frame(a)
+  a[is.na(a)]=""
+  print(a)
+
   cat(" ","\n")
   cat("As medias dos tratamentos podem ser acessados com o $Med","\n")
   cat("Os Graus de liberdade do residuo podem ser acessados com o $GLres","\n")

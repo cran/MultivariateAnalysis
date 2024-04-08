@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -39,8 +39,11 @@ CP=ComponentesPrincipais(DadosMed,padronizar = TRUE)
 
 ## -----------------------------------------------------------------------------
 VC=VariaveisCanonicas(Dados.Fat2.DBC,Modelo = 5,Fator = "A:B")
+VC
 
 ## -----------------------------------------------------------------------------
 VC=VariaveisCanonicas(Dados.Fat2.DBC,Modelo = 5,Fator = "A")
+VC
 VC=VariaveisCanonicas(Dados.Fat2.DBC,Modelo = 5,Fator = "B")
+VC
 

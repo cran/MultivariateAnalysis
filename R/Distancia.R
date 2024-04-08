@@ -1,6 +1,7 @@
 #' Distancia de dissimilaridade
 #'
 #' @description Esta funcao retorna a distancia de dissimilaridade.
+#' @name Distancia
 #' @usage Distancia(Dados,Metodo,Cov=NULL)
 #' @param Dados Matriz contendo os dados para calculo das distancias. Nas
 #'   linhas devem estar os tratamentos, e nas colunas as variaveis respostas.
@@ -56,7 +57,7 @@
 #'   covariancias (residuais) entre as caracteristicas. Necessaria apenas para
 #'   calculo da distancia de Mahalanobis.
 #' @return A funcao retorna a distancia estimada entre os tratamentos.
-#' @seealso /code{/link{dist}/}
+#' @seealso \code{\link[stats]{dist}}
 #' @references
 #' PlayList "Curso de Analise Multivariada":
 #'  https://www.youtube.com/playlist?list=PLvth1ZcREyK72M3lFl7kBaHiVh5W53mlR
