@@ -161,6 +161,7 @@ class(Resultado)="MANOVA"
  return(Resultado)}
 
 
+#' @export
 print.MANOVA=function(x,...){
   cat("__________________________________________________________________________","\n")
   cat("MANOVA com o teste Pillai","\n")

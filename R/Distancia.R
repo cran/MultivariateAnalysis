@@ -490,7 +490,7 @@ class(Res)="Distancia"
 return(Res)
 }
 
-
+#' @export
 print.Distancia=function(x,...){
   Met=c("1 = Distancia euclidiana.
     "," 2= Distancia euclidiana media.

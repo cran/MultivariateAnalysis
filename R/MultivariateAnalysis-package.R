@@ -10,7 +10,7 @@
 #'  variaveis canonicas, etc.
 #  \cr
 # \if{html}{\figure{logo.jpg}{options:   height="4\%" alt="Figure: logo.jpg"}}
-#' @docType package
+
 #' @name MultivariateAnalysis package
 #' @aliases MultivariateAnalysis
 #' @author Alcinei Mistico Azevedo: <alcineimistico@@hotmail.com>

@@ -160,7 +160,7 @@ if(plot==TRUE){
 return(res)
   }
 
-
+#' @export
 print.SummaryDistancia=function(x, ...){
   cat("_________________________________________________________________________","\n")
   cat("Tabela com o resumo da matriz dissimilaridade","\n")

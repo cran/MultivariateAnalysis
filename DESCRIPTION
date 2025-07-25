@@ -1,7 +1,7 @@
 Package: MultivariateAnalysis
 Type: Package
 Title: Pacote Para Analise Multivariada
-Version: 0.5.0
+Version: 0.5.1
 Authors@R: 
     person(given = "Alcinei Mistico",
            family = "Azevedo",
@@ -19,14 +19,14 @@ Imports: PCAmixdata,magrittr, NbClust, factoextra, gridExtra,
 License: GPL-3
 Encoding: UTF-8
 LazyData: false
-RoxygenNote: 7.2.2
+RoxygenNote: 7.3.2
 Language: pt-BR
 NeedsCompilation: no
-Packaged: 2024-04-08 18:01:43 UTC; AlcineiAzevedo
-Author: Alcinei Mistico Azevedo [aut, cre]
-    (<https://orcid.org/0000-0001-5196-0851>)
+Packaged: 2025-07-25 18:26:42 UTC; Huggo
 Maintainer: Alcinei Mistico Azevedo <alcineimistico@hotmail.com>
 Repository: CRAN
-Date/Publication: 2024-04-08 18:40:03 UTC
+Date/Publication: 2025-07-25 18:40:02 UTC
 Suggests: rmarkdown, knitr
 VignetteBuilder: knitr
+Author: Alcinei Mistico Azevedo [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-5196-0851>)

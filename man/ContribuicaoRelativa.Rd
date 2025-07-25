@@ -23,7 +23,7 @@ Esta funcao retorna a contribuicao relativa entre as variaveis
 independentes no agrupamento formado pelo metodo Tocher, Kmeans ou Dendrograma.
 }
 \examples{
-
+ \donttest{
     #Dados sem repeticao considerando o metodo Kmeans
      data("Dados.MED")
      Dados=Dados.MED
@@ -67,7 +67,7 @@ independentes no agrupamento formado pelo metodo Tocher, Kmeans ou Dendrograma.
     Kmeans(Dados=Dados.Fat2.DBC,design=6,nclusters=2,iter.max = 20,nstart = 1,
            algorithm = "Hartigan-Wong")
 
-
+}
 }
 \references{
 PlayList "Curso de Analise Multivariada":

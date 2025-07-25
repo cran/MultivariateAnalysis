@@ -49,7 +49,7 @@
 #'  HAIR, J.F. Multivariate Data Analysis.  (2016) 6ed. Pearson Prentice HalL.
 #'   (ISBN 13:978 0138132637)
 #'
-#' @seealso \code{\link{eigen}}, \code{\link{princomp}}, \code{\link{PCAmix}}
+#' @seealso \code{\link{eigen}}, \code{\link{princomp}}
 #' @importFrom PCAmixdata PCAmix
 #' @examples
 #' \donttest{

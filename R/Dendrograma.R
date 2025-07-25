@@ -419,7 +419,7 @@ return(resultado)
   }
 
 
-
+#' @export
 print.Dendrograma = function (x, ...){
   cat("_________________________________________________________________________","\n")
   cat("Estimativa de correlacao cofenetica:","\n")

@@ -163,6 +163,7 @@ class(VC)="VariaveisCanonicas"
 return(VC)
 }
 
+#' @export
 print.VariaveisCanonicas=function(x, ...){
   cat("__________________________________________________________________","\n")
   cat("Estudo das variaveis canonicas","\n")

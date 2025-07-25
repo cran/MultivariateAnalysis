@@ -1,3 +1,7 @@
+# MultivariateAnalysis 0.5.1
+## Minor improvements
+* A correction was made at the request of the R CRAN team.
+
 # MultivariateAnalysis 0.5.0
 ## Minor improvements
 * New argument `layout` in `ComponentesPrincipais()`

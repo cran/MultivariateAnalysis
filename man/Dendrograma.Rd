@@ -57,6 +57,7 @@ Esta funcao retorna a figura do Dendrograma, distancias feneticas
   e correlacao cofenetica.
 }
 \examples{
+ \donttest{
 data(Dados.MED)
 rownames(Dados.MED)=paste0("Treatment ",1:10)
 Dist=Distancia(Dados.MED,2)
@@ -71,6 +72,7 @@ Dendrograma(Dist,2,layout =7,corte=3)
 Dendrograma(Dist,2,layout =8)
 Dendrograma(Dist,2,layout =9)
 Dendrograma(Dist,2,layout =10,corte=2)
+}
 
 }
 \references{

@@ -183,7 +183,7 @@ return(out)
 }
 
 
-
+#' @export
 print.Tocher=  function (x, ...){
   cat("_________________________________________________________________________","\n")
   cat("Agrupamento Tocher","\n")

@@ -112,7 +112,7 @@ if(Plot==TRUE){
 return(Mantel)
 }
 
-
+#' @export
 print.CorrelacaoMantel=function(x, ...){
   cat( "Estimativa de correlacao: ",x$correlation,"\n")
   cat( "P-valor obtido pelo teste Mantel: ",x$p.value,"\n")

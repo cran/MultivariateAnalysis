@@ -50,6 +50,7 @@ Esta funcao retorna clusters pelo metodo kmeans a partir de uma
 matriz com dados quantitativos.
 }
 \examples{
+ \donttest{
 #Dados sem repeticao
  data("Dados.MED")
  Dados=Dados.MED
@@ -87,7 +88,7 @@ data("Dados.Fat2.DBC")
 Kmeans_NumeroOtimo(Dados=Dados.Fat2.DBC,design=6,nboot=100,method="silhouette",NumMax=NULL)
 Kmeans(Dados=Dados.Fat2.DBC,design=6,nclusters=2,iter.max = 20,nstart = 1,
        algorithm = "Hartigan-Wong")
-
+}
 }
 \references{
 PlayList "Curso de Analise Multivariada":

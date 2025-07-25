@@ -60,6 +60,7 @@ Esta funcao retorna o numero otimo de clusters para o metodo kmeans
  @name Kmeans_NumeroOtimo2
 }
 \examples{
+ \donttest{
 #Sem repeticoes
 data("Dados.MED")
 Dados=Dados.MED
@@ -94,6 +95,7 @@ Dados=Dados.Fat2.DBC
 Kmeans_NumeroOtimo2(Dados,design=5,Metodo = 1,nboot=100,iter.max = 100,NumMax=NULL)
 Kmeans_NumeroOtimo2(Dados,design=5,Metodo =2,nboot=100,iter.max = 100,NumMax=NULL)
 Kmeans_NumeroOtimo2(Dados,design=5,Metodo =3,nboot=100,iter.max = 100,NumMax=NULL)
+}
 }
 \references{
 PlayList "Curso de Analise Multivariada":
